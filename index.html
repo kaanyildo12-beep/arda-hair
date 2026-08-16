@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17130f" />
+  <meta name="description" content="Premium Echthaar Extensions – elegante Farben, natürliche Texturen und sorgfältig ausgewählte Qualität." />
+  <title>ARDA HAIR — Premium Extensions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div class="announcement" data-i18n="announcement">Premium Haar. Natürliche Wirkung. Zeitlose Schönheit.</div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Startseite">ARDA <span>HAIR</span></a>
+    <nav class="desktop-nav" aria-label="Hauptnavigation">
+      <a href="#collection" data-i18n="navCollection">Kollektion</a>
+      <a href="#quality" data-i18n="navQuality">Qualität</a>
+      <a href="#gallery" data-i18n="navGallery">Galerie</a>
+      <a href="#shop" data-i18n="navShop">Shop</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-picker" aria-label="Sprache wählen">
+        <button class="lang-option active" data-lang="de" type="button">DE</button>
+        <button class="lang-option" data-lang="tr" type="button">TR</button>
+        <button class="lang-option" data-lang="en" type="button">EN</button>
+      </div>
+      <button class="icon-btn" id="favBtn" aria-label="Favoriten">♡ <span id="favCount">0</span></button>
+      <button class="icon-btn" id="cartBtn" aria-label="Warenkorb">Bag <span id="cartCount">0</span></button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menü">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-image-wrap"><img src="assets/images/hair-22.jpg" alt="Premium Haar Extensions" class="hero-image"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow" data-i18n="heroEyebrow">PREMIUM ECHTHAAR</p>
+        <h1 data-i18n="heroTitle">Schönheit, die sich <em>echt</em> anfühlt.</h1>
+        <p class="hero-copy" data-i18n="heroCopy">Natürlich fallendes Haar, sorgfältig ausgewählte Farbtöne und Texturen – für Looks, die nicht künstlich wirken.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#gallery" data-i18n="discover">Kollektion entdecken</a>
+          <a class="btn ghost" href="#quality" data-i18n="whyUs">Warum ARDA?</a>
+        </div>
+      </div>
+      <div class="hero-note" data-i18n="heroNote">Gerade · Wellig · Lockig · Viele Nuancen</div>
+    </section>
+
+    <section class="trust-strip">
+      <div><strong>01</strong><span data-i18n="trust1">Natürlicher Glanz</span></div>
+      <div><strong>02</strong><span data-i18n="trust2">Vielfältige Farbtöne</span></div>
+      <div><strong>03</strong><span data-i18n="trust3">Mehrere Haarstrukturen</span></div>
+      <div><strong>04</strong><span data-i18n="trust4">Premium Auswahl</span></div>
+    </section>
+
+    <section class="intro section" id="collection">
+      <div class="section-kicker" data-i18n="collectionKicker">DIE KOLLEKTION</div>
+      <div class="intro-grid">
+        <h2 data-i18n="collectionTitle">Von tiefem Braun bis kühlem Blond.</h2>
+        <p data-i18n="collectionText">Unsere Auswahl zeigt unterschiedliche Nuancen, Längen und Strukturen. Der Shop wird aktuell vorbereitet – die ersten Produkte erscheinen in Kürze.</p>
+      </div>
+    </section>
+
+    <section class="feature-grid section" id="quality">
+      <article class="feature-card large reveal">
+        <img src="assets/images/hair-04.jpg" alt="Haarfarben in verschiedenen Nuancen">
+        <div class="card-copy"><span data-i18n="featureColorSmall">FARBAUSWAHL</span><h3 data-i18n="featureColorTitle">Nuancen, die sich harmonisch einfügen.</h3></div>
+      </article>
+      <article class="feature-card reveal">
+        <img src="assets/images/hair-09.jpg" alt="Lockige Haar Extensions">
+        <div class="card-copy"><span data-i18n="featureTextureSmall">TEXTUREN</span><h3 data-i18n="featureTextureTitle">Glatt, gewellt oder lockig.</h3></div>
+      </article>
+      <article class="feature-card text-card reveal">
+        <span class="quote-mark">“</span>
+        <h3 data-i18n="quote">Gutes Haar soll nicht nur schön aussehen. Es soll sich auch so anfühlen.</h3>
+        <p data-i18n="quoteSub">Unser Anspruch: hochwertige Optik, natürliche Bewegung und eine klare, moderne Einkaufserfahrung.</p>
+      </article>
+    </section>
+
+    <section class="gallery-section section" id="gallery">
+      <div class="section-head">
+        <div><div class="section-kicker" data-i18n="galleryKicker">LOOKBOOK</div><h2 data-i18n="galleryTitle">Unsere Haarwelt</h2></div>
+        <p data-i18n="galleryText">Ein Einblick in Farben, Strukturen und Auswahl. Tippe auf ein Bild, um es größer zu sehen.</p>
+      </div>
+      <div class="masonry" id="galleryGrid"></div>
+    </section>
+
+    <section class="shop-section section" id="shop">
+      <div class="shop-panel reveal">
+        <div>
+          <div class="section-kicker" data-i18n="shopKicker">SHOP</div>
+          <h2 data-i18n="shopTitle">Der Shop wird gerade vorbereitet.</h2>
+          <p data-i18n="shopText">Aktuell sind noch keine Produkte veröffentlicht. Bald kannst du hier direkt nach Farbe, Länge und Struktur filtern und bestellen.</p>
+        </div>
+        <div class="empty-shop">
+          <div class="empty-icon">✦</div>
+          <strong data-i18n="zeroProducts">0 Produkte</strong>
+          <span data-i18n="comingSoon">Neue Produkte folgen in Kürze.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter section">
+      <div>
+        <div class="section-kicker" data-i18n="newsKicker">NEUHEITEN</div>
+        <h2 data-i18n="newsTitle">Sei zuerst dabei.</h2>
+        <p data-i18n="newsText">Erfahre, wenn die ersten Produkte online gehen.</p>
+      </div>
+      <form id="notifyForm" class="notify-form">
+        <input type="email" id="email" required data-i18n-placeholder="emailPlaceholder" placeholder="E-Mail-Adresse" />
+        <button class="btn primary" type="submit" data-i18n="notifyBtn">Benachrichtigen</button>
+      </form>
+      <div class="form-msg" id="formMsg"></div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#top">ARDA <span>HAIR</span></a>
+    <p data-i18n="footerText">Premium Hair Extensions · Deutschland</p>
+    <div class="footer-links"><a href="#" data-i18n="imprint">Impressum</a><a href="#" data-i18n="privacy">Datenschutz</a><a href="#" data-i18n="terms">AGB</a></div>
+    <small>© 2026 ARDA HAIR</small>
+  </footer>
+
+  <div class="drawer" id="menuDrawer" aria-hidden="true">
+    <button class="drawer-close" data-close="menuDrawer">×</button>
+    <a href="#collection" data-i18n="navCollection">Kollektion</a><a href="#quality" data-i18n="navQuality">Qualität</a><a href="#gallery" data-i18n="navGallery">Galerie</a><a href="#shop" data-i18n="navShop">Shop</a>
+  </div>
+  <div class="drawer side" id="cartDrawer" aria-hidden="true">
+    <button class="drawer-close" data-close="cartDrawer">×</button><h3 data-i18n="cartTitle">Warenkorb</h3><p data-i18n="cartEmpty">Dein Warenkorb ist noch leer.</p>
+  </div>
+  <div class="drawer side" id="favDrawer" aria-hidden="true">
+    <button class="drawer-close" data-close="favDrawer">×</button><h3 data-i18n="favTitle">Favoriten</h3><p data-i18n="favEmpty">Du hast noch keine Favoriten gespeichert.</p>
+  </div>
+  <div class="backdrop" id="backdrop"></div>
+  <div class="lightbox" id="lightbox"><button id="lightboxClose">×</button><img id="lightboxImg" alt="Galerieansicht"></div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
