@@ -12,3 +12,5 @@ Vercel'e yüklemek için bu klasörün tamamını veya ZIP dosyasını kullanın
 Ana dosya: index.html
 
 Ürünler şimdilik 0 olarak bırakılmıştır.
+
+Deployment update
