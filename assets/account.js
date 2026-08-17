@@ -1416,36 +1416,15 @@ async function syncShoppingData(
     userId
   );
 
+
 }
-
-
-
-
-      localStorage.removeItem(
-        'ardaHairCart'
-      );
-
-      localStorage.removeItem(
-        'ardaHairFavorites'
-      );
-
-
-      $('customerDashboard').hidden =
-        true;
-
-      $('authView').hidden =
-        false;
-
-
-      showAuthPanel('login');
-
-    }
-  );
-
+    
 
 /* =========================================
    AUTH STATE
-================async function syncCart(
+================
+
+async function syncCart(
   userId
 ) {
 
@@ -1885,11 +1864,36 @@ $('customerLogout')
       currentCustomer = null;
 
 
-      /*
+            /*
         Başka biri aynı cihazda giriş yaparsa
         önceki hesabın sepetini görmemesi için.
-      */========================= */
+      */
 
+      localStorage.removeItem(
+        'ardaHairCart'
+      );
+
+      localStorage.removeItem(
+        'ardaHairFavorites'
+      );
+
+
+      $('customerDashboard').hidden =
+        true;
+
+      $('authView').hidden =
+        false;
+
+
+      showAuthPanel('login');
+
+    }
+  );
+
+
+/* =========================================
+   AUTH STATE
+========================================= */
 async function checkInitialSession() {
 
   const {
