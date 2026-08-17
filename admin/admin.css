@@ -770,3 +770,107 @@ dialog::backdrop {
     width: 100%;
   }
 }
+
+
+/* =========================================
+   ADMIN SWITCHES
+========================================= */
+
+.switch-row {
+  min-height: 82px;
+  margin: 0;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #fcfbfb;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+.switch-row:hover {
+  background: #fff;
+  border-color: #d8c5cc;
+  box-shadow: 0 8px 25px rgba(20, 12, 15, .05);
+}
+
+.switch-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.switch-text strong {
+  color: var(--black);
+  font-size: 14px;
+}
+
+.switch-text small {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.switch-control {
+  position: relative;
+  flex: 0 0 auto;
+  width: 52px;
+  height: 30px;
+}
+
+.switch-control input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch-slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #d9d4d2;
+  transition:
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+.switch-slider::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+  transition: transform .2s ease;
+}
+
+.switch-control input:checked + .switch-slider {
+  background: var(--pink-dark);
+}
+
+.switch-control input:checked + .switch-slider::after {
+  transform: translateX(22px);
+}
+
+.switch-control input:focus-visible + .switch-slider {
+  box-shadow: 0 0 0 4px rgba(231, 167, 187, .25);
+}
+
+@media (max-width: 620px) {
+
+  .switch-row {
+    min-height: 76px;
+    padding: 16px;
+  }
+}
