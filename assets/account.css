@@ -1,0 +1,667 @@
+/* =========================================
+   ARDA HAIR — CUSTOMER ACCOUNT
+========================================= */
+
+.account-page {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.account-home-button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  transition: .25s ease;
+}
+
+.account-home-button:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.account-main {
+  padding: 90px 6vw 120px;
+}
+
+.account-intro {
+  max-width: 760px;
+  margin-bottom: 50px;
+}
+
+.account-intro h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 7vw, 90px);
+  line-height: .98;
+  font-weight: 500;
+  margin: 14px 0 24px;
+}
+
+.account-intro p {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+
+/* =========================================
+   AUTH CARD
+========================================= */
+
+.account-card {
+  width: min(680px, 100%);
+  margin: 0 auto;
+
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  overflow: hidden;
+
+  box-shadow:
+    0 28px 80px rgba(23, 19, 15, .08);
+}
+
+.account-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+
+.account-tab {
+  min-height: 62px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: .25s ease;
+}
+
+.account-tab:first-child {
+  border-right: 1px solid var(--line);
+}
+
+.account-tab:hover {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.account-tab.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+
+/* =========================================
+   PANELS
+========================================= */
+
+.account-panel {
+  padding: 46px;
+}
+
+.account-panel-heading {
+  margin-bottom: 34px;
+}
+
+.account-panel-heading > span {
+  display: block;
+  color: var(--accent);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+
+  margin-bottom: 10px;
+}
+
+.account-panel-heading h2 {
+  margin: 0 0 12px;
+
+  font-family: 'Playfair Display', serif;
+  font-size: 46px;
+  line-height: 1.05;
+  font-weight: 500;
+}
+
+.account-panel-heading p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+
+/* =========================================
+   FORM FIELDS
+========================================= */
+
+.account-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.account-field > span {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.account-field > input,
+.password-field {
+  width: 100%;
+  min-height: 54px;
+
+  border: 1px solid var(--line);
+  border-radius: 15px;
+
+  background: #fff;
+}
+
+.account-field > input {
+  padding: 0 16px;
+  outline: none;
+
+  transition:
+    border-color .2s,
+    box-shadow .2s;
+}
+
+.account-field > input:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(23,19,15,.06);
+}
+
+.account-field input::placeholder {
+  color: #aaa39a;
+}
+
+
+/* PASSWORD */
+
+.password-field {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.password-field input {
+  min-width: 0;
+  flex: 1;
+  height: 52px;
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  padding: 0 16px;
+}
+
+.password-toggle {
+  align-self: stretch;
+
+  padding: 0 16px;
+
+  border: 0;
+  border-left: 1px solid var(--line);
+
+  background: transparent;
+  color: var(--muted);
+
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+
+  transition: .2s;
+}
+
+.password-toggle:hover {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+
+/* =========================================
+   FORM HELPERS
+========================================= */
+
+.account-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+  margin: 8px 0 25px;
+}
+
+.remember-option,
+.account-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.remember-option input,
+.account-checkbox input {
+  margin-top: 2px;
+  accent-color: var(--ink);
+}
+
+.account-checkbox {
+  margin: 6px 0 24px;
+}
+
+.account-text-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+
+  color: var(--ink);
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.account-text-button:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.account-primary-button,
+.account-secondary-button {
+  min-height: 54px;
+  padding: 0 22px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.account-primary-button {
+  width: 100%;
+
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.account-primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(23,19,15,.18);
+}
+
+.account-primary-button:disabled {
+  opacity: .5;
+  cursor: wait;
+  transform: none;
+  box-shadow: none;
+}
+
+.account-secondary-button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+.account-secondary-button:hover {
+  border-color: var(--ink);
+}
+
+#resetPanel .account-secondary-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.account-message {
+  min-height: 22px;
+  margin-top: 18px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.account-message.success {
+  color: #538153;
+}
+
+.account-message.error {
+  color: #b23b3b;
+}
+
+
+/* =========================================
+   LOGGED-IN DASHBOARD
+========================================= */
+
+.customer-dashboard {
+  width: 100%;
+}
+
+.dashboard-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 48px;
+  padding-bottom: 35px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.dashboard-heading h2 {
+  margin: 12px 0 6px;
+
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(46px, 6vw, 76px);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.dashboard-heading p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.logout-button {
+  flex: 0 0 auto;
+}
+
+
+/* =========================================
+   OVERVIEW CARDS
+========================================= */
+
+.account-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-bottom: 100px;
+}
+
+.account-overview-card {
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 26px;
+
+  border: 1px solid var(--line);
+  border-radius: 22px;
+
+  background: #fff;
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
+}
+
+.account-overview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 55px rgba(23,19,15,.08);
+}
+
+.overview-number {
+  color: var(--accent);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  margin-bottom: auto;
+}
+
+.account-overview-card h3 {
+  margin: 30px 0 10px;
+
+  font-family: 'Playfair Display', serif;
+  font-size: 27px;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.account-overview-card p {
+  margin: 0 0 20px;
+
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.account-overview-card a {
+  margin-top: auto;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.account-overview-card a:hover {
+  text-decoration: underline;
+}
+
+.overview-coming {
+  margin-top: auto;
+
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+.profile-section {
+  display: grid;
+  grid-template-columns: .72fr 1.28fr;
+
+  gap: 8vw;
+
+  padding: 80px 0 20px;
+
+  border-top: 1px solid var(--line);
+}
+
+.profile-heading h2 {
+  margin: 12px 0 18px;
+
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 5vw, 66px);
+  line-height: 1.02;
+  font-weight: 500;
+}
+
+.profile-heading p {
+  max-width: 420px;
+
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.profile-form {
+  padding: 34px;
+
+  border: 1px solid var(--line);
+  border-radius: 24px;
+
+  background: #fff;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 0 16px;
+}
+
+.profile-full {
+  grid-column: 1 / -1;
+}
+
+.profile-save {
+  width: auto;
+  min-width: 220px;
+  margin-top: 8px;
+}
+
+
+/* =========================================
+   MOBILE / TABLET
+========================================= */
+
+@media (max-width: 1050px) {
+
+  .account-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .account-main {
+    padding:
+      55px 18px
+      80px;
+  }
+
+  .account-intro {
+    margin-bottom: 35px;
+  }
+
+  .account-intro h1 {
+    font-size: 48px;
+  }
+
+  .account-intro p {
+    font-size: 15px;
+  }
+
+  .account-card {
+    border-radius: 20px;
+  }
+
+  .account-panel {
+    padding: 28px 20px;
+  }
+
+  .account-panel-heading h2 {
+    font-size: 38px;
+  }
+
+  .account-form-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-overview-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 70px;
+  }
+
+  .account-overview-card {
+    min-height: 220px;
+  }
+
+  .dashboard-heading {
+    display: block;
+  }
+
+  .logout-button {
+    margin-top: 24px;
+  }
+
+  .profile-form {
+    padding: 22px 18px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-full {
+    grid-column: auto;
+  }
+
+  .profile-save {
+    width: 100%;
+  }
+
+  .account-page .desktop-nav {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .account-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .account-tab:first-child {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .account-panel-heading h2 {
+    font-size: 34px;
+  }
+
+  .account-home-button {
+    display: none;
+  }
+
+}
