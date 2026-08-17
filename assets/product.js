@@ -179,22 +179,39 @@ async function initProductPage() {
   await loadProduct(identifier);
 
 }
-
-
 async function loadProduct(identifier) {
 
-  const { data, error } = await productDb
-    .from('products')
-    .select('*')
-    .or(
-      `slug.eq.${identifier},id.eq.${identifier}`
-    )
-    .eq('is_active', true)
-    .maybeSingle();
+  let result;
+
+  const isUuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+      .test(identifier);
+
+  if (isUuid) {
+
+    result = await productDb
+      .from('products')
+      .select('*')
+      .eq('id', identifier)
+      .eq('is_active', true)
+      .maybeSingle();
+
+  } else {
+
+    result = await productDb
+      .from('products')
+      .select('*')
+      .eq('slug', identifier)
+      .eq('is_active', true)
+      .maybeSingle();
+
+  }
+
+  const { data, error } = result;
 
   if (error || !data) {
 
-    console.error(error);
+    console.error('Product load error:', error);
 
     showProductError(
       'Produkt konnte nicht gefunden werden.'
@@ -211,7 +228,6 @@ async function loadProduct(identifier) {
   ]);
 
   renderProduct();
-
 }
 
 
