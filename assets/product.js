@@ -1485,46 +1485,134 @@ function renderBoxContents() {
    CART
 ========================================= */
 
-function addCurrentProductToCart() {
+/* STOCK LIMIT 2026 */
 
-  if (!currentProduct) return;
+function stockLimitText(stock) {
 
-  const stock =
-    selectedVariant
-      ? Number(
-          selectedVariant.stock || 0
-        )
-      : Number(
-          currentProduct.stock || 0
-        );
+  if (currentLang === 'tr') {
+    return `Stok sınırı: en fazla ${stock} adet mevcut.`;
+  }
 
-  if (stock <= 0) {
+  if (currentLang === 'en') {
+    return `Stock limit: maximum ${stock} item(s) available.`;
+  }
 
-    $('productMessage')
-      .textContent =
-      productTranslations[
-        currentLang
-      ].soldOut;
+  return `Bestandsgrenze: maximal ${stock} Stück verfügbar.`;
 
-    return;
+}
+
+
+async function getLiveCartItemStock(item) {
+
+  if (!item) return null;
+
+  if (item.variantId) {
+
+    const { data, error } =
+      await productDb
+        .from('product_variants')
+        .select('stock')
+        .eq('id', item.variantId)
+        .maybeSingle();
+
+    if (!error && data) {
+      return Math.max(
+        0,
+        Number(data.stock || 0)
+      );
+    }
 
   }
 
-  const quantity =
-    Number(
-      $('quantity').value || 1
+  if (item.productId) {
+
+    const { data, error } =
+      await productDb
+        .from('products')
+        .select('stock')
+        .eq('id', item.productId)
+        .maybeSingle();
+
+    if (!error && data) {
+      return Math.max(
+        0,
+        Number(data.stock || 0)
+      );
+    }
+
+  }
+
+  return null;
+}
+
+
+async function addCurrentProductToCart() {
+
+  if (!currentProduct) return;
+
+  const loadedStock =
+    selectedVariant
+      ? Number(selectedVariant.stock || 0)
+      : Number(currentProduct.stock || 0);
+
+  const liveStock =
+    await getLiveCartItemStock({
+      variantId:
+        selectedVariant?.id || null,
+      productId:
+        currentProduct.id
+    });
+
+  const stock =
+    liveStock === null
+      ? loadedStock
+      : liveStock;
+
+  if (stock <= 0) {
+
+    $('productMessage').textContent =
+      productTranslations[currentLang].soldOut;
+
+    return;
+  }
+
+  const requestedQuantity =
+    Math.max(
+      1,
+      Math.floor(
+        Number($('quantity').value || 1)
+      )
     );
 
   const key =
-    `${currentProduct.id}::${
-      selectedVariant?.id ||
-      'default'
-    }`;
+    `${currentProduct.id}::${selectedVariant?.id || 'default'}`;
 
   const existing =
     cart.find(
-      item =>
-        item.key === key
+      item => item.key === key
+    );
+
+  const existingQuantity =
+    Number(existing?.quantity || 0);
+
+  const remaining =
+    Math.max(
+      0,
+      stock - existingQuantity
+    );
+
+  if (remaining <= 0) {
+
+    $('productMessage').textContent =
+      stockLimitText(stock);
+
+    return;
+  }
+
+  const quantity =
+    Math.min(
+      requestedQuantity,
+      remaining
     );
 
   if (existing) {
@@ -1541,8 +1629,7 @@ function addCurrentProductToCart() {
         currentProduct.id,
 
       variantId:
-        selectedVariant?.id ||
-        null,
+        selectedVariant?.id || null,
 
       slug:
         currentProduct.slug,
@@ -1551,10 +1638,8 @@ function addCurrentProductToCart() {
         getProductName(),
 
       price_cents:
-        selectedVariant
-          ?.price_cents ??
-        currentProduct
-          .price_cents,
+        selectedVariant?.price_cents ??
+        currentProduct.price_cents,
 
       quantity,
 
@@ -1570,11 +1655,10 @@ function addCurrentProductToCart() {
 
   saveCart();
 
-  $('productMessage')
-    .textContent =
-    productTranslations[
-      currentLang
-    ].addedCart;
+  $('productMessage').textContent =
+    quantity < requestedQuantity
+      ? stockLimitText(stock)
+      : productTranslations[currentLang].addedCart;
 
   renderCartDrawer();
 
@@ -1691,19 +1775,50 @@ function renderCartDrawer() {
 
 
 window.changeProductCartQuantity =
-function(index, delta) {
+async function(index, delta) {
 
   const item = cart[index];
+
   if (!item) return;
 
-  const next =
-    Number(item.quantity || 1) +
+  const current =
+    Number(item.quantity || 1);
+
+  const change =
     Number(delta || 0);
 
+  const next =
+    current + change;
+
   if (next <= 0) {
+
     cart.splice(index, 1);
+
+    saveCart();
+    renderCartDrawer();
+
+    return;
+  }
+
+  if (change > 0) {
+
+    const stock =
+      await getLiveCartItemStock(item);
+
+    if (stock === null) {
+      return;
+    }
+
+    item.quantity =
+      Math.min(
+        stock,
+        next
+      );
+
   } else {
-    item.quantity = Math.min(99, next);
+
+    item.quantity = next;
+
   }
 
   saveCart();
@@ -2265,7 +2380,7 @@ function renderShippingReturns() {
 
       if (
         summary &&
-        summary.textContent.includes('Versand & R�ckgabe')
+        summary.textContent.includes('Versand & R�ckgabe')
       ) {
         container =
           section.querySelector('.accordion-content');
@@ -2277,6 +2392,6 @@ function renderShippingReturns() {
   if (!container) return;
 
   container.textContent =
-    text || '�';
+    text || '�';
 }
 

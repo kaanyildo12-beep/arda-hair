@@ -1114,22 +1114,93 @@ function renderMainCart() {
 
 
 
-window.changeMainCartQuantity =
-function(index, delta) {
+async function getMainCartLiveStock(item) {
 
-  const cart = getSavedCart();
-  const item = cart[index];
+  if (!item) return null;
+
+  if (item.variantId) {
+
+    const { data, error } =
+      await shopDb
+        .from('product_variants')
+        .select('stock')
+        .eq('id', item.variantId)
+        .maybeSingle();
+
+    if (!error && data) {
+      return Math.max(
+        0,
+        Number(data.stock || 0)
+      );
+    }
+
+  }
+
+  if (item.productId) {
+
+    const { data, error } =
+      await shopDb
+        .from('products')
+        .select('stock')
+        .eq('id', item.productId)
+        .maybeSingle();
+
+    if (!error && data) {
+      return Math.max(
+        0,
+        Number(data.stock || 0)
+      );
+    }
+
+  }
+
+  return null;
+}
+
+
+window.changeMainCartQuantity =
+async function(index, delta) {
+
+  const cart =
+    getSavedCart();
+
+  const item =
+    cart[index];
 
   if (!item) return;
 
-  const next =
-    Number(item.quantity || 1) +
+  const current =
+    Number(item.quantity || 1);
+
+  const change =
     Number(delta || 0);
 
+  const next =
+    current + change;
+
   if (next <= 0) {
+
     cart.splice(index, 1);
+
+  } else if (change > 0) {
+
+    const stock =
+      await getMainCartLiveStock(item);
+
+    if (stock === null) {
+      return;
+    }
+
+    item.quantity =
+      Math.min(
+        stock,
+        next
+      );
+
   } else {
-    item.quantity = Math.min(99, next);
+
+    item.quantity = next;
+
   }
 
   localStorage.setItem(
@@ -1138,7 +1209,9 @@ function(index, delta) {
   );
 
   renderMainCart();
+
 };
+
 
 window.removeMainCartItem =
 function(index) {
