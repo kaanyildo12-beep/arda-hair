@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>ARDA HAIR — Produkt</title>
+
+  <meta
+    name="description"
+    content="ARDA HAIR Premium Haarverlängerungen und Hair Systems."
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="assets/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="assets/product.css"
+  >
+</head>
+
+
+<body class="product-page">
+
+  <!-- ANNOUNCEMENT -->
+
+  <div class="announcement">
+    Premium Hair · Natürliche Qualität · ARDA HAIR
+  </div>
+
+
+  <!-- HEADER -->
+
+  <header class="site-header">
+
+    <a
+      class="brand"
+      href="index.html"
+    >
+      ARDA
+      <span>HAIR</span>
+    </a>
+
+
+    <nav class="desktop-nav">
+
+      <a href="index.html#collection">
+        Kollektion
+      </a>
+
+      <a href="index.html#quality">
+        Qualität
+      </a>
+
+      <a href="index.html#gallery">
+        Galerie
+      </a>
+
+      <a href="index.html#shop">
+        Shop
+      </a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <div class="lang-picker">
+
+        <button
+          class="lang-option active"
+          data-product-lang="de"
+          type="button"
+        >
+          DE
+        </button>
+
+        <button
+          class="lang-option"
+          data-product-lang="tr"
+          type="button"
+        >
+          TR
+        </button>
+
+        <button
+          class="lang-option"
+          data-product-lang="en"
+          type="button"
+        >
+          EN
+        </button>
+
+      </div>
+
+
+      <button
+        class="icon-btn"
+        id="productFavButton"
+        type="button"
+      >
+        ♡
+        <span id="productFavCount">0</span>
+      </button>
+
+
+      <button
+        class="icon-btn"
+        id="productCartButton"
+        type="button"
+      >
+        Bag
+        <span id="productCartCount">0</span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN PRODUCT -->
+
+  <main>
+
+    <section class="product-detail">
+
+      <!-- LEFT / MEDIA -->
+
+      <div class="product-media-column">
+
+        <a
+          href="index.html#shop"
+          class="product-back"
+        >
+          ← Zurück zum Shop
+        </a>
+
+
+        <div
+          id="productMedia"
+          class="product-media-grid"
+        >
+
+          <div class="product-main-placeholder">
+
+            <span>ARDA</span>
+
+            <small>
+              HAIR
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT / PRODUCT INFO -->
+
+      <aside class="product-info-panel">
+
+        <div
+          id="productType"
+          class="product-type"
+        >
+          ARDA HAIR
+        </div>
+
+
+        <h1 id="productName">
+          Produkt wird geladen...
+        </h1>
+
+
+        <div class="product-price-row">
+
+          <strong id="productPrice">
+            —
+          </strong>
+
+          <span
+            id="productComparePrice"
+            class="compare-price"
+            hidden
+          >
+          </span>
+
+        </div>
+
+
+        <div
+          id="productStock"
+          class="product-stock"
+        >
+          Produktinformationen werden geladen...
+        </div>
+
+
+        <p
+          id="productDescription"
+          class="product-description"
+        >
+        </p>
+
+
+        <!-- VARIANT SELECTORS -->
+
+        <div
+          id="productOptions"
+          class="product-options"
+        >
+        </div>
+
+
+        <!-- TECHNICAL INFO -->
+
+        <div
+          id="productHighlights"
+          class="product-highlights"
+        >
+        </div>
+
+
+        <!-- QUANTITY -->
+
+        <div class="quantity-section">
+
+          <span class="option-label">
+            Menge
+          </span>
+
+
+          <div class="quantity-control">
+
+            <button
+              id="quantityMinus"
+              type="button"
+            >
+              −
+            </button>
+
+            <input
+              id="quantity"
+              type="number"
+              min="1"
+              value="1"
+              readonly
+            >
+
+            <button
+              id="quantityPlus"
+              type="button"
+            >
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- CART -->
+
+        <button
+          id="addToCart"
+          class="product-add-cart"
+          type="button"
+          disabled
+        >
+          In den Warenkorb
+        </button>
+
+
+        <button
+          id="addToFavorites"
+          class="product-favorite"
+          type="button"
+        >
+          ♡ Zu Favoriten hinzufügen
+        </button>
+
+
+        <div
+          id="productMessage"
+          class="product-message"
+        >
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="product-benefits">
+
+          <div>
+            <strong>01</strong>
+
+            <span>
+              Premium Qualität
+            </span>
+          </div>
+
+
+          <div>
+            <strong>02</strong>
+
+            <span>
+              Sichere Auswahl
+            </span>
+          </div>
+
+
+          <div>
+            <strong>03</strong>
+
+            <span>
+              Persönlicher Support
+            </span>
+          </div>
+
+        </div>
+
+      </aside>
+
+    </section>
+
+
+    <!-- INFORMATION -->
+
+    <section class="product-extra-section">
+
+      <div class="product-extra-heading">
+
+        <span class="section-kicker">
+          DETAILS
+        </span>
+
+        <h2>
+          Alles, was du wissen musst.
+        </h2>
+
+      </div>
+
+
+      <div class="product-accordion">
+
+        <details open>
+
+          <summary>
+            Produktdetails
+          </summary>
+
+          <div
+            id="technicalDetails"
+            class="accordion-content"
+          >
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Pflege & Anwendung
+          </summary>
+
+          <div
+            id="careInformation"
+            class="accordion-content"
+          >
+
+            Pflegehinweise werden nach Auswahl des Produkts angezeigt.
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Lieferumfang
+          </summary>
+
+          <div
+            id="boxContents"
+            class="accordion-content"
+          >
+
+            Informationen zum Lieferumfang werden hier angezeigt.
+
+          </div>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Versand & Rückgabe
+          </summary>
+
+          <div class="accordion-content">
+
+            Versand- und Rückgabeinformationen werden vor dem Verkaufsstart ergänzt.
+
+          </div>
+
+        </details>
+
+      </div>
+
+    </section>
+
+
+    <!-- GUIDE -->
+
+    <section class="product-guide-section">
+
+      <div>
+
+        <span class="section-kicker">
+          ARDA GUIDE
+        </span>
+
+        <h2 id="guideTitle">
+          Nicht sicher, welche Variante passt?
+        </h2>
+
+      </div>
+
+
+      <div>
+
+        <p id="guideText">
+          Wähle Farbe, Länge und weitere Eigenschaften.
+          ARDA HAIR zeigt dir automatisch die verfügbare Kombination.
+        </p>
+
+        <a
+          href="index.html#shop"
+          class="btn primary"
+        >
+          Weitere Produkte
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- CART DRAWER -->
+
+  <div
+    class="drawer side"
+    id="productCartDrawer"
+    aria-hidden="true"
+  >
+
+    <button
+      class="drawer-close"
+      id="closeProductCart"
+      type="button"
+    >
+      ×
+    </button>
+
+
+    <h3>
+      Warenkorb
+    </h3>
+
+
+    <div id="productCartItems">
+      Dein Warenkorb ist noch leer.
+    </div>
+
+  </div>
+
+
+  <!-- FAVORITES DRAWER -->
+
+  <div
+    class="drawer side"
+    id="productFavDrawer"
+    aria-hidden="true"
+  >
+
+    <button
+      class="drawer-close"
+      id="closeProductFav"
+      type="button"
+    >
+      ×
+    </button>
+
+
+    <h3>
+      Favoriten
+    </h3>
+
+
+    <div id="productFavItems">
+      Du hast noch keine Favoriten gespeichert.
+    </div>
+
+  </div>
+
+
+  <div
+    class="backdrop"
+    id="productBackdrop"
+  >
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <a
+      class="brand footer-brand"
+      href="index.html"
+    >
+      ARDA
+      <span>HAIR</span>
+    </a>
+
+
+    <p>
+      Premium Hair Extensions · Deutschland
+    </p>
+
+
+    <div class="footer-links">
+
+      <a href="#">
+        Impressum
+      </a>
+
+      <a href="#">
+        Datenschutz
+      </a>
+
+      <a href="#">
+        AGB
+      </a>
+
+    </div>
+
+
+    <small>
+      © 2026 ARDA HAIR
+    </small>
+
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="assets/product.js"></script>
+
+</body>
+
+</html>
