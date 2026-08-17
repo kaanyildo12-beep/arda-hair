@@ -555,3 +555,245 @@
 
 }
 .saved-cart-controls{display:flex!important;align-items:center!important;gap:7px!important;margin-top:12px!important}.saved-cart-controls>button:not(.saved-remove){width:34px!important;height:34px!important;border:1px solid #ddd!important;border-radius:8px!important;background:#fff!important;color:#111!important;font-size:18px!important;cursor:pointer!important;padding:0!important}.saved-cart-controls>span{min-width:28px!important;text-align:center!important;font-weight:700!important;color:#111!important}.saved-cart-controls>.saved-remove{margin-left:8px!important;border:0!important;background:transparent!important;color:#777!important;font-size:13px!important;cursor:pointer!important;text-decoration:none!important;padding:5px!important}.saved-cart-controls>.saved-remove:hover{color:#111!important}
+
+
+/* =========================================
+   ARDA HAIR — CUSTOMER BRANDING 2026
+========================================= */
+
+:root {
+  --ink: #0b0b0c;
+  --cream: #fff3f6;
+  --paper: #ffffff;
+  --muted: #746970;
+  --line: #eadde2;
+  --accent: #e7a7bb;
+
+  --pink: #e7a7bb;
+  --pink-soft: #fff1f5;
+  --pink-dark: #b75f7c;
+
+  --radius: 26px;
+
+  --shadow:
+    0 24px 70px rgba(18, 10, 14, .12);
+}
+
+body {
+  background: #fff;
+  color: var(--ink);
+}
+
+/* ANNOUNCEMENT */
+
+.announcement {
+  background: #0b0b0c;
+  color: #fff;
+}
+
+/* HEADER */
+
+.site-header {
+  background: rgba(255, 255, 255, .92);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  color: #0b0b0c;
+  font-weight: 600;
+}
+
+.brand span {
+  color: var(--pink-dark);
+  font-weight: 700;
+}
+
+.desktop-nav a::after {
+  background: var(--pink);
+}
+
+/* LANGUAGE */
+
+.lang-picker {
+  background: #fff;
+  border-color: var(--line);
+}
+
+.lang-option.active {
+  background: #0b0b0c;
+  color: #fff;
+}
+
+/* HEADER BUTTONS */
+
+.icon-btn,
+.menu-btn {
+  background: #fff;
+  border-color: var(--line);
+  color: #0b0b0c;
+}
+
+.icon-btn:hover,
+.menu-btn:hover {
+  border-color: var(--pink);
+  background: var(--pink-soft);
+}
+
+/* BUTTONS */
+
+.btn.primary {
+  background: #0b0b0c;
+  color: #fff;
+  box-shadow:
+    0 10px 30px rgba(11, 11, 12, .12);
+}
+
+.btn.primary:hover {
+  background: var(--pink-dark);
+}
+
+.hero .btn.primary {
+  background: #fff;
+  color: #0b0b0c;
+}
+
+.hero .btn.primary:hover {
+  background: var(--pink);
+  color: #0b0b0c;
+}
+
+/* HERO */
+
+.hero-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 8, 9, .78) 0%,
+      rgba(8, 8, 9, .34) 56%,
+      rgba(8, 8, 9, .10) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(8, 8, 9, .48),
+      transparent 55%
+    );
+}
+
+.eyebrow {
+  color: #f4bdce;
+}
+
+/* TRUST */
+
+.trust-strip {
+  background: #fff;
+  border-color: var(--line);
+}
+
+.trust-strip div {
+  border-color: var(--line);
+}
+
+.trust-strip strong {
+  color: var(--pink-dark);
+}
+
+/* GENERAL SECTIONS */
+
+.section-kicker {
+  color: var(--pink-dark);
+}
+
+.feature-grid {
+  background: var(--pink-soft);
+}
+
+.feature-card {
+  background: #fff;
+  box-shadow:
+    0 18px 55px rgba(31, 18, 23, .06);
+}
+
+.card-copy {
+  background: rgba(255, 255, 255, .91);
+}
+
+.quote-mark {
+  color: var(--pink);
+}
+
+/* GALLERY */
+
+.gallery-item {
+  background: var(--pink-soft);
+}
+
+/* SHOP */
+
+.shop-section {
+  background:
+    linear-gradient(
+      160deg,
+      #09090a 0%,
+      #111012 100%
+    );
+}
+
+.product-filter {
+  border-color: rgba(231, 167, 187, .32);
+}
+
+.product-filter:hover {
+  border-color: var(--pink);
+}
+
+.product-filter.active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #0b0b0c;
+}
+
+.shop-product-card {
+  border: 1px solid rgba(231, 167, 187, .15);
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, .18);
+}
+
+.shop-product-placeholder {
+  background:
+    linear-gradient(
+      145deg,
+      #fff5f8,
+      #f0dce3
+    );
+}
+
+/* NEWSLETTER */
+
+.newsletter {
+  background: #fff;
+}
+
+/* FOOTER */
+
+footer {
+  background: var(--pink-soft);
+  border-color: var(--line);
+}
+
+/* DRAWERS */
+
+.drawer {
+  background: #fff;
+}
+
+.drawer-close {
+  border-color: var(--line);
+}
+
+/* SELECTION */
+
+::selection {
+  background: var(--pink);
+  color: #0b0b0c;
+}
