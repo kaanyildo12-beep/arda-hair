@@ -6,30 +6,49 @@ const ACCOUNT_SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const ACCOUNT_SUPABASE_KEY =
-  'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
-
-
 /* =========================================
-   AUTH STORAGE
-   "Angemeldet bleiben" desteği
+   SHARED CUSTOMER AUTH STORAGE
 ========================================= */
-/* =========================================
-   SHARED CUSTOMER SESSION
-========================================= */
+
+const accountAuthStorage = {
+
+  getItem(key) {
+    return (
+      localStorage.getItem(key) ??
+      sessionStorage.getItem(key)
+    );
+  },
+
+  setItem(key, value) {
+
+    const remember =
+      localStorage.getItem('ardaRememberLogin') !== '0';
+
+    if (remember) {
+
+      localStorage.setItem(key, value);
+      sessionStorage.removeItem(key);
+
+    } else {
+
+      sessionStorage.setItem(key, value);
+      localStorage.removeItem(key);
+
+    }
+
+  },
+
+  removeItem(key) {
+
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+
+  }
+
+};
+
 
 const accountDb = supabase.createClient(
-  ACCOUNT_SUPABASE_URL,
-  ACCOUNT_SUPABASE_KEY,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      storage: window.localStorage
-    }
-  }
-);
-
   ACCOUNT_SUPABASE_URL,
   ACCOUNT_SUPABASE_KEY,
   {
