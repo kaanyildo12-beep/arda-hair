@@ -1,1 +1,865 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARDA HAIR — Admin</title><link rel="stylesheet" href="admin.css"></head><body><header><a href="../">ARDA HAIR</a><span>ADMIN</span><button id="logout" hidden>Abmelden</button></header><main><section id="login" class="panel"><h1>Admin Panel</h1><form id="loginForm"><label>E-Mail<input id="email" type="email" required value="kaanyildo12@gmail.com"></label><label>Passwort<input id="password" type="password" required></label><button type="submit">Anmelden</button><button type="button" id="signup" class="secondary">Erstes Admin-Konto erstellen</button><p id="loginMsg"></p></form></section><section id="dashboard" hidden><div class="title"><h1>Produkte verwalten</h1><button id="newProduct">+ Neues Produkt</button></div><div id="products"></div></section></main><dialog id="editor"><form id="productForm"><button type="button" id="closeEditor">×</button><input id="productId" type="hidden"><label>Slug<input id="slug" required></label><label>Preis (€)<input id="price" type="number" min="0" step="0.01" required></label><label>Bestand<input id="stock" type="number" min="0" value="0"></label><label>Kategorie<input id="category"></label><label>Farbe<input id="color"></label><label>Textur<input id="texture"></label><label>Länge (cm)<input id="length" type="number" min="1"></label><label>Gewicht (g)<input id="weight" type="number" min="1"></label><h3>Deutsch</h3><label>Name<input id="nameDe" required></label><label>Beschreibung<textarea id="descDe"></textarea></label><h3>Türkçe</h3><label>Ürün adı<input id="nameTr"></label><label>Açıklama<textarea id="descTr"></textarea></label><h3>English</h3><label>Product name<input id="nameEn"></label><label>Description<textarea id="descEn"></textarea></label><label><input id="active" type="checkbox"> Veröffentlicht</label><label><input id="featured" type="checkbox"> Hervorgehoben</label><label>Foto / Video<input id="media" type="file" accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm"></label><div class="actions"><button type="button" id="deleteProduct" class="danger">Löschen</button><button type="submit">Speichern</button></div><p id="editorMsg"></p></form></dialog><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ARDA HAIR — Admin</title>
+
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<header>
+  <a href="../">ARDA HAIR</a>
+
+  <span>ADMIN</span>
+
+  <button id="logout" hidden>
+    Abmelden
+  </button>
+</header>
+
+
+<main>
+
+  <!-- LOGIN -->
+  <section id="login" class="panel">
+
+    <h1>Admin Panel</h1>
+
+    <p>
+      Produkte, Varianten, Preise und Lagerbestand verwalten.
+    </p>
+
+    <form id="loginForm">
+
+      <label>
+        E-Mail
+        <input
+          id="email"
+          type="email"
+          required
+          value="kaanyildo12@gmail.com"
+        >
+      </label>
+
+      <label>
+        Passwort
+        <input
+          id="password"
+          type="password"
+          required
+        >
+      </label>
+
+      <button type="submit">
+        Anmelden
+      </button>
+
+      <button
+        type="button"
+        id="signup"
+        class="secondary"
+      >
+        Erstes Admin-Konto erstellen
+      </button>
+
+      <p id="loginMsg"></p>
+
+    </form>
+
+  </section>
+
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" hidden>
+
+    <div class="title">
+
+      <div>
+        <small>ARDA HAIR</small>
+        <h1>Produkte verwalten</h1>
+      </div>
+
+      <button id="newProduct">
+        + Neues Produkt
+      </button>
+
+    </div>
+
+    <div id="products"></div>
+
+  </section>
+
+</main>
+
+
+<!-- PRODUCT EDITOR -->
+<dialog id="editor">
+
+<form id="productForm">
+
+  <button
+    type="button"
+    id="closeEditor"
+  >
+    ×
+  </button>
+
+
+  <input
+    id="productId"
+    type="hidden"
+  >
+
+
+  <h2>Produkt bearbeiten</h2>
+
+
+  <!-- PRODUCT TYPE -->
+
+  <label>
+    Produkttyp
+
+    <select id="productType" required>
+
+      <option value="">
+        Bitte auswählen
+      </option>
+
+      <option value="women_extension">
+        Frauen — Haarverlängerung
+      </option>
+
+      <option value="men_hair_system">
+        Männer — Hair System / Perücke
+      </option>
+
+    </select>
+
+  </label>
+
+
+  <hr>
+
+
+  <!-- BASIC PRODUCT INFO -->
+
+  <h3>Grundinformationen</h3>
+
+
+  <label>
+    Slug
+
+    <input
+      id="slug"
+      required
+      placeholder="premium-keratin-dark-brown"
+    >
+  </label>
+
+
+  <label>
+    Kategorie
+
+    <input
+      id="category"
+      placeholder="Keratin / Tape / Hair System"
+    >
+  </label>
+
+
+  <label>
+    Standardpreis (€)
+
+    <input
+      id="price"
+      type="number"
+      min="0"
+      step="0.01"
+      required
+    >
+  </label>
+
+
+  <label>
+    Standardbestand
+
+    <input
+      id="stock"
+      type="number"
+      min="0"
+      value="0"
+    >
+  </label>
+
+
+  <hr>
+
+
+  <!-- LANGUAGE CONTENT -->
+
+  <h3>🇩🇪 Deutsch</h3>
+
+
+  <label>
+    Produktname
+
+    <input
+      id="nameDe"
+      required
+      placeholder="Premium Keratin Extensions"
+    >
+  </label>
+
+
+  <label>
+    Beschreibung
+
+    <textarea
+      id="descDe"
+      placeholder="Produktbeschreibung..."
+    ></textarea>
+  </label>
+
+
+  <h3>🇹🇷 Türkçe</h3>
+
+
+  <label>
+    Ürün adı
+
+    <input
+      id="nameTr"
+      placeholder="Premium Keratin Saç Kaynağı"
+    >
+  </label>
+
+
+  <label>
+    Açıklama
+
+    <textarea
+      id="descTr"
+      placeholder="Ürün açıklaması..."
+    ></textarea>
+  </label>
+
+
+  <h3>🇬🇧 English</h3>
+
+
+  <label>
+    Product name
+
+    <input
+      id="nameEn"
+      placeholder="Premium Keratin Extensions"
+    >
+  </label>
+
+
+  <label>
+    Description
+
+    <textarea
+      id="descEn"
+      placeholder="Product description..."
+    ></textarea>
+  </label>
+
+
+  <!-- WOMEN EXTENSIONS -->
+
+  <section
+    id="femaleFields"
+    hidden
+  >
+
+    <hr>
+
+    <h2>
+      Frauen — Haarverlängerung
+    </h2>
+
+
+    <label>
+      Extension Typ
+
+      <select id="extensionType">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="keratin">
+          Keratin Bonding
+        </option>
+
+        <option value="tape">
+          Tape-In
+        </option>
+
+        <option value="weft">
+          Weft / Tresse
+        </option>
+
+        <option value="clip">
+          Clip-In
+        </option>
+
+        <option value="nano">
+          Nano Ring
+        </option>
+
+        <option value="micro">
+          Micro Ring
+        </option>
+
+        <option value="i_tip">
+          I-Tip
+        </option>
+
+        <option value="u_tip">
+          U-Tip
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Haarqualität
+
+      <select id="hairQuality">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="human">
+          100% Echthaar
+        </option>
+
+        <option value="remy">
+          Remy Human Hair
+        </option>
+
+        <option value="virgin">
+          Virgin Human Hair
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Haarstruktur
+
+      <select id="texture">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="straight">
+          Glatt
+        </option>
+
+        <option value="wavy">
+          Wellig
+        </option>
+
+        <option value="curly">
+          Lockig
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Standardfarbe
+
+      <input
+        id="color"
+        placeholder="#2 Dark Brown"
+      >
+    </label>
+
+
+    <label>
+      Standardlänge (cm)
+
+      <input
+        id="length"
+        type="number"
+        min="1"
+        placeholder="60"
+      >
+    </label>
+
+
+    <label>
+      Gewicht (g)
+
+      <input
+        id="weight"
+        type="number"
+        min="1"
+        placeholder="100"
+      >
+    </label>
+
+
+    <label>
+      Anzahl Strähnen / Pieces
+
+      <input
+        id="strandCount"
+        type="number"
+        min="1"
+        placeholder="100"
+      >
+    </label>
+
+
+    <label>
+      Gewicht pro Strähne (g)
+
+      <input
+        id="strandWeight"
+        type="number"
+        min="0"
+        step="0.1"
+        placeholder="1"
+      >
+    </label>
+
+
+    <label>
+      Kann gefärbt werden?
+
+      <select id="canColor">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="yes">
+          Ja
+        </option>
+
+        <option value="no">
+          Nein
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Hitzestyling möglich?
+
+      <select id="heatSafe">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="yes">
+          Ja
+        </option>
+
+        <option value="no">
+          Nein
+        </option>
+
+      </select>
+
+    </label>
+
+  </section>
+
+
+  <!-- MEN HAIR SYSTEM -->
+
+  <section
+    id="maleFields"
+    hidden
+  >
+
+    <hr>
+
+    <h2>
+      Männer — Hair System
+    </h2>
+
+
+    <label>
+      Base Typ
+
+      <select id="baseType">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="lace">
+          Lace
+        </option>
+
+        <option value="skin">
+          Skin / Poly
+        </option>
+
+        <option value="mono">
+          Mono
+        </option>
+
+        <option value="hybrid">
+          Hybrid
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Base Breite (cm)
+
+      <input
+        id="baseWidth"
+        type="number"
+        min="1"
+        step="0.1"
+        placeholder="20"
+      >
+    </label>
+
+
+    <label>
+      Base Länge (cm)
+
+      <input
+        id="baseLength"
+        type="number"
+        min="1"
+        step="0.1"
+        placeholder="25"
+      >
+    </label>
+
+
+    <label>
+      Base Dicke (mm)
+
+      <input
+        id="baseThickness"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="0.06"
+      >
+    </label>
+
+
+    <label>
+      Density (%)
+
+      <input
+        id="density"
+        type="number"
+        min="1"
+        max="200"
+        placeholder="100"
+      >
+    </label>
+
+
+    <label>
+      Haarfarbe
+
+      <input
+        id="maleColor"
+        placeholder="#2 Dark Brown"
+      >
+    </label>
+
+
+    <label>
+      Haarlänge (cm)
+
+      <input
+        id="maleLength"
+        type="number"
+        min="1"
+        placeholder="15"
+      >
+    </label>
+
+
+    <label>
+      Haarstruktur
+
+      <select id="maleTexture">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="straight">
+          Glatt
+        </option>
+
+        <option value="wavy">
+          Wellig
+        </option>
+
+        <option value="curly">
+          Lockig
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Haarmaterial
+
+      <select id="maleHairQuality">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="human">
+          100% Human Hair
+        </option>
+
+        <option value="remy">
+          Remy Human Hair
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Grauhaaranteil (%)
+
+      <input
+        id="greyPercentage"
+        type="number"
+        min="0"
+        max="100"
+        value="0"
+      >
+    </label>
+
+
+    <label>
+      Hairline
+
+      <select id="hairline">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="natural">
+          Natural
+        </option>
+
+        <option value="graduated">
+          Graduated
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Haarstil
+
+      <select id="hairDirection">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="freestyle">
+          Freestyle
+        </option>
+
+        <option value="forward">
+          Forward
+        </option>
+
+        <option value="back">
+          Comb Back
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+      Bleached Knots
+
+      <select id="bleachedKnots">
+
+        <option value="">
+          Auswählen
+        </option>
+
+        <option value="yes">
+          Ja
+        </option>
+
+        <option value="no">
+          Nein
+        </option>
+
+      </select>
+
+    </label>
+
+  </section>
+
+
+  <!-- VARIANTS -->
+
+  <hr>
+
+
+  <section id="variantSection">
+
+    <h2>
+      Varianten
+    </h2>
+
+    <p>
+      Jede Kombination kann einen eigenen Preis und Lagerbestand haben.
+    </p>
+
+
+    <button
+      type="button"
+      id="addVariant"
+      class="secondary"
+    >
+      + Variante hinzufügen
+    </button>
+
+
+    <div id="variantRows"></div>
+
+  </section>
+
+
+  <!-- MEDIA -->
+
+  <hr>
+
+
+  <h2>
+    Bilder & Videos
+  </h2>
+
+
+  <label>
+    Foto / Video hochladen
+
+    <input
+      id="media"
+      type="file"
+      accept="
+        image/jpeg,
+        image/png,
+        image/webp,
+        image/avif,
+        video/mp4,
+        video/webm
+      "
+    >
+
+  </label>
+
+
+  <div id="mediaPreview"></div>
+
+
+  <!-- PUBLISH SETTINGS -->
+
+  <hr>
+
+
+  <label>
+
+    <input
+      id="active"
+      type="checkbox"
+    >
+
+    Veröffentlicht
+
+  </label>
+
+
+  <label>
+
+    <input
+      id="featured"
+      type="checkbox"
+    >
+
+    Hervorgehoben
+
+  </label>
+
+
+  <!-- ACTIONS -->
+
+  <div class="actions">
+
+    <button
+      type="button"
+      id="deleteProduct"
+      class="danger"
+    >
+      Löschen
+    </button>
+
+
+    <button type="submit">
+      Speichern
+    </button>
+
+  </div>
+
+
+  <p id="editorMsg"></p>
+
+</form>
+
+</dialog>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
