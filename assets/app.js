@@ -1358,3 +1358,129 @@ document.querySelectorAll('.lang-option').forEach(button => {
   });
 
 });
+
+
+/* =========================================
+   GALLERY SHOW MORE 2026
+========================================= */
+
+let galleryExpanded = false;
+
+function getGalleryVisibleCount() {
+  if (window.innerWidth <= 560) return 4;
+  if (window.innerWidth <= 900) return 8;
+  return 12;
+}
+
+function updateGalleryVisibility() {
+
+  const items =
+    document.querySelectorAll(
+      '#galleryGrid .gallery-item'
+    );
+
+  const button =
+    document.getElementById(
+      'galleryToggleBtn'
+    );
+
+  if (!items.length || !button) return;
+
+  const visibleCount =
+    getGalleryVisibleCount();
+
+  items.forEach((item, index) => {
+
+    if (
+      galleryExpanded ||
+      index < visibleCount
+    ) {
+      item.style.setProperty(
+        'display',
+        'block',
+        'important'
+      );
+    } else {
+      item.style.setProperty(
+        'display',
+        'none',
+        'important'
+      );
+    }
+
+  });
+
+  button.textContent =
+    galleryExpanded
+      ? (
+          lang === 'tr'
+            ? 'Daha az göster'
+            : lang === 'en'
+              ? 'Show less'
+              : 'Weniger anzeigen'
+        )
+      : (
+          lang === 'tr'
+            ? 'Daha fazla göster'
+            : lang === 'en'
+              ? 'Show more'
+              : 'Mehr anzeigen'
+        );
+}
+
+document
+  .getElementById('galleryToggleBtn')
+  ?.addEventListener('click', () => {
+
+    galleryExpanded =
+      !galleryExpanded;
+
+    updateGalleryVisibility();
+
+    if (!galleryExpanded) {
+      document
+        .getElementById('gallery')
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+    }
+
+  });
+
+document
+  .querySelectorAll('.lang-option')
+  .forEach(button => {
+
+    button.addEventListener(
+      'click',
+      () => {
+        setTimeout(
+          updateGalleryVisibility,
+          0
+        );
+      }
+    );
+
+  });
+
+window.addEventListener(
+  'resize',
+  updateGalleryVisibility
+);
+
+const originalBuildGallery =
+  buildGallery;
+
+buildGallery = function() {
+
+  originalBuildGallery();
+
+  setTimeout(
+    updateGalleryVisibility,
+    0
+  );
+
+};
+
+updateGalleryVisibility();

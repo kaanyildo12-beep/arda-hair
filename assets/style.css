@@ -1531,3 +1531,431 @@ footer {
     font-size: 11px;
   }
 }
+
+/* =========================================
+   PREMIUM EDITORIAL GALLERY 2026
+========================================= */
+
+.gallery-section {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 90% 5%,
+      rgba(231,167,187,.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fff9fb 100%
+    );
+
+  padding-top: 110px !important;
+  padding-bottom: 120px !important;
+}
+
+.gallery-section .section-head {
+  max-width: 1280px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 52px;
+
+  padding-bottom: 28px;
+
+  border-bottom: 1px solid #eadfe3;
+}
+
+.gallery-section .section-kicker {
+  color: #b75f7c;
+  margin-bottom: 10px;
+}
+
+.gallery-section h2 {
+  color: #111;
+
+  font-size: clamp(48px, 5.5vw, 76px);
+  line-height: .98;
+
+  margin-bottom: 0;
+}
+
+.gallery-section .section-head p {
+  max-width: 440px;
+
+  color: #777;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* PREMIUM MASONRY */
+.gallery-section .masonry {
+  display: block !important;
+
+  columns: 3 !important;
+  column-gap: 18px !important;
+
+  width: 100% !important;
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 0 !important;
+
+  overflow: visible !important;
+
+  counter-reset: arda-look;
+}
+
+.gallery-section .gallery-item {
+  position: relative;
+
+  display: block !important;
+  width: 100% !important;
+
+  margin: 0 0 18px !important;
+
+  break-inside: avoid;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  background: #eee9eb;
+
+  box-shadow:
+    0 10px 35px rgba(20,15,17,.07);
+
+  cursor: zoom-in;
+
+  counter-increment: arda-look;
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+}
+
+/* Dengeli editorial yükseklikler */
+.gallery-section .gallery-item:nth-child(4n+1) {
+  height: 470px;
+}
+
+.gallery-section .gallery-item:nth-child(4n+2) {
+  height: 340px;
+}
+
+.gallery-section .gallery-item:nth-child(4n+3) {
+  height: 410px;
+}
+
+.gallery-section .gallery-item:nth-child(4n+4) {
+  height: 365px;
+}
+
+.gallery-section .gallery-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform .65s cubic-bezier(.2,.7,.2,1),
+    filter .35s ease;
+}
+
+/* Hafif sinematik overlay */
+.gallery-section .gallery-item::after {
+  content: "↗";
+
+  position: absolute;
+  z-index: 4;
+
+  top: 16px;
+  right: 16px;
+
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.92);
+  color: #111;
+
+  font-size: 15px;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.12);
+
+  opacity: 0;
+  transform: translateY(-5px);
+
+  transition:
+    opacity .25s ease,
+    transform .25s ease;
+}
+
+/* ARDA LOOK etiketi */
+.gallery-section .gallery-item::before {
+  content: "ARDA LOOK " counter(arda-look, decimal-leading-zero);
+
+  position: absolute;
+  z-index: 4;
+
+  left: 16px;
+  bottom: 16px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 999px;
+
+  background: rgba(10,10,11,.62);
+  backdrop-filter: blur(12px);
+
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .14em;
+
+  opacity: 0;
+  transform: translateY(6px);
+
+  transition:
+    opacity .25s ease,
+    transform .25s ease;
+}
+
+.gallery-section .gallery-item:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 22px 55px rgba(20,15,17,.13);
+}
+
+.gallery-section .gallery-item:hover img {
+  transform: scale(1.045);
+  filter: contrast(1.02);
+}
+
+.gallery-section .gallery-item:hover::before,
+.gallery-section .gallery-item:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+
+  .gallery-section .masonry {
+    columns: 2 !important;
+  }
+
+  .gallery-section .gallery-item:nth-child(n) {
+    height: 390px;
+  }
+
+  .gallery-section .gallery-item:nth-child(3n+2) {
+    height: 320px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+
+  .gallery-section {
+    padding-top: 75px !important;
+    padding-bottom: 80px !important;
+  }
+
+  .gallery-section .section-head {
+    margin-bottom: 30px;
+    padding-bottom: 22px;
+  }
+
+  .gallery-section .masonry {
+    columns: 1 !important;
+  }
+
+  .gallery-section .gallery-item:nth-child(n) {
+    height: 390px;
+    margin-bottom: 12px !important;
+
+    border-radius: 17px;
+  }
+
+  .gallery-section .gallery-item:nth-child(3n+2) {
+    height: 330px;
+  }
+
+  .gallery-section .gallery-item::before,
+  .gallery-section .gallery-item::after {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* =========================================
+   PREMIUM GALLERY TOGGLE FIX 2026
+========================================= */
+
+.gallery-section .masonry {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  gap: 18px !important;
+
+  columns: auto !important;
+
+  width: 100% !important;
+  max-width: 1280px !important;
+
+  margin:
+    0 auto !important;
+
+  padding: 0 !important;
+}
+
+/* 3 sütun x 4 sıra */
+.gallery-section .gallery-item,
+.gallery-section .gallery-item:nth-child(n),
+.gallery-section .gallery-item:nth-child(3n+2),
+.gallery-section .gallery-item:nth-child(4n+1),
+.gallery-section .gallery-item:nth-child(4n+2),
+.gallery-section .gallery-item:nth-child(4n+3),
+.gallery-section .gallery-item:nth-child(4n+4) {
+  width: 100% !important;
+  height: 345px !important;
+
+  margin: 0 !important;
+
+  border-radius: 20px;
+}
+
+.gallery-section .gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BUTON ALANI */
+.gallery-more-wrap {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 38px;
+}
+
+/* PREMIUM BUTTON */
+.gallery-more-button {
+  appearance: none;
+
+  min-width: 190px;
+  height: 50px;
+
+  padding: 0 28px;
+
+  border-radius: 999px;
+
+  border: 1px solid #e7a7bb;
+
+  background: #fff;
+
+  color: #111;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: .03em;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 28px rgba(20,15,17,.07);
+
+  transition:
+    background .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.gallery-more-button::after {
+  content: " ↓";
+
+  color: #b75f7c;
+
+  margin-left: 5px;
+}
+
+.gallery-more-button:hover {
+  transform: translateY(-2px);
+
+  background: #111;
+  color: #fff;
+
+  border-color: #111;
+
+  box-shadow:
+    0 15px 35px rgba(20,15,17,.14);
+}
+
+.gallery-more-button:hover::after {
+  color: #e7a7bb;
+}
+
+/* TABLET: 2 sütun x 4 sıra = 8 fotoğraf */
+@media (max-width: 900px) {
+
+  .gallery-section .masonry {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .gallery-section .gallery-item:nth-child(n) {
+    height: 320px !important;
+  }
+
+  .gallery-more-wrap {
+    margin-top: 30px;
+  }
+}
+
+/* TELEFON: 1 sütun x 4 sıra = 4 fotoğraf */
+@media (max-width: 560px) {
+
+  .gallery-section .masonry {
+    grid-template-columns:
+      1fr !important;
+
+    gap: 12px !important;
+  }
+
+  .gallery-section .gallery-item:nth-child(n) {
+    height: 350px !important;
+  }
+
+  .gallery-more-wrap {
+    margin-top: 25px;
+  }
+
+  .gallery-more-button {
+    width: 100%;
+    max-width: 280px;
+  }
+}
