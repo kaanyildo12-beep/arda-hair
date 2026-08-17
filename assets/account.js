@@ -1419,50 +1419,130 @@ async function syncShoppingData(
 }
 
 
-async function syncCart(
+
+
+      localStorage.removeItem(
+        'ardaHairCart'
+      );
+
+      localStorage.removeItem(
+        'ardaHairFavorites'
+      );
+
+
+      $('customerDashboard').hidden =
+        true;
+
+      $('authView').hidden =
+        false;
+
+
+      showAuthPanel('login');
+
+    }
+  );
+
+
+/* =========================================
+   AUTH STATE
+================async function syncCart(
   userId
 ) {
 
   const localCart =
-    readLocalCart();
+    readLocalCart()
+      .filter(item => item.key);
 
 
+  /* Sunucudaki mevcut sepeti al */
   const {
-    data: remoteCart
+    data: remoteCart,
+    error: readError
   } =
     await accountDb
-      .from(
-        'customer_cart_items'
-      )
-      .select('*')
+      .from('customer_cart_items')
+      .select('item_key')
       .eq('user_id', userId);
 
 
-  const remoteMap =
-    new Map(
-      (remoteCart || [])
-        .map(
-          row => [
-            row.item_key,
-            row
-          ]
-        )
+  if (readError) {
+
+    console.error(
+      'Cart read error:',
+      readError
+    );
+
+    return;
+  }
+
+
+  /*
+    Tarayıcıda artık olmayan ürünleri
+    Supabase'den de tamamen sil.
+  */
+
+  const localKeys =
+    new Set(
+      localCart.map(
+        item => item.key
+      )
     );
 
 
-  const rows = [];
+  const removedKeys =
+    (remoteCart || [])
+      .map(row => row.item_key)
+      .filter(
+        key =>
+          !localKeys.has(key)
+      );
 
 
-  localCart.forEach(item => {
+  if (removedKeys.length) {
 
-    if (!item.key) return;
+    const {
+      error: deleteError
+    } =
+      await accountDb
+        .from('customer_cart_items')
+        .delete()
+        .eq('user_id', userId)
+        .in(
+          'item_key',
+          removedKeys
+        );
 
 
-    const existing =
-      remoteMap.get(item.key);
+    if (deleteError) {
+
+      console.error(
+        'Cart delete error:',
+        deleteError
+      );
+
+      return;
+    }
+
+  }
 
 
-    rows.push({
+  /*
+    Sepet tamamen boşsa
+    yukarıdaki işlem sunucuyu da temizledi.
+  */
+
+  if (!localCart.length) {
+    return;
+  }
+
+
+  /*
+    Mevcut sepeti birebir kaydet.
+    Adet artık Math.max ile eski değere dönmez.
+  */
+
+  const rows =
+    localCart.map(item => ({
 
       user_id:
         userId,
@@ -1491,19 +1571,11 @@ async function syncCart(
           item.price_cents || 0
         ),
 
-      /*
-        Aynı ürün hem hesapta hem tarayıcıda varsa
-        miktarı tekrar tekrar toplamıyoruz.
-      */
       quantity:
         Math.max(
+          1,
           Number(
-            existing?.quantity ||
-            0
-          ),
-          Number(
-            item.quantity ||
-            1
+            item.quantity || 1
           )
         ),
 
@@ -1519,21 +1591,14 @@ async function syncCart(
         new Date()
           .toISOString()
 
-    });
-
-  });
-
-
-  if (!rows.length) return;
+    }));
 
 
   const {
     error
   } =
     await accountDb
-      .from(
-        'customer_cart_items'
-      )
+      .from('customer_cart_items')
       .upsert(
         rows,
         {
@@ -1823,33 +1888,7 @@ $('customerLogout')
       /*
         Başka biri aynı cihazda giriş yaparsa
         önceki hesabın sepetini görmemesi için.
-      */
-
-      localStorage.removeItem(
-        'ardaHairCart'
-      );
-
-      localStorage.removeItem(
-        'ardaHairFavorites'
-      );
-
-
-      $('customerDashboard').hidden =
-        true;
-
-      $('authView').hidden =
-        false;
-
-
-      showAuthPanel('login');
-
-    }
-  );
-
-
-/* =========================================
-   AUTH STATE
-========================================= */
+      */========================= */
 
 async function checkInitialSession() {
 
