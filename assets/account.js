@@ -1420,10 +1420,6 @@ async function syncShoppingData(
 }
     
 
-/* =========================================
-   AUTH STATE
-================
-
 async function syncCart(
   userId
 ) {
