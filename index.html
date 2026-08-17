@@ -89,19 +89,52 @@
     </section>
 
     <section class="shop-section section" id="shop">
-      <div class="shop-panel reveal">
-        <div>
-          <div class="section-kicker" data-i18n="shopKicker">SHOP</div>
-          <h2 data-i18n="shopTitle">Der Shop wird gerade vorbereitet.</h2>
-          <p data-i18n="shopText">Aktuell sind noch keine Produkte veröffentlicht. Bald kannst du hier direkt nach Farbe, Länge und Struktur filtern und bestellen.</p>
-        </div>
-        <div class="empty-shop">
-          <div class="empty-icon">✦</div>
-          <strong data-i18n="zeroProducts">0 Produkte</strong>
-          <span data-i18n="comingSoon">Neue Produkte folgen in Kürze.</span>
-        </div>
-      </div>
-    </section>
+
+  <div class="shop-heading reveal">
+    <div>
+      <div class="section-kicker">SHOP</div>
+      <h2>Unsere Produkte</h2>
+      <p>
+        Entdecke unsere Auswahl an hochwertigen Haarverlängerungen
+        und Hair Systems.
+      </p>
+    </div>
+  </div>
+
+  <!-- ÜRÜN FİLTRELERİ -->
+  <div class="product-filters reveal">
+
+    <button class="product-filter active" data-filter="all">
+      Alle
+    </button>
+
+    <button class="product-filter" data-filter="women_extension">
+      Haarverlängerungen
+    </button>
+
+    <button class="product-filter" data-filter="men_hair_system">
+      Hair Systems
+    </button>
+
+  </div>
+
+  <!-- SUPABASE ÜRÜNLERİ BURAYA GELECEK -->
+  <div id="productGrid" class="product-grid">
+
+    <div class="products-loading">
+      Produkte werden geladen...
+    </div>
+
+  </div>
+
+  <!-- ÜRÜN YOKSA -->
+  <div id="productsEmpty" class="empty-shop" hidden>
+    <div class="empty-icon">✦</div>
+    <strong>Noch keine Produkte</strong>
+    <span>Neue Produkte folgen in Kürze.</span>
+  </div>
+
+</section>
 
     <section class="newsletter section">
       <div>
