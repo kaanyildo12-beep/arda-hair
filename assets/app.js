@@ -1329,3 +1329,32 @@ window.addEventListener(
   'pageshow',
   updateHeaderAccount
 );
+
+
+/* =========================================
+   INSTANT LANGUAGE REFRESH 2026
+========================================= */
+
+document.querySelectorAll('.lang-option').forEach(button => {
+
+  button.addEventListener('click', () => {
+
+    setTimeout(() => {
+
+      if (typeof renderEnhancedShopProducts === 'function') {
+        renderEnhancedShopProducts();
+      }
+
+      if (typeof renderMainCartAndFavorites === 'function') {
+        renderMainCartAndFavorites();
+      }
+
+      if (typeof updateHeaderAccount === 'function') {
+        updateHeaderAccount();
+      }
+
+    }, 0);
+
+  });
+
+});
