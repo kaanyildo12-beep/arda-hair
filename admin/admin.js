@@ -297,6 +297,9 @@ function setChecked(id, value) {
 }
 
 async function openEditor(product = {}) {
+
+  $('editorTitle').textContent =
+    product.id ? 'Produkt bearbeiten' : 'Neues Produkt';
   $('editorMsg').textContent = '';
 
   setValue('productId', product.id);
