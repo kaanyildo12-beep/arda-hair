@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ARDA HAIR — Mein Konto</title>
+
+  <meta
+    name="description"
+    content="ARDA HAIR Kundenkonto – anmelden, registrieren und persönliche Daten verwalten."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/account.css">
+</head>
+
+
+<body class="account-page">
+
+  <!-- TOP BAR -->
+
+  <div class="announcement">
+    Premium Hair · Natürliche Qualität · ARDA HAIR
+  </div>
+
+
+  <!-- HEADER -->
+
+  <header class="site-header">
+
+    <a class="brand" href="index.html">
+      ARDA
+      <span>HAIR</span>
+    </a>
+
+
+    <nav class="desktop-nav">
+
+      <a href="index.html#collection">
+        Kollektion
+      </a>
+
+      <a href="index.html#quality">
+        Qualität
+      </a>
+
+      <a href="index.html#gallery">
+        Galerie
+      </a>
+
+      <a href="index.html#shop">
+        Shop
+      </a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <div class="lang-picker">
+
+        <button
+          class="lang-option active"
+          type="button"
+          data-account-lang="de"
+        >
+          DE
+        </button>
+
+        <button
+          class="lang-option"
+          type="button"
+          data-account-lang="tr"
+        >
+          TR
+        </button>
+
+        <button
+          class="lang-option"
+          type="button"
+          data-account-lang="en"
+        >
+          EN
+        </button>
+
+      </div>
+
+
+      <a
+        href="index.html"
+        class="account-home-button"
+      >
+        Shop
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main class="account-main">
+
+    <section class="account-intro">
+
+      <div class="section-kicker">
+        ARDA ACCOUNT
+      </div>
+
+      <h1 id="accountMainTitle">
+        Dein persönlicher Bereich.
+      </h1>
+
+      <p id="accountMainText">
+        Melde dich an oder erstelle ein Konto,
+        um deine persönlichen Daten und später
+        auch Bestellungen komfortabel zu verwalten.
+      </p>
+
+    </section>
+
+
+    <!-- AUTH AREA -->
+
+    <section
+      id="authView"
+      class="account-card"
+    >
+
+      <!-- TABS -->
+
+      <div class="account-tabs">
+
+        <button
+          id="showLogin"
+          class="account-tab active"
+          type="button"
+        >
+          Anmelden
+        </button>
+
+        <button
+          id="showRegister"
+          class="account-tab"
+          type="button"
+        >
+          Konto erstellen
+        </button>
+
+      </div>
+
+
+      <!-- LOGIN -->
+
+      <div
+        id="loginPanel"
+        class="account-panel"
+      >
+
+        <div class="account-panel-heading">
+
+          <span>
+            WILLKOMMEN ZURÜCK
+          </span>
+
+          <h2>
+            Anmelden
+          </h2>
+
+          <p>
+            Greife auf dein ARDA HAIR Konto zu.
+          </p>
+
+        </div>
+
+
+        <form id="customerLoginForm">
+
+          <label class="account-field">
+
+            <span>
+              E-Mail-Adresse
+            </span>
+
+            <input
+              id="loginEmail"
+              type="email"
+              autocomplete="email"
+              required
+              placeholder="name@email.de"
+            >
+
+          </label>
+
+
+          <label class="account-field">
+
+            <span>
+              Passwort
+            </span>
+
+            <div class="password-field">
+
+              <input
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password"
+                required
+                placeholder="Dein Passwort"
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                data-password-target="loginPassword"
+              >
+                Anzeigen
+              </button>
+
+            </div>
+
+          </label>
+
+
+          <div class="account-form-row">
+
+            <label class="remember-option">
+
+              <input
+                id="rememberMe"
+                type="checkbox"
+                checked
+              >
+
+              <span>
+                Angemeldet bleiben
+              </span>
+
+            </label>
+
+
+            <button
+              id="forgotPasswordButton"
+              type="button"
+              class="account-text-button"
+            >
+              Passwort vergessen?
+            </button>
+
+          </div>
+
+
+          <button
+            class="account-primary-button"
+            type="submit"
+          >
+            Anmelden
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- REGISTER -->
+
+      <div
+        id="registerPanel"
+        class="account-panel"
+        hidden
+      >
+
+        <div class="account-panel-heading">
+
+          <span>
+            NEUES KONTO
+          </span>
+
+          <h2>
+            Registrieren
+          </h2>
+
+          <p>
+            Erstelle dein persönliches ARDA HAIR Konto.
+          </p>
+
+        </div>
+
+
+        <form id="customerRegisterForm">
+
+          <label class="account-field">
+
+            <span>
+              Vor- und Nachname
+            </span>
+
+            <input
+              id="registerName"
+              type="text"
+              autocomplete="name"
+              required
+              placeholder="Vor- und Nachname"
+            >
+
+          </label>
+
+
+          <label class="account-field">
+
+            <span>
+              E-Mail-Adresse
+            </span>
+
+            <input
+              id="registerEmail"
+              type="email"
+              autocomplete="email"
+              required
+              placeholder="name@email.de"
+            >
+
+          </label>
+
+
+          <label class="account-field">
+
+            <span>
+              Passwort
+            </span>
+
+            <div class="password-field">
+
+              <input
+                id="registerPassword"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+                placeholder="Mindestens 8 Zeichen"
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                data-password-target="registerPassword"
+              >
+                Anzeigen
+              </button>
+
+            </div>
+
+          </label>
+
+
+          <label class="account-field">
+
+            <span>
+              Passwort wiederholen
+            </span>
+
+            <div class="password-field">
+
+              <input
+                id="registerPasswordConfirm"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+                placeholder="Passwort wiederholen"
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                data-password-target="registerPasswordConfirm"
+              >
+                Anzeigen
+              </button>
+
+            </div>
+
+          </label>
+
+
+          <label class="account-checkbox">
+
+            <input
+              id="acceptTerms"
+              type="checkbox"
+              required
+            >
+
+            <span>
+              Ich akzeptiere die Datenschutzbestimmungen
+              und Geschäftsbedingungen.
+            </span>
+
+          </label>
+
+
+          <button
+            class="account-primary-button"
+            type="submit"
+          >
+            Konto erstellen
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- RESET PASSWORD -->
+
+      <div
+        id="resetPanel"
+        class="account-panel"
+        hidden
+      >
+
+        <div class="account-panel-heading">
+
+          <span>
+            PASSWORT
+          </span>
+
+          <h2>
+            Passwort zurücksetzen
+          </h2>
+
+          <p>
+            Gib deine E-Mail-Adresse ein.
+            Wir senden dir einen Link zum Zurücksetzen.
+          </p>
+
+        </div>
+
+
+        <form id="resetPasswordForm">
+
+          <label class="account-field">
+
+            <span>
+              E-Mail-Adresse
+            </span>
+
+            <input
+              id="resetEmail"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="name@email.de"
+            >
+
+          </label>
+
+
+          <button
+            class="account-primary-button"
+            type="submit"
+          >
+            Link senden
+          </button>
+
+
+          <button
+            id="backToLogin"
+            class="account-secondary-button"
+            type="button"
+          >
+            Zurück zur Anmeldung
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <div
+        id="authMessage"
+        class="account-message"
+      >
+      </div>
+
+    </section>
+
+
+    <!-- LOGGED-IN ACCOUNT -->
+
+    <section
+      id="customerDashboard"
+      class="customer-dashboard"
+      hidden
+    >
+
+      <div class="dashboard-heading">
+
+        <div>
+
+          <span class="section-kicker">
+            MEIN KONTO
+          </span>
+
+          <h2 id="customerWelcome">
+            Willkommen.
+          </h2>
+
+          <p id="customerEmail">
+          </p>
+
+        </div>
+
+
+        <button
+          id="customerLogout"
+          class="account-secondary-button logout-button"
+          type="button"
+        >
+          Abmelden
+        </button>
+
+      </div>
+
+
+      <!-- ACCOUNT NAV CARDS -->
+
+      <div class="account-overview-grid">
+
+        <article class="account-overview-card">
+
+          <span class="overview-number">
+            01
+          </span>
+
+          <h3>
+            Meine Daten
+          </h3>
+
+          <p>
+            Name, Telefonnummer und Adresse verwalten.
+          </p>
+
+          <a href="#profileSection">
+            Daten bearbeiten →
+          </a>
+
+        </article>
+
+
+        <article class="account-overview-card">
+
+          <span class="overview-number">
+            02
+          </span>
+
+          <h3>
+            Bestellungen
+          </h3>
+
+          <p>
+            Deine zukünftigen Bestellungen werden hier angezeigt.
+          </p>
+
+          <span class="overview-coming">
+            Bald verfügbar
+          </span>
+
+        </article>
+
+
+        <article class="account-overview-card">
+
+          <span class="overview-number">
+            03
+          </span>
+
+          <h3>
+            Favoriten
+          </h3>
+
+          <p>
+            Gespeicherte Produkte jederzeit wiederfinden.
+          </p>
+
+          <a href="index.html#shop">
+            Produkte ansehen →
+          </a>
+
+        </article>
+
+
+        <article class="account-overview-card">
+
+          <span class="overview-number">
+            04
+          </span>
+
+          <h3>
+            Warenkorb
+          </h3>
+
+          <p>
+            Deine ausgewählten Produkte bleiben gespeichert.
+          </p>
+
+          <a href="index.html#shop">
+            Zum Shop →
+          </a>
+
+        </article>
+
+      </div>
+
+
+      <!-- PROFILE -->
+
+      <section
+        id="profileSection"
+        class="profile-section"
+      >
+
+        <div class="profile-heading">
+
+          <span class="section-kicker">
+            PROFIL
+          </span>
+
+          <h2>
+            Persönliche Daten
+          </h2>
+
+          <p>
+            Diese Informationen werden in deinem
+            ARDA HAIR Konto gespeichert.
+          </p>
+
+        </div>
+
+
+        <form
+          id="profileForm"
+          class="profile-form"
+        >
+
+          <div class="profile-grid">
+
+            <label class="account-field profile-full">
+
+              <span>
+                Vor- und Nachname
+              </span>
+
+              <input
+                id="profileName"
+                type="text"
+                autocomplete="name"
+                placeholder="Vor- und Nachname"
+              >
+
+            </label>
+
+
+            <label class="account-field">
+
+              <span>
+                Telefonnummer
+              </span>
+
+              <input
+                id="profilePhone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+49 ..."
+              >
+
+            </label>
+
+
+            <label class="account-field">
+
+              <span>
+                Land
+              </span>
+
+              <input
+                id="profileCountry"
+                type="text"
+                autocomplete="country-name"
+                value="Deutschland"
+              >
+
+            </label>
+
+
+            <label class="account-field profile-full">
+
+              <span>
+                Straße und Hausnummer
+              </span>
+
+              <input
+                id="profileAddress1"
+                type="text"
+                autocomplete="address-line1"
+                placeholder="Straße 10"
+              >
+
+            </label>
+
+
+            <label class="account-field profile-full">
+
+              <span>
+                Adresszusatz
+              </span>
+
+              <input
+                id="profileAddress2"
+                type="text"
+                autocomplete="address-line2"
+                placeholder="Wohnung, Etage usw. (optional)"
+              >
+
+            </label>
+
+
+            <label class="account-field">
+
+              <span>
+                Postleitzahl
+              </span>
+
+              <input
+                id="profilePostalCode"
+                type="text"
+                autocomplete="postal-code"
+                placeholder="77855"
+              >
+
+            </label>
+
+
+            <label class="account-field">
+
+              <span>
+                Stadt
+              </span>
+
+              <input
+                id="profileCity"
+                type="text"
+                autocomplete="address-level2"
+                placeholder="Achern"
+              >
+
+            </label>
+
+          </div>
+
+
+          <button
+            class="account-primary-button profile-save"
+            type="submit"
+          >
+            Änderungen speichern
+          </button>
+
+
+          <div
+            id="profileMessage"
+            class="account-message"
+          >
+          </div>
+
+        </form>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <a
+      class="brand footer-brand"
+      href="index.html"
+    >
+      ARDA
+      <span>HAIR</span>
+    </a>
+
+
+    <p>
+      Premium Hair Extensions · Deutschland
+    </p>
+
+
+    <div class="footer-links">
+
+      <a href="#">
+        Impressum
+      </a>
+
+      <a href="#">
+        Datenschutz
+      </a>
+
+      <a href="#">
+        AGB
+      </a>
+
+    </div>
+
+
+    <small>
+      © 2026 ARDA HAIR
+    </small>
+
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="assets/account.js"></script>
+
+</body>
+
+</html>
