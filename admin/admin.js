@@ -264,6 +264,14 @@ async function openEditor(product = {}) {
   setValue('descTr', product.description_tr);
   setValue('descEn', product.description_en);
 
+  setValue('careDe', product.care_de);
+  setValue('careTr', product.care_tr);
+  setValue('careEn', product.care_en);
+
+  setValue('boxDe', product.box_contents_de);
+  setValue('boxTr', product.box_contents_tr);
+  setValue('boxEn', product.box_contents_en);
+
   /* WOMEN */
 
   setValue('extensionType', product.extension_type);
@@ -660,6 +668,14 @@ $('productForm').addEventListener('submit', async (e) => {
     description_de: $('descDe').value.trim() || null,
     description_tr: $('descTr').value.trim() || null,
     description_en: $('descEn').value.trim() || null,
+
+    care_de: $('careDe').value.trim() || null,
+    care_tr: $('careTr').value.trim() || null,
+    care_en: $('careEn').value.trim() || null,
+
+    box_contents_de: $('boxDe').value.trim() || null,
+    box_contents_tr: $('boxTr').value.trim() || null,
+    box_contents_en: $('boxEn').value.trim() || null,
 
     category: $('category').value.trim() || null,
 

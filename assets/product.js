@@ -886,6 +886,7 @@ function (
   renderOptions();
   renderPriceAndStock();
   renderHighlights();
+  renderTechnicalDetails();
 
 };
 
@@ -926,6 +927,7 @@ function (value) {
   renderOptions();
   renderPriceAndStock();
   renderHighlights();
+  renderTechnicalDetails();
 
 };
 
@@ -1214,6 +1216,43 @@ function renderTechnicalDetails() {
       rows,
       t.texture,
       currentProduct.texture
+    );
+
+    
+    /* PRODUCT DETAILS EXTRA FIELDS */
+
+    addTechnicalRow(
+      rows,
+      t.color,
+      selectedVariant?.color_name ||
+      currentProduct.color
+    );
+
+    addTechnicalRow(
+      rows,
+      t.length,
+      selectedVariant?.length_cm
+        ? selectedVariant.length_cm + ' cm'
+        : currentProduct.length_cm
+          ? currentProduct.length_cm + ' cm'
+          : null
+    );
+
+    addTechnicalRow(
+      rows,
+      t.weight,
+      selectedVariant?.weight_g
+        ? selectedVariant.weight_g + ' g'
+        : currentProduct.weight_g
+          ? currentProduct.weight_g + ' g'
+          : null
+    );
+
+    addTechnicalRow(
+      rows,
+      t.strands,
+      selectedVariant?.strand_count ||
+      currentProduct.strand_count
     );
 
     addTechnicalRow(
