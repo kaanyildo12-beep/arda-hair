@@ -554,3 +554,4 @@
   }
 
 }
+.saved-cart-controls{display:flex!important;align-items:center!important;gap:7px!important;margin-top:12px!important}.saved-cart-controls>button:not(.saved-remove){width:34px!important;height:34px!important;border:1px solid #ddd!important;border-radius:8px!important;background:#fff!important;color:#111!important;font-size:18px!important;cursor:pointer!important;padding:0!important}.saved-cart-controls>span{min-width:28px!important;text-align:center!important;font-weight:700!important;color:#111!important}.saved-cart-controls>.saved-remove{margin-left:8px!important;border:0!important;background:transparent!important;color:#777!important;font-size:13px!important;cursor:pointer!important;text-decoration:none!important;padding:5px!important}.saved-cart-controls>.saved-remove:hover{color:#111!important}

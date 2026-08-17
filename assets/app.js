@@ -809,25 +809,14 @@ function renderMainCart() {
                 : ''
             }
 
-            <small>
-              ${Number(item.quantity || 1)}
-              ×
-              ${mainMoney(item.price_cents)}
-            </small>
-
-            <button
-              type="button"
-              class="saved-remove"
-              onclick="removeMainCartItem(${index})"
-            >
-              ${
-                lang === 'tr'
-                  ? 'Kaldır'
-                  : lang === 'en'
-                    ? 'Remove'
-                    : 'Entfernen'
-              }
-            </button>
+            <div class="saved-cart-controls">
+  <button type="button" onclick="changeMainCartQuantity(${index}, -1)">−</button>
+  <span>${Number(item.quantity || 1)}</span>
+  <button type="button" onclick="changeMainCartQuantity(${index}, 1)">+</button>
+  <button type="button" class="saved-remove" onclick="removeMainCartItem(${index})">
+    ${lang === 'tr' ? 'Kaldır' : lang === 'en' ? 'Remove' : 'Entfernen'}
+  </button>
+</div>
 
           </div>
 
@@ -872,6 +861,33 @@ function renderMainCart() {
 
 }
 
+
+
+window.changeMainCartQuantity =
+function(index, delta) {
+
+  const cart = getSavedCart();
+  const item = cart[index];
+
+  if (!item) return;
+
+  const next =
+    Number(item.quantity || 1) +
+    Number(delta || 0);
+
+  if (next <= 0) {
+    cart.splice(index, 1);
+  } else {
+    item.quantity = Math.min(99, next);
+  }
+
+  localStorage.setItem(
+    'ardaHairCart',
+    JSON.stringify(cart)
+  );
+
+  renderMainCart();
+};
 
 window.removeMainCartItem =
 function(index) {

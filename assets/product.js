@@ -1541,42 +1541,31 @@ function updateCartCount() {
 
 function renderCartDrawer() {
 
-  const container =
-    $('productCartItems');
+  const container = $('productCartItems');
 
   if (!cart.length) {
-
     container.textContent =
       currentLang === 'tr'
         ? 'Sepetin henüz boş.'
         : currentLang === 'en'
           ? 'Your cart is empty.'
           : 'Dein Warenkorb ist noch leer.';
-
     return;
-
   }
 
   container.innerHTML =
-    cart.map(item => `
+    cart.map((item, index) => `
       <div class="product-drawer-item">
 
         <div class="product-drawer-thumb">
-
           ${
             item.image
-              ? `
-                <img
-                  src="${escapeProductHtml(item.image)}"
-                  alt=""
-                >
-              `
+              ? `<img src="${escapeProductHtml(item.image)}" alt="">`
               : ''
           }
-
         </div>
 
-        <div>
+        <div class="product-drawer-info">
 
           <strong>
             ${escapeProductHtml(item.name)}
@@ -1587,9 +1576,39 @@ function renderCartDrawer() {
           </small>
 
           <small>
-            ${item.quantity} ×
             ${formatProductMoney(item.price_cents)}
           </small>
+
+          <div class="product-cart-controls">
+
+            <button
+              type="button"
+              onclick="changeProductCartQuantity(${index}, -1)"
+            >−</button>
+
+            <strong>
+              ${Number(item.quantity || 1)}
+            </strong>
+
+            <button
+              type="button"
+              onclick="changeProductCartQuantity(${index}, 1)"
+            >+</button>
+
+            <button
+              type="button"
+              onclick="removeProductCartItem(${index})"
+            >
+              ${
+                currentLang === 'tr'
+                  ? 'Kaldır'
+                  : currentLang === 'en'
+                    ? 'Remove'
+                    : 'Entfernen'
+              }
+            </button>
+
+          </div>
 
         </div>
 
@@ -1597,6 +1616,41 @@ function renderCartDrawer() {
     `).join('');
 
 }
+
+
+window.changeProductCartQuantity =
+function(index, delta) {
+
+  const item = cart[index];
+  if (!item) return;
+
+  const next =
+    Number(item.quantity || 1) +
+    Number(delta || 0);
+
+  if (next <= 0) {
+    cart.splice(index, 1);
+  } else {
+    item.quantity = Math.min(99, next);
+  }
+
+  saveCart();
+  renderCartDrawer();
+
+};
+
+
+window.removeProductCartItem =
+function(index) {
+
+  if (!cart[index]) return;
+
+  cart.splice(index, 1);
+
+  saveCart();
+  renderCartDrawer();
+
+};
 
 
 /* =========================================
