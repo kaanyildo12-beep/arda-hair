@@ -349,3 +349,725 @@ document.querySelectorAll('.product-filter').forEach(button => {
 ========================= */
 
 loadShopProducts();
+
+/* =====================================================
+   ARDA HAIR — SHOP / CART / FAVORITES FIX
+===================================================== */
+
+const shopMediaByProduct = new Map();
+
+/* ---------- SHOP WITH REAL PRODUCT IMAGES ---------- */
+
+async function loadEnhancedShopProducts() {
+
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+
+  const { data: products, error } = await shopDb
+    .from('products')
+    .select('*')
+    .eq('is_active', true)
+    .order('featured', { ascending: false })
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Shop products error:', error);
+    return;
+  }
+
+  shopProducts = products || [];
+  shopMediaByProduct.clear();
+
+  const ids = shopProducts.map(product => product.id);
+
+  if (ids.length) {
+
+    const { data: media, error: mediaError } = await shopDb
+      .from('product_media')
+      .select('product_id, media_type, path, sort_order')
+      .in('product_id', ids)
+      .eq('media_type', 'image')
+      .order('sort_order', { ascending: true });
+
+    if (mediaError) {
+      console.error('Shop media error:', mediaError);
+    } else {
+
+      (media || []).forEach(item => {
+
+        if (shopMediaByProduct.has(item.product_id)) return;
+
+        const { data } = shopDb
+          .storage
+          .from('product-media')
+          .getPublicUrl(item.path);
+
+        if (data?.publicUrl) {
+          shopMediaByProduct.set(
+            item.product_id,
+            data.publicUrl
+          );
+        }
+
+      });
+    }
+  }
+
+  renderEnhancedShopProducts();
+}
+
+
+function renderEnhancedShopProducts() {
+
+  const grid = document.getElementById('productGrid');
+  const empty = document.getElementById('productsEmpty');
+
+  if (!grid) return;
+
+  const filteredProducts =
+    currentProductFilter === 'all'
+      ? shopProducts
+      : shopProducts.filter(
+          product =>
+            product.product_type === currentProductFilter
+        );
+
+  if (!filteredProducts.length) {
+
+    grid.innerHTML = '';
+
+    if (empty) {
+      empty.hidden = false;
+    }
+
+    return;
+  }
+
+  if (empty) {
+    empty.hidden = true;
+  }
+
+  grid.innerHTML = filteredProducts.map(product => {
+
+    const name =
+      lang === 'tr'
+        ? (
+            product.name_tr ||
+            product.name_de ||
+            product.name_en
+          )
+        : lang === 'en'
+          ? (
+              product.name_en ||
+              product.name_de ||
+              product.name_tr
+            )
+          : (
+              product.name_de ||
+              product.name_en ||
+              product.name_tr
+            );
+
+    const typeLabel =
+      product.product_type === 'women_extension'
+        ? (
+            lang === 'tr'
+              ? 'Saç Kaynağı'
+              : lang === 'en'
+                ? 'Hair Extensions'
+                : 'Haarverlängerung'
+          )
+        : (
+            lang === 'tr'
+              ? 'Hair System'
+              : lang === 'en'
+                ? 'Hair System'
+                : 'Hair System'
+          );
+
+    const buttonText =
+      lang === 'tr'
+        ? 'İncele'
+        : lang === 'en'
+          ? 'View'
+          : 'Ansehen';
+
+    const price =
+      Number(product.price_cents || 0) / 100;
+
+    const formattedPrice =
+      price.toLocaleString(
+        lang === 'tr'
+          ? 'tr-TR'
+          : lang === 'en'
+            ? 'en-GB'
+            : 'de-DE',
+        {
+          style: 'currency',
+          currency: 'EUR'
+        }
+      );
+
+    const image =
+      shopMediaByProduct.get(product.id);
+
+    return `
+      <article
+        class="shop-product-card"
+        data-product-id="${escapeShopHtml(product.id)}"
+      >
+
+        <div
+          class="shop-product-image"
+          onclick="openShopProduct('${escapeShopHtml(product.slug || product.id)}')"
+        >
+
+          ${
+            image
+              ? `
+                <img
+                  src="${escapeShopHtml(image)}"
+                  alt="${escapeShopHtml(name || 'ARDA HAIR')}"
+                  loading="lazy"
+                >
+              `
+              : `
+                <div class="shop-product-placeholder">
+                  <span>ARDA</span>
+                  <small>HAIR</small>
+                </div>
+              `
+          }
+
+          ${
+            product.featured
+              ? `
+                <span class="shop-product-badge">
+                  Featured
+                </span>
+              `
+              : ''
+          }
+
+        </div>
+
+        <div class="shop-product-info">
+
+          <span class="shop-product-type">
+            ${escapeShopHtml(typeLabel)}
+          </span>
+
+          <h3>
+            ${escapeShopHtml(name || 'ARDA HAIR')}
+          </h3>
+
+          <div class="shop-product-meta">
+
+            ${
+              product.color
+                ? `
+                  <span>
+                    ${escapeShopHtml(product.color)}
+                  </span>
+                `
+                : ''
+            }
+
+            ${
+              product.length_cm
+                ? `
+                  <span>
+                    ${escapeShopHtml(product.length_cm)} cm
+                  </span>
+                `
+                : ''
+            }
+
+          </div>
+
+          <div class="shop-product-bottom">
+
+            <strong class="shop-product-price">
+              ${escapeShopHtml(formattedPrice)}
+            </strong>
+
+            <button
+              class="shop-product-open"
+              type="button"
+              onclick="openShopProduct('${escapeShopHtml(product.slug || product.id)}')"
+            >
+              ${buttonText}
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+    `;
+
+  }).join('');
+}
+
+
+/*
+  Eski filtre butonları renderShopProducts() çağırıyor.
+  Artık geliştirilmiş sürümü kullanmasını sağlıyoruz.
+*/
+renderShopProducts = renderEnhancedShopProducts;
+
+document
+  .querySelectorAll('.product-filter')
+  .forEach(button => {
+
+    button.addEventListener('click', () => {
+      setTimeout(renderEnhancedShopProducts, 0);
+    });
+
+  });
+
+
+/* ---------- SHARED CART + FAVORITES ---------- */
+
+function getSavedCart() {
+
+  try {
+    return JSON.parse(
+      localStorage.getItem('ardaHairCart') || '[]'
+    );
+  } catch {
+    return [];
+  }
+
+}
+
+
+function getSavedFavorites() {
+
+  try {
+    return JSON.parse(
+      localStorage.getItem('ardaHairFavorites') || '[]'
+    );
+  } catch {
+    return [];
+  }
+
+}
+
+
+function mainMoney(cents) {
+
+  return (
+    Number(cents || 0) / 100
+  ).toLocaleString(
+    lang === 'tr'
+      ? 'tr-TR'
+      : lang === 'en'
+        ? 'en-GB'
+        : 'de-DE',
+    {
+      style: 'currency',
+      currency: 'EUR'
+    }
+  );
+
+}
+
+
+function renderMainCartAndFavorites() {
+
+  renderMainCart();
+  renderMainFavorites();
+
+}
+
+
+function renderMainCart() {
+
+  const drawer =
+    document.getElementById('cartDrawer');
+
+  if (!drawer) return;
+
+  const cart = getSavedCart();
+
+  const count =
+    cart.reduce(
+      (total, item) =>
+        total + Number(item.quantity || 0),
+      0
+    );
+
+  const counter =
+    document.getElementById('cartCount');
+
+  if (counter) {
+    counter.textContent = count;
+  }
+
+  const empty =
+    drawer.querySelector(
+      '[data-i18n="cartEmpty"]'
+    );
+
+  let content =
+    drawer.querySelector(
+      '.saved-cart-content'
+    );
+
+  if (!content) {
+
+    content =
+      document.createElement('div');
+
+    content.className =
+      'saved-cart-content';
+
+    drawer.appendChild(content);
+  }
+
+  if (!cart.length) {
+
+    if (empty) {
+      empty.hidden = false;
+    }
+
+    content.innerHTML = '';
+    return;
+  }
+
+  if (empty) {
+    empty.hidden = true;
+  }
+
+  const subtotal =
+    cart.reduce(
+      (total, item) =>
+        total +
+        Number(item.price_cents || 0) *
+        Number(item.quantity || 0),
+      0
+    );
+
+  content.innerHTML = `
+
+    <div class="saved-drawer-list">
+
+      ${cart.map((item, index) => `
+
+        <div class="saved-drawer-item">
+
+          <a
+            class="saved-drawer-image"
+            href="product.html?product=${encodeURIComponent(
+              item.slug || item.productId
+            )}"
+          >
+
+            ${
+              item.image
+                ? `
+                  <img
+                    src="${escapeShopHtml(item.image)}"
+                    alt=""
+                  >
+                `
+                : `
+                  <span>ARDA</span>
+                `
+            }
+
+          </a>
+
+          <div class="saved-drawer-info">
+
+            <a
+              href="product.html?product=${encodeURIComponent(
+                item.slug || item.productId
+              )}"
+            >
+              <strong>
+                ${escapeShopHtml(item.name || 'ARDA HAIR')}
+              </strong>
+            </a>
+
+            ${
+              item.variant
+                ? `
+                  <small>
+                    ${escapeShopHtml(item.variant)}
+                  </small>
+                `
+                : ''
+            }
+
+            <small>
+              ${Number(item.quantity || 1)}
+              ×
+              ${mainMoney(item.price_cents)}
+            </small>
+
+            <button
+              type="button"
+              class="saved-remove"
+              onclick="removeMainCartItem(${index})"
+            >
+              ${
+                lang === 'tr'
+                  ? 'Kaldır'
+                  : lang === 'en'
+                    ? 'Remove'
+                    : 'Entfernen'
+              }
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join('')}
+
+    </div>
+
+    <div class="saved-drawer-summary">
+
+      <span>
+        ${
+          lang === 'tr'
+            ? 'Ara toplam'
+            : lang === 'en'
+              ? 'Subtotal'
+              : 'Zwischensumme'
+        }
+      </span>
+
+      <strong>
+        ${mainMoney(subtotal)}
+      </strong>
+
+    </div>
+
+    <button
+      type="button"
+      class="saved-clear-button"
+      onclick="clearMainCart()"
+    >
+      ${
+        lang === 'tr'
+          ? 'Sepeti temizle'
+          : lang === 'en'
+            ? 'Clear bag'
+            : 'Warenkorb leeren'
+      }
+    </button>
+  `;
+
+}
+
+
+window.removeMainCartItem =
+function(index) {
+
+  const cart = getSavedCart();
+
+  cart.splice(index, 1);
+
+  localStorage.setItem(
+    'ardaHairCart',
+    JSON.stringify(cart)
+  );
+
+  renderMainCart();
+
+};
+
+
+window.clearMainCart =
+function() {
+
+  localStorage.setItem(
+    'ardaHairCart',
+    '[]'
+  );
+
+  renderMainCart();
+
+};
+
+
+function renderMainFavorites() {
+
+  const drawer =
+    document.getElementById('favDrawer');
+
+  if (!drawer) return;
+
+  const favorites =
+    getSavedFavorites();
+
+  const counter =
+    document.getElementById('favCount');
+
+  if (counter) {
+    counter.textContent =
+      favorites.length;
+  }
+
+  const empty =
+    drawer.querySelector(
+      '[data-i18n="favEmpty"]'
+    );
+
+  let content =
+    drawer.querySelector(
+      '.saved-fav-content'
+    );
+
+  if (!content) {
+
+    content =
+      document.createElement('div');
+
+    content.className =
+      'saved-fav-content';
+
+    drawer.appendChild(content);
+  }
+
+  if (!favorites.length) {
+
+    if (empty) {
+      empty.hidden = false;
+    }
+
+    content.innerHTML = '';
+    return;
+  }
+
+  if (empty) {
+    empty.hidden = true;
+  }
+
+  content.innerHTML = `
+    <div class="saved-drawer-list">
+
+      ${favorites.map((item, index) => `
+
+        <div class="saved-drawer-item">
+
+          <a
+            class="saved-drawer-image"
+            href="product.html?product=${encodeURIComponent(
+              item.slug || item.productId
+            )}"
+          >
+
+            ${
+              item.image
+                ? `
+                  <img
+                    src="${escapeShopHtml(item.image)}"
+                    alt=""
+                  >
+                `
+                : `
+                  <span>ARDA</span>
+                `
+            }
+
+          </a>
+
+          <div class="saved-drawer-info">
+
+            <a
+              href="product.html?product=${encodeURIComponent(
+                item.slug || item.productId
+              )}"
+            >
+              <strong>
+                ${escapeShopHtml(item.name || 'ARDA HAIR')}
+              </strong>
+            </a>
+
+            <small>
+              ${mainMoney(item.price_cents)}
+            </small>
+
+            <button
+              type="button"
+              class="saved-remove"
+              onclick="removeMainFavorite(${index})"
+            >
+              ${
+                lang === 'tr'
+                  ? 'Favorilerden çıkar'
+                  : lang === 'en'
+                    ? 'Remove'
+                    : 'Entfernen'
+              }
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join('')}
+
+    </div>
+  `;
+
+}
+
+
+window.removeMainFavorite =
+function(index) {
+
+  const favorites =
+    getSavedFavorites();
+
+  favorites.splice(index, 1);
+
+  localStorage.setItem(
+    'ardaHairFavorites',
+    JSON.stringify(favorites)
+  );
+
+  renderMainFavorites();
+
+};
+
+
+/* Drawer açılmadan önce güncel veriyi oku */
+document
+  .getElementById('cartBtn')
+  ?.addEventListener(
+    'click',
+    renderMainCart
+  );
+
+document
+  .getElementById('favBtn')
+  ?.addEventListener(
+    'click',
+    renderMainFavorites
+  );
+
+
+/*
+  Tarayıcı geri tuşuyla cache'ten döndüğünde de
+  sepet/favorileri tekrar yenile.
+*/
+window.addEventListener(
+  'pageshow',
+  renderMainCartAndFavorites
+);
+
+window.addEventListener(
+  'storage',
+  renderMainCartAndFavorites
+);
+
+
+/* İlk yükleme */
+renderMainCartAndFavorites();
+loadEnhancedShopProducts();
