@@ -6,6 +6,7 @@ const ACCOUNT_SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const ACCOUNT_SUPABASE_KEY =
+   'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
 /* =========================================
    SHARED CUSTOMER AUTH STORAGE
 ========================================= */
