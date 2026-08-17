@@ -234,6 +234,63 @@ translations.en.quality4Text =
 translations.en.qualityQuote =
   'Beautiful hair begins with quality.';
 
+
+
+/* =========================================
+   PREMIUM FOOTER TRANSLATIONS
+========================================= */
+
+translations.de.newsKicker =
+  'ARDA INSIDER';
+translations.de.newsTitle =
+  'Neuheiten zuerst entdecken.';
+translations.de.newsText =
+  'Erhalte Updates zu neuen Produkten, Kollektionen und ausgewählten ARDA Highlights.';
+translations.de.newsletterNote =
+  'Kein Spam. Nur ausgewählte ARDA Neuigkeiten.';
+translations.de.footerExplore =
+  'Entdecken';
+translations.de.footerLegal =
+  'Rechtliches';
+translations.de.footerTagline =
+  'Natürliche Schönheit. Premium Haar.';
+translations.de.footerCountry =
+  'Deutschland';
+
+translations.tr.newsKicker =
+  'ARDA INSIDER';
+translations.tr.newsTitle =
+  'Yenilikleri ilk sen keşfet.';
+translations.tr.newsText =
+  'Yeni ürünler, koleksiyonlar ve seçili ARDA yeniliklerinden haberdar ol.';
+translations.tr.newsletterNote =
+  'Spam yok. Sadece seçilmiş ARDA yenilikleri.';
+translations.tr.footerExplore =
+  'Keşfet';
+translations.tr.footerLegal =
+  'Yasal';
+translations.tr.footerTagline =
+  'Doğal güzellik. Premium saç.';
+translations.tr.footerCountry =
+  'Almanya';
+
+translations.en.newsKicker =
+  'ARDA INSIDER';
+translations.en.newsTitle =
+  'Discover what is new first.';
+translations.en.newsText =
+  'Get updates on new products, collections and selected ARDA highlights.';
+translations.en.newsletterNote =
+  'No spam. Only selected ARDA updates.';
+translations.en.footerExplore =
+  'Explore';
+translations.en.footerLegal =
+  'Legal';
+translations.en.footerTagline =
+  'Natural beauty. Premium hair.';
+translations.en.footerCountry =
+  'Germany';
+
 let lang = localStorage.getItem('arda-lang') || 'de';
 if (!translations[lang]) lang = 'de';
 const galleryGrid = document.getElementById('galleryGrid');

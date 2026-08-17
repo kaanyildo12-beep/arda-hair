@@ -444,26 +444,165 @@
 
     
 
-    <section class="newsletter section">
-      <div>
-        <div class="section-kicker" data-i18n="newsKicker">NEUHEITEN</div>
-        <h2 data-i18n="newsTitle">Sei zuerst dabei.</h2>
-        <p data-i18n="newsText">Erfahre, wenn die ersten Produkte online gehen.</p>
+    
+<section class="section premium-newsletter">
+
+  <div class="newsletter-shell">
+
+    <div class="newsletter-copy">
+
+      <div
+        class="section-kicker"
+        data-i18n="newsKicker"
+      >
+        ARDA INSIDER
       </div>
-      <form id="notifyForm" class="notify-form">
-        <input type="email" id="email" required data-i18n-placeholder="emailPlaceholder" placeholder="E-Mail-Adresse" />
-        <button class="btn primary" type="submit" data-i18n="notifyBtn">Benachrichtigen</button>
+
+      <h2 data-i18n="newsTitle">
+        Neuheiten zuerst entdecken.
+      </h2>
+
+      <p data-i18n="newsText">
+        Erhalte Updates zu neuen Produkten,
+        Kollektionen und ausgewählten ARDA Highlights.
+      </p>
+
+    </div>
+
+    <div class="newsletter-form-area">
+
+      <form
+        id="notifyForm"
+        class="notify-form premium-notify-form"
+      >
+
+        <input
+          type="email"
+          id="email"
+          required
+          data-i18n-placeholder="emailPlaceholder"
+          placeholder="E-Mail-Adresse"
+        >
+
+        <button
+          class="newsletter-submit"
+          type="submit"
+          data-i18n="notifyBtn"
+        >
+          Benachrichtigen
+        </button>
+
       </form>
-      <div class="form-msg" id="formMsg"></div>
-    </section>
+
+      <div
+        class="form-msg"
+        id="formMsg"
+      ></div>
+
+      <small
+        class="newsletter-note"
+        data-i18n="newsletterNote"
+      >
+        Kein Spam. Nur ausgewählte ARDA Neuigkeiten.
+      </small>
+
+    </div>
+
+  </div>
+
+</section>
   </main>
 
-  <footer>
-    <a class="brand footer-brand" href="#top">ARDA <span>HAIR</span></a>
-    <p data-i18n="footerText">Premium Hair Extensions · Deutschland</p>
-    <div class="footer-links"><a href="#" data-i18n="imprint">Impressum</a><a href="#" data-i18n="privacy">Datenschutz</a><a href="#" data-i18n="terms">AGB</a></div>
-    <small>© 2026 ARDA HAIR</small>
-  </footer>
+  
+<footer class="premium-footer">
+
+  <div class="footer-main">
+
+    <div class="footer-brand-area">
+
+      <a
+        class="footer-logo"
+        href="#top"
+        aria-label="ARDA HAIR"
+      >
+        <img
+          src="assets/arda-logo.png"
+          alt="ARDA HAIR"
+        >
+      </a>
+
+      <p data-i18n="footerText">
+        Premium Hair Extensions · Deutschland
+      </p>
+
+      <div class="footer-social-note">
+        <span>✦</span>
+        <small data-i18n="footerTagline">
+          Natural beauty. Premium hair.
+        </small>
+      </div>
+
+    </div>
+
+    <div class="footer-column">
+
+      <strong data-i18n="footerExplore">
+        Entdecken
+      </strong>
+
+      <a href="#shop" data-i18n="navShop">
+        Shop
+      </a>
+
+      <a href="#gallery" data-i18n="navGallery">
+        Galerie
+      </a>
+
+      <a href="#collection" data-i18n="navCollection">
+        Kollektion
+      </a>
+
+      <a href="#quality" data-i18n="navQuality">
+        Qualität
+      </a>
+
+    </div>
+
+    <div class="footer-column">
+
+      <strong data-i18n="footerLegal">
+        Rechtliches
+      </strong>
+
+      <a href="#" data-i18n="imprint">
+        Impressum
+      </a>
+
+      <a href="#" data-i18n="privacy">
+        Datenschutz
+      </a>
+
+      <a href="#" data-i18n="terms">
+        AGB
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+
+    <small>
+      © 2026 ARDA HAIR
+    </small>
+
+    <small data-i18n="footerCountry">
+      Deutschland
+    </small>
+
+  </div>
+
+</footer>
 
   <div class="drawer" id="menuDrawer" aria-hidden="true">
     <button class="drawer-close" data-close="menuDrawer">×</button>
