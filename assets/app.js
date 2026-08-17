@@ -1071,3 +1071,162 @@ window.addEventListener(
 /* İlk yükleme */
 renderMainCartAndFavorites();
 loadEnhancedShopProducts();
+
+/* =========================================
+   ARDA HAIR — HEADER ACCOUNT STATUS
+========================================= */
+
+async function updateHeaderAccount() {
+
+  const button =
+    document.getElementById(
+      'accountHeaderButton'
+    );
+
+  const text =
+    document.getElementById(
+      'accountHeaderText'
+    );
+
+  if (!button || !text) return;
+
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await shopDb.auth.getSession();
+
+
+  if (!session?.user) {
+
+    button.classList.remove(
+      'logged-in'
+    );
+
+    text.textContent =
+      lang === 'tr'
+        ? 'Giriş'
+        : lang === 'en'
+          ? 'Sign in'
+          : 'Anmelden';
+
+    return;
+  }
+
+
+  const user =
+    session.user;
+
+
+  let displayName =
+    user.user_metadata
+      ?.full_name ||
+    '';
+
+
+  /*
+    Profilde isim sonradan değiştirildiyse
+    en güncel halini al.
+  */
+
+  const {
+    data: profile
+  } =
+    await shopDb
+      .from('profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .maybeSingle();
+
+
+  if (profile?.full_name) {
+    displayName =
+      profile.full_name;
+  }
+
+
+  /*
+    Üst menü çok büyümesin:
+    sadece ilk adı gösteriyoruz.
+  */
+
+  const firstName =
+    displayName
+      .trim()
+      .split(/\s+/)[0];
+
+
+  button.classList.add(
+    'logged-in'
+  );
+
+
+  text.textContent =
+    firstName ||
+    (
+      lang === 'tr'
+        ? 'Hesabım'
+        : lang === 'en'
+          ? 'Account'
+          : 'Mein Konto'
+    );
+
+}
+
+
+/* Login/logout değiştiğinde */
+
+shopDb.auth.onAuthStateChange(
+  () => {
+
+    setTimeout(
+      updateHeaderAccount,
+      0
+    );
+
+  }
+);
+
+
+/* Sayfa ilk açıldığında */
+
+updateHeaderAccount();
+
+
+/*
+  Dil değiştirildiğinde
+  giriş yapılmamış durumdaki yazıyı da güncelle.
+*/
+
+document
+  .querySelectorAll(
+    '.lang-option'
+  )
+  .forEach(button => {
+
+    button.addEventListener(
+      'click',
+      () => {
+
+        setTimeout(
+          updateHeaderAccount,
+          0
+        );
+
+      }
+    );
+
+  });
+
+
+/*
+  Tarayıcı geri tuşuyla ana sayfaya
+  dönülürse tekrar kontrol et.
+*/
+
+window.addEventListener(
+  'pageshow',
+  updateHeaderAccount
+);
