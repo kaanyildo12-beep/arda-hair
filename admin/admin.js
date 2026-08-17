@@ -152,7 +152,7 @@ function renderProducts() {
       product.category || 'Keine Kategorie';
 
     return `
-      <article class="card product-card-pro">
+      <article class="card product-card-pro" data-product-type="${escapeHtml(product.product_type || '')}" data-product-status="${product.is_active ? 'published' : 'draft'}" data-product-featured="${product.featured ? 'yes' : 'no'}" data-product-search="${escapeHtml([product.name_de, product.name_tr, product.name_en, product.slug, product.category].filter(Boolean).join(' ').toLowerCase())}">
 
         <div class="product-card-badges">
 
@@ -238,6 +238,8 @@ function renderProducts() {
       </article>
     `;
   }).join('');
+
+  applyProductFilters();
 }
 function formatMoney(cents) {
   return new Intl.NumberFormat('de-DE', {
@@ -1137,3 +1139,96 @@ $('media').addEventListener('change', () => {
 });
 
 
+
+
+/* =========================
+   ADMIN PRODUCT FILTERS
+========================= */
+
+function applyProductFilters() {
+  const searchEl = $('productSearch');
+  const typeEl = $('productTypeFilter');
+  const statusEl = $('productStatusFilter');
+  const countEl = $('productCount');
+  const emptyEl = $('productFilterEmpty');
+
+  if (!searchEl || !typeEl || !statusEl) return;
+
+  const search =
+    searchEl.value.trim().toLowerCase();
+
+  const type =
+    typeEl.value;
+
+  const status =
+    statusEl.value;
+
+  const cards =
+    Array.from(
+      document.querySelectorAll('.product-card-pro')
+    );
+
+  let visible = 0;
+
+  cards.forEach((card) => {
+    const matchesSearch =
+      !search ||
+      (card.dataset.productSearch || '')
+        .includes(search);
+
+    const matchesType =
+      type === 'all' ||
+      card.dataset.productType === type;
+
+    let matchesStatus = true;
+
+    if (status === 'published') {
+      matchesStatus =
+        card.dataset.productStatus === 'published';
+    }
+
+    if (status === 'draft') {
+      matchesStatus =
+        card.dataset.productStatus === 'draft';
+    }
+
+    if (status === 'featured') {
+      matchesStatus =
+        card.dataset.productFeatured === 'yes';
+    }
+
+    const show =
+      matchesSearch &&
+      matchesType &&
+      matchesStatus;
+
+    card.hidden = !show;
+
+    if (show) visible++;
+  });
+
+  if (countEl) {
+    countEl.textContent =
+      visible + ' / ' + cards.length + ' Produkte';
+  }
+
+  if (emptyEl) {
+    emptyEl.hidden =
+      cards.length === 0 || visible !== 0;
+  }
+}
+
+$('productSearch')?.addEventListener(
+  'input',
+  applyProductFilters
+);
+
+$('productTypeFilter')?.addEventListener(
+  'change',
+  applyProductFilters
+);
+
+$('productStatusFilter')?.addEventListener(
+  'change',
+  applyProductFilters
+);

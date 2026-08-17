@@ -81,7 +81,36 @@
 
     </div>
 
-    <div id="products"></div>
+    <div class="product-toolbar">
+
+  <div class="product-search">
+    <span>⌕</span>
+    <input id="productSearch" type="search" placeholder="Produkt suchen..." autocomplete="off">
+  </div>
+
+  <select id="productTypeFilter">
+    <option value="all">Alle Produkttypen</option>
+    <option value="women_extension">Frauen - Extensions</option>
+    <option value="men_hair_system">Männer - Hair System</option>
+  </select>
+
+  <select id="productStatusFilter">
+    <option value="all">Alle Status</option>
+    <option value="published">Veröffentlicht</option>
+    <option value="draft">Entwurf</option>
+    <option value="featured">Hervorgehoben</option>
+  </select>
+
+  <span id="productCount" class="product-count"></span>
+
+</div>
+
+<div id="productFilterEmpty" class="card product-empty-state" hidden>
+  <strong>Kein Produkt gefunden.</strong>
+  <span>Suche oder Filter anpassen.</span>
+</div>
+
+<div id="products"></div>
 
   </section>
 
