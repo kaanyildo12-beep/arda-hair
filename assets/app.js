@@ -312,6 +312,59 @@ function buildGallery() {
   }
 }
 
+
+/* =========================================
+   HOMEPAGE LANGUAGE COMPLETION 2026
+========================================= */
+
+translations.de.trust1Sub = 'Premium Finish';
+translations.de.trust2Sub = 'Viele Nuancen';
+translations.de.trust3Sub = 'Glatt bis lockig';
+translations.de.trust4Sub = 'ARDA Qualität';
+
+translations.de.shopKicker = 'SHOP';
+translations.de.shopTitle = 'Unsere Produkte';
+translations.de.shopText =
+  'Entdecke unsere Auswahl an hochwertigen Haarverlängerungen und Hair Systems.';
+translations.de.filterAll = 'Alle';
+translations.de.filterWomen = 'Haarverlängerungen';
+translations.de.filterMen = 'Hair Systems';
+translations.de.loadingProducts = 'Produkte werden geladen...';
+translations.de.emptyProducts = 'Noch keine Produkte';
+
+
+translations.tr.trust1Sub = 'Premium görünüm';
+translations.tr.trust2Sub = 'Birçok renk tonu';
+translations.tr.trust3Sub = 'Düzden kıvırcığa';
+translations.tr.trust4Sub = 'ARDA kalitesi';
+
+translations.tr.shopKicker = 'MAĞAZA';
+translations.tr.shopTitle = 'Ürünlerimiz';
+translations.tr.shopText =
+  'Yüksek kaliteli saç kaynakları ve Hair System seçeneklerimizi keşfet.';
+translations.tr.filterAll = 'Tümü';
+translations.tr.filterWomen = 'Saç Kaynakları';
+translations.tr.filterMen = 'Hair Systems';
+translations.tr.loadingProducts = 'Ürünler yükleniyor...';
+translations.tr.emptyProducts = 'Henüz ürün yok';
+
+
+translations.en.trust1Sub = 'Premium finish';
+translations.en.trust2Sub = 'Many shades';
+translations.en.trust3Sub = 'Straight to curly';
+translations.en.trust4Sub = 'ARDA quality';
+
+translations.en.shopKicker = 'SHOP';
+translations.en.shopTitle = 'Our Products';
+translations.en.shopText =
+  'Discover our selection of premium hair extensions and Hair Systems.';
+translations.en.filterAll = 'All';
+translations.en.filterWomen = 'Hair Extensions';
+translations.en.filterMen = 'Hair Systems';
+translations.en.loadingProducts = 'Products are loading...';
+translations.en.emptyProducts = 'No products yet';
+
+
 function applyLang() {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i18n]').forEach(el => {

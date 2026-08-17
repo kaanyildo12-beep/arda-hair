@@ -158,7 +158,7 @@
         <span class="trust-icon">✦</span>
         <div class="trust-copy">
           <strong data-i18n="trust1">Natürlicher Glanz</strong>
-          <small>Premium Finish</small>
+          <small data-i18n="trust1Sub">Premium Finish</small>
         </div>
       </div>
 
@@ -166,7 +166,7 @@
         <span class="trust-icon">◌</span>
         <div class="trust-copy">
           <strong data-i18n="trust2">Vielfältige Farbtöne</strong>
-          <small>Viele Nuancen</small>
+          <small data-i18n="trust2Sub">Viele Nuancen</small>
         </div>
       </div>
 
@@ -174,7 +174,7 @@
         <span class="trust-icon">≈</span>
         <div class="trust-copy">
           <strong data-i18n="trust3">Mehrere Haarstrukturen</strong>
-          <small>Glatt bis lockig</small>
+          <small data-i18n="trust3Sub">Glatt bis lockig</small>
         </div>
       </div>
 
@@ -182,7 +182,7 @@
         <span class="trust-icon">♡</span>
         <div class="trust-copy">
           <strong data-i18n="trust4">Premium Auswahl</strong>
-          <small>ARDA Qualität</small>
+          <small data-i18n="trust4Sub">ARDA Qualität</small>
         </div>
       </div>
 
@@ -192,9 +192,9 @@
 
   <div class="shop-heading reveal">
     <div>
-      <div class="section-kicker">SHOP</div>
-      <h2>Unsere Produkte</h2>
-      <p>
+      <div class="section-kicker" data-i18n="shopKicker">SHOP</div>
+      <h2 data-i18n="shopTitle">Unsere Produkte</h2>
+      <p data-i18n="shopText">
         Entdecke unsere Auswahl an hochwertigen Haarverlängerungen
         und Hair Systems.
       </p>
@@ -204,15 +204,15 @@
   <!-- ÜRÜN FİLTRELERİ -->
   <div class="product-filters reveal">
 
-    <button class="product-filter active" data-filter="all">
+    <button class="product-filter active" data-filter="all" data-i18n="filterAll">
       Alle
     </button>
 
-    <button class="product-filter" data-filter="women_extension">
+    <button class="product-filter" data-filter="women_extension" data-i18n="filterWomen">
       Haarverlängerungen
     </button>
 
-    <button class="product-filter" data-filter="men_hair_system">
+    <button class="product-filter" data-filter="men_hair_system" data-i18n="filterMen">
       Hair Systems
     </button>
 
@@ -221,7 +221,7 @@
   <!-- SUPABASE ÜRÜNLERİ BURAYA GELECEK -->
   <div id="productGrid" class="product-grid">
 
-    <div class="products-loading">
+    <div class="products-loading" data-i18n="loadingProducts">
       Produkte werden geladen...
     </div>
 
@@ -230,8 +230,8 @@
   <!-- ÜRÜN YOKSA -->
   <div id="productsEmpty" class="empty-shop" hidden>
     <div class="empty-icon">✦</div>
-    <strong>Noch keine Produkte</strong>
-    <span>Neue Produkte folgen in Kürze.</span>
+    <strong data-i18n="emptyProducts">Noch keine Produkte</strong>
+    <span data-i18n="comingSoon">Neue Produkte folgen in Kürze.</span>
   </div>
 
 </section>
