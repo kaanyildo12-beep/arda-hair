@@ -70,33 +70,6 @@ $('loginForm').addEventListener('submit', async (e) => {
     : 'Anmeldung erfolgreich.';
 });
 
-$('signup').addEventListener('click', async () => {
-  const email = $('email').value.trim().toLowerCase();
-  const password = $('password').value;
-
-  if (email !== ADMIN_EMAIL) {
-    $('loginMsg').textContent = 'Nur die hinterlegte Admin E-Mail ist erlaubt.';
-    return;
-  }
-
-  if (password.length < 8) {
-    $('loginMsg').textContent = 'Das Passwort muss mindestens 8 Zeichen haben.';
-    return;
-  }
-
-  const { error } = await sb.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: location.origin + '/admin/'
-    }
-  });
-
-  $('loginMsg').textContent = error
-    ? error.message
-    : 'Admin-Konto erstellt. Bitte E-Mail bestätigen, falls erforderlich.';
-});
-
 $('logout').addEventListener('click', async () => {
   await sb.auth.signOut();
 });
