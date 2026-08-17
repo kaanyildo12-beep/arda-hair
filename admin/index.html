@@ -919,23 +919,37 @@
 
 
 
-  <label>
-    Foto / Video hochladen
+  <div class="media-upload">
 
-    <input
-      id="media"
-      type="file"
-      accept="
-        image/jpeg,
-        image/png,
-        image/webp,
-        image/avif,
-        video/mp4,
-        video/webm
-      "
-    >
+  <input
+    id="media"
+    class="media-input"
+    type="file"
+    accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm"
+  >
+
+  <label for="media" class="media-dropzone">
+
+    <span class="media-upload-icon">↑</span>
+
+    <span class="media-upload-copy">
+      <strong>Foto oder Video hochladen</strong>
+      <small>
+        JPG, PNG, WEBP, AVIF, MP4 oder WEBM
+      </small>
+    </span>
+
+    <span class="media-select-button">
+      Datei auswählen
+    </span>
 
   </label>
+
+  <p id="mediaFileName" class="media-file-name">
+    Noch keine Datei ausgewählt.
+  </p>
+
+</div>
 
 
   <div id="mediaPreview"></div>

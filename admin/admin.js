@@ -318,6 +318,11 @@ async function openEditor(product = {}) {
 
   $('media').value = '';
 
+  if ($('mediaFileName')) {
+    $('mediaFileName').textContent =
+      'Noch keine Datei ausgewählt.';
+  }
+
   $('deleteProduct').style.display =
     product.id ? 'inline-block' : 'none';
 
@@ -1031,3 +1036,19 @@ $('deleteProduct').addEventListener('click', async () => {
 ========================= */
 
 boot();
+
+
+/* =========================
+   MEDIA FILE DISPLAY
+========================= */
+
+$('media').addEventListener('change', () => {
+  const file = $('media').files[0];
+  const name = $('mediaFileName');
+
+  if (!name) return;
+
+  name.textContent = file
+    ? file.name
+    : 'Noch keine Datei ausgewählt.';
+});
