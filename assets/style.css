@@ -1959,3 +1959,268 @@ footer {
     max-width: 280px;
   }
 }
+
+
+/* =========================================
+   PREMIUM COLLECTION 2026
+========================================= */
+
+.premium-collection {
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 12% 90%,
+      rgba(231,167,187,.15),
+      transparent 30%
+    ),
+    #fff;
+
+  overflow: hidden;
+}
+
+.collection-top {
+  max-width: 1280px;
+  margin: 0 auto 54px;
+
+  display: grid;
+  grid-template-columns: 1.15fr .65fr;
+  gap: 80px;
+
+  align-items: end;
+}
+
+.premium-collection .section-kicker {
+  color: #b75f7c;
+  margin-bottom: 12px;
+}
+
+.premium-collection h2 {
+  margin: 0;
+
+  max-width: 760px;
+
+  font:
+    500 clamp(44px, 5.2vw, 72px) / 1.02
+    'Playfair Display',
+    serif;
+
+  color: #111;
+}
+
+.collection-top > p {
+  margin: 0;
+
+  max-width: 470px;
+
+  color: #777;
+
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.collection-swatches {
+  max-width: 1280px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.collection-swatch {
+  position: relative;
+
+  min-height: 178px;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-end;
+
+  border-radius: 18px;
+
+  background: #fff;
+
+  border: 1px solid #eee5e8;
+
+  box-shadow:
+    0 8px 30px rgba(20,15,17,.05);
+
+  overflow: hidden;
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    border-color .3s ease;
+}
+
+.collection-swatch:hover {
+  transform: translateY(-5px);
+
+  border-color: #e7a7bb;
+
+  box-shadow:
+    0 18px 45px rgba(20,15,17,.10);
+}
+
+.swatch-color {
+  position: absolute;
+  inset: 0 0 62px 0;
+
+  transition: transform .4s ease;
+}
+
+.collection-swatch:hover .swatch-color {
+  transform: scale(1.035);
+}
+
+.collection-swatch strong,
+.collection-swatch small {
+  position: relative;
+  z-index: 2;
+}
+
+.collection-swatch strong {
+  color: #111;
+  font-size: 13px;
+  margin-top: 9px;
+}
+
+.collection-swatch small {
+  margin-top: 3px;
+
+  color: #9a8f93;
+
+  font-size: 10px;
+  letter-spacing: .10em;
+}
+
+/* Hair shade gradients */
+
+.swatch-espresso {
+  background:
+    linear-gradient(
+      135deg,
+      #120d0c,
+      #2c1b16,
+      #0e0908
+    );
+}
+
+.swatch-chocolate {
+  background:
+    linear-gradient(
+      135deg,
+      #3a2118,
+      #684331,
+      #2b1712
+    );
+}
+
+.swatch-caramel {
+  background:
+    linear-gradient(
+      135deg,
+      #8a5a35,
+      #c58b55,
+      #704326
+    );
+}
+
+.swatch-honey {
+  background:
+    linear-gradient(
+      135deg,
+      #c99556,
+      #e5be7b,
+      #ad7740
+    );
+}
+
+.swatch-ash {
+  background:
+    linear-gradient(
+      135deg,
+      #9b8e82,
+      #d0c1ae,
+      #81766e
+    );
+}
+
+.swatch-platinum {
+  background:
+    linear-gradient(
+      135deg,
+      #d8d0c4,
+      #f3eee6,
+      #bfb5aa
+    );
+}
+
+.collection-note {
+  max-width: 1280px;
+
+  margin: 26px auto 0;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #7d7376;
+
+  font-size: 12px;
+}
+
+.collection-note-icon {
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #fff1f5;
+  color: #b75f7c;
+}
+
+@media (max-width: 1000px) {
+
+  .collection-swatches {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .collection-top {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 560px) {
+
+  .collection-swatches {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+
+  .collection-swatch {
+    min-height: 145px;
+    border-radius: 14px;
+  }
+
+  .swatch-color {
+    inset: 0 0 58px 0;
+  }
+
+  .collection-top {
+    margin-bottom: 34px;
+  }
+}

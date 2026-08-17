@@ -115,6 +115,39 @@ translations.en.benefit3 =
 translations.en.benefit3Sub =
   'Quality you can trust';
 
+
+
+/* =========================================
+   PREMIUM COLLECTION TRANSLATIONS
+========================================= */
+
+translations.de.shadeEspresso = 'Espresso';
+translations.de.shadeChocolate = 'Schokolade';
+translations.de.shadeCaramel = 'Karamell';
+translations.de.shadeHoney = 'Honigblond';
+translations.de.shadeAsh = 'Aschblond';
+translations.de.shadePlatinum = 'Platinblond';
+translations.de.collectionNote =
+  'Weitere Nuancen sind je nach Produkt verfügbar.';
+
+translations.tr.shadeEspresso = 'Espresso';
+translations.tr.shadeChocolate = 'Çikolata';
+translations.tr.shadeCaramel = 'Karamel';
+translations.tr.shadeHoney = 'Bal Sarısı';
+translations.tr.shadeAsh = 'Küllü Sarı';
+translations.tr.shadePlatinum = 'Platin Sarısı';
+translations.tr.collectionNote =
+  'Ürüne göre daha fazla renk tonu mevcuttur.';
+
+translations.en.shadeEspresso = 'Espresso';
+translations.en.shadeChocolate = 'Chocolate';
+translations.en.shadeCaramel = 'Caramel';
+translations.en.shadeHoney = 'Honey Blonde';
+translations.en.shadeAsh = 'Ash Blonde';
+translations.en.shadePlatinum = 'Platinum Blonde';
+translations.en.collectionNote =
+  'More shades are available depending on the product.';
+
 let lang = localStorage.getItem('arda-lang') || 'de';
 if (!translations[lang]) lang = 'de';
 const galleryGrid = document.getElementById('galleryGrid');
