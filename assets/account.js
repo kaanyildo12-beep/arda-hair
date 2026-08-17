@@ -1595,60 +1595,84 @@ async function syncCart(
 }
 
 
-async function syncFavorites(
-  userId
-) {
+
+async function syncFavorites(userId) {
 
   const localFavorites =
-    readLocalFavorites();
+    readLocalFavorites()
+      .filter(item => item.productId);
 
+  const {
+    data: remoteFavorites,
+    error: fetchError
+  } =
+    await accountDb
+      .from('customer_favorites')
+      .select('product_id')
+      .eq('user_id', userId);
+
+  if (fetchError) {
+    console.error(
+      'Favorites fetch error:',
+      fetchError
+    );
+    return;
+  }
+
+  const localIds =
+    new Set(
+      localFavorites.map(
+        item => item.productId
+      )
+    );
+
+  const removedIds =
+    (remoteFavorites || [])
+      .map(row => row.product_id)
+      .filter(id => !localIds.has(id));
+
+  if (removedIds.length) {
+
+    const {
+      error: deleteError
+    } =
+      await accountDb
+        .from('customer_favorites')
+        .delete()
+        .eq('user_id', userId)
+        .in('product_id', removedIds);
+
+    if (deleteError) {
+      console.error(
+        'Favorites delete error:',
+        deleteError
+      );
+      return;
+    }
+  }
+
+  if (!localFavorites.length) {
+    return;
+  }
 
   const rows =
-    localFavorites
+    localFavorites.map(item => ({
 
-      .filter(
-        item =>
-          item.productId
-      )
+      user_id: userId,
+      product_id: item.productId,
+      slug: item.slug || null,
+      name: item.name || 'ARDA HAIR',
+      price_cents:
+        Number(item.price_cents || 0),
+      image_url: item.image || null
 
-      .map(item => ({
-
-        user_id:
-          userId,
-
-        product_id:
-          item.productId,
-
-        slug:
-          item.slug ||
-          null,
-
-        name:
-          item.name ||
-          'ARDA HAIR',
-
-        price_cents:
-          Number(
-            item.price_cents || 0
-          ),
-
-        image_url:
-          item.image ||
-          null
-
-      }));
-
-
-  if (!rows.length) return;
-
+    }));
 
   const {
     error
   } =
     await accountDb
-      .from(
-        'customer_favorites'
-      )
+      .from('customer_favorites')
       .upsert(
         rows,
         {
@@ -1657,16 +1681,12 @@ async function syncFavorites(
         }
       );
 
-
   if (error) {
-
     console.error(
       'Favorites sync error:',
       error
     );
-
   }
-
 }
 
 
