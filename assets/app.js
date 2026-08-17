@@ -115,7 +115,15 @@ const SHOP_SUPABASE_KEY = 'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
 
 const shopDb = supabase.createClient(
   SHOP_SUPABASE_URL,
-  SHOP_SUPABASE_KEY
+  SHOP_SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: window.localStorage
+    }
+  }
 );
 
 let shopProducts = [];
