@@ -279,3 +279,141 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================
+   SHOP / CART / FAVORITES FIX
+========================================= */
+
+/* hidden özelliğinin eski .empty-shop display:flex kuralına yenilmesini engeller */
+.empty-shop[hidden],
+.drawer [hidden] {
+  display: none !important;
+}
+
+.shop-product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.shop-product-meta span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.saved-cart-content,
+.saved-fav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.saved-drawer-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.saved-drawer-item {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.saved-drawer-image {
+  width: 84px;
+  height: 105px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--cream);
+  display: grid;
+  place-items: center;
+}
+
+.saved-drawer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.saved-drawer-image span {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  letter-spacing: .08em;
+}
+
+.saved-drawer-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+}
+
+.saved-drawer-info a {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 15px !important;
+}
+
+.saved-drawer-info strong {
+  line-height: 1.3;
+}
+
+.saved-drawer-info small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.saved-remove {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.saved-remove:hover {
+  color: var(--ink);
+}
+
+.saved-drawer-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.saved-drawer-summary span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.saved-drawer-summary strong {
+  font-size: 18px;
+}
+
+.saved-clear-button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.saved-clear-button:hover {
+  border-color: var(--ink);
+}
