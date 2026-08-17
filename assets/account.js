@@ -322,6 +322,373 @@ const accountText = {
 };
 
 
+
+/* =========================================
+   ACCOUNT LANGUAGE COMPLETION 2026
+========================================= */
+
+Object.assign(
+  accountText.de,
+  {
+    pageTitle:
+      'ARDA HAIR — Mein Konto',
+
+    pageDescription:
+      'ARDA HAIR Kundenkonto – anmelden, registrieren und persönliche Daten verwalten.',
+
+    announcement:
+      'Premium Hair · Natürliche Qualität · ARDA HAIR',
+
+    navCollection: 'Kollektion',
+    navQuality: 'Qualität',
+    navGallery: 'Galerie',
+    navShop: 'Shop',
+    homeShop: 'Shop',
+
+    accountKicker:
+      'ARDA ACCOUNT',
+
+    termsAgreement:
+      'Ich akzeptiere die Datenschutzbestimmungen und Geschäftsbedingungen.',
+
+    resetKicker:
+      'PASSWORT',
+
+    dashboardKicker:
+      'MEIN KONTO',
+
+    dataTitle:
+      'Meine Daten',
+
+    dataText:
+      'Name, Telefonnummer und Adresse verwalten.',
+
+    editData:
+      'Daten bearbeiten →',
+
+    ordersTitle:
+      'Bestellungen',
+
+    ordersText:
+      'Deine zukünftigen Bestellungen werden hier angezeigt.',
+
+    comingSoon:
+      'Bald verfügbar',
+
+    favoritesTitle:
+      'Favoriten',
+
+    favoritesText:
+      'Gespeicherte Produkte jederzeit wiederfinden.',
+
+    viewProducts:
+      'Produkte ansehen →',
+
+    cartTitle:
+      'Warenkorb',
+
+    cartText:
+      'Deine ausgewählten Produkte bleiben gespeichert.',
+
+    toShop:
+      'Zum Shop →',
+
+    profileKicker:
+      'PROFIL',
+
+    profileText:
+      'Diese Informationen werden in deinem ARDA HAIR Konto gespeichert.',
+
+    footerText:
+      'Premium Hair Extensions · Deutschland',
+
+    imprint:
+      'Impressum',
+
+    privacy:
+      'Datenschutz',
+
+    termsLink:
+      'AGB',
+
+    passwordPlaceholder:
+      'Dein Passwort',
+
+    namePlaceholder:
+      'Vor- und Nachname',
+
+    passwordMinPlaceholder:
+      'Mindestens 8 Zeichen',
+
+    passwordRepeatPlaceholder:
+      'Passwort wiederholen',
+
+    address1Placeholder:
+      'Straße 10',
+
+    address2Placeholder:
+      'Wohnung, Etage usw. (optional)',
+
+    postalPlaceholder:
+      '77855',
+
+    cityPlaceholder:
+      'Achern'
+  }
+);
+
+
+Object.assign(
+  accountText.tr,
+  {
+    pageTitle:
+      'ARDA HAIR — Hesabım',
+
+    pageDescription:
+      'ARDA HAIR müşteri hesabı – giriş yap, kayıt ol ve kişisel bilgilerini yönet.',
+
+    announcement:
+      'Premium Saç · Doğal Kalite · ARDA HAIR',
+
+    navCollection: 'Koleksiyon',
+    navQuality: 'Kalite',
+    navGallery: 'Galeri',
+    navShop: 'Mağaza',
+    homeShop: 'Mağaza',
+
+    accountKicker:
+      'ARDA HESAP',
+
+    termsAgreement:
+      'Gizlilik politikasını ve genel şartları kabul ediyorum.',
+
+    resetKicker:
+      'ŞİFRE',
+
+    dashboardKicker:
+      'HESABIM',
+
+    dataTitle:
+      'Bilgilerim',
+
+    dataText:
+      'Ad, telefon numarası ve adres bilgilerini yönet.',
+
+    editData:
+      'Bilgileri düzenle →',
+
+    ordersTitle:
+      'Siparişler',
+
+    ordersText:
+      'Gelecekteki siparişlerin burada gösterilecek.',
+
+    comingSoon:
+      'Yakında',
+
+    favoritesTitle:
+      'Favoriler',
+
+    favoritesText:
+      'Kaydettiğin ürünlere istediğin zaman tekrar ulaş.',
+
+    viewProducts:
+      'Ürünleri görüntüle →',
+
+    cartTitle:
+      'Sepet',
+
+    cartText:
+      'Seçtiğin ürünler sepetinde kayıtlı kalır.',
+
+    toShop:
+      'Mağazaya git →',
+
+    profileKicker:
+      'PROFİL',
+
+    profileText:
+      'Bu bilgiler ARDA HAIR hesabında saklanır.',
+
+    footerText:
+      'Premium Hair Extensions · Almanya',
+
+    imprint:
+      'Künye',
+
+    privacy:
+      'Gizlilik',
+
+    termsLink:
+      'Şartlar',
+
+    passwordPlaceholder:
+      'Şifren',
+
+    namePlaceholder:
+      'Ad Soyad',
+
+    passwordMinPlaceholder:
+      'En az 8 karakter',
+
+    passwordRepeatPlaceholder:
+      'Şifreyi tekrar gir',
+
+    address1Placeholder:
+      'Sokak ve kapı numarası',
+
+    address2Placeholder:
+      'Daire, kat vb. (isteğe bağlı)',
+
+    postalPlaceholder:
+      'Posta kodu',
+
+    cityPlaceholder:
+      'Şehir'
+  }
+);
+
+
+Object.assign(
+  accountText.en,
+  {
+    pageTitle:
+      'ARDA HAIR — My Account',
+
+    pageDescription:
+      'ARDA HAIR customer account – sign in, register and manage your personal details.',
+
+    announcement:
+      'Premium Hair · Natural Quality · ARDA HAIR',
+
+    navCollection: 'Collection',
+    navQuality: 'Quality',
+    navGallery: 'Gallery',
+    navShop: 'Shop',
+    homeShop: 'Shop',
+
+    accountKicker:
+      'ARDA ACCOUNT',
+
+    termsAgreement:
+      'I accept the privacy policy and terms and conditions.',
+
+    resetKicker:
+      'PASSWORD',
+
+    dashboardKicker:
+      'MY ACCOUNT',
+
+    dataTitle:
+      'My Details',
+
+    dataText:
+      'Manage your name, phone number and address.',
+
+    editData:
+      'Edit details →',
+
+    ordersTitle:
+      'Orders',
+
+    ordersText:
+      'Your future orders will be displayed here.',
+
+    comingSoon:
+      'Coming soon',
+
+    favoritesTitle:
+      'Favorites',
+
+    favoritesText:
+      'Find your saved products anytime.',
+
+    viewProducts:
+      'View products →',
+
+    cartTitle:
+      'Shopping Bag',
+
+    cartText:
+      'Your selected products remain saved.',
+
+    toShop:
+      'Go to shop →',
+
+    profileKicker:
+      'PROFILE',
+
+    profileText:
+      'This information is stored in your ARDA HAIR account.',
+
+    footerText:
+      'Premium Hair Extensions · Germany',
+
+    imprint:
+      'Legal Notice',
+
+    privacy:
+      'Privacy',
+
+    termsLink:
+      'Terms',
+
+    passwordPlaceholder:
+      'Your password',
+
+    namePlaceholder:
+      'Full name',
+
+    passwordMinPlaceholder:
+      'At least 8 characters',
+
+    passwordRepeatPlaceholder:
+      'Repeat password',
+
+    address1Placeholder:
+      'Street and house number',
+
+    address2Placeholder:
+      'Apartment, floor, etc. (optional)',
+
+    postalPlaceholder:
+      'Postal code',
+
+    cityPlaceholder:
+      'City'
+  }
+);
+
+
+function setAccountText(
+  selector,
+  value
+) {
+
+  const element =
+    document.querySelector(selector);
+
+  if (element && value !== undefined) {
+    element.textContent = value;
+  }
+
+}
+
+
+function setAccountPlaceholder(
+  id,
+  value
+) {
+
+  const element = $(id);
+
+  if (element) {
+    element.placeholder = value;
+  }
+
+}
+
+
 function t(key) {
   return (
     accountText[accountLang]?.[key] ||
@@ -354,6 +721,7 @@ function setLabel(inputId, text) {
 }
 
 
+
 function applyAccountLanguage() {
 
   document.documentElement.lang =
@@ -380,17 +748,76 @@ function applyAccountLanguage() {
     });
 
 
-  $('accountMainTitle').textContent =
-    t('mainTitle');
+  document.title =
+    t('pageTitle');
 
-  $('accountMainText').textContent =
-    t('mainText');
+  const metaDescription =
+    document.querySelector(
+      'meta[name="description"]'
+    );
 
-  $('showLogin').textContent =
-    t('loginTab');
+  if (metaDescription) {
+    metaDescription.content =
+      t('pageDescription');
+  }
 
-  $('showRegister').textContent =
-    t('registerTab');
+
+  setAccountText(
+    '.announcement',
+    t('announcement')
+  );
+
+  setAccountText(
+    '.desktop-nav a[href="index.html#collection"]',
+    t('navCollection')
+  );
+
+  setAccountText(
+    '.desktop-nav a[href="index.html#quality"]',
+    t('navQuality')
+  );
+
+  setAccountText(
+    '.desktop-nav a[href="index.html#gallery"]',
+    t('navGallery')
+  );
+
+  setAccountText(
+    '.desktop-nav a[href="index.html#shop"]',
+    t('navShop')
+  );
+
+  setAccountText(
+    '.account-home-button',
+    t('homeShop')
+  );
+
+
+  setAccountText(
+    '.account-intro .section-kicker',
+    t('accountKicker')
+  );
+
+  if ($('accountMainTitle')) {
+    $('accountMainTitle').textContent =
+      t('mainTitle');
+  }
+
+  if ($('accountMainText')) {
+    $('accountMainText').textContent =
+      t('mainText');
+  }
+
+
+  if ($('showLogin')) {
+    $('showLogin').textContent =
+      t('loginTab');
+  }
+
+  if ($('showRegister')) {
+    $('showRegister').textContent =
+      t('registerTab');
+  }
 
 
   const loginHeading =
@@ -400,17 +827,20 @@ function applyAccountLanguage() {
 
   if (loginHeading) {
 
-    loginHeading.querySelector('span')
-      .textContent =
-      t('welcomeBack');
+    setAccountText(
+      '#loginPanel .account-panel-heading span',
+      t('welcomeBack')
+    );
 
-    loginHeading.querySelector('h2')
-      .textContent =
-      t('loginTitle');
+    setAccountText(
+      '#loginPanel .account-panel-heading h2',
+      t('loginTitle')
+    );
 
-    loginHeading.querySelector('p')
-      .textContent =
-      t('loginText');
+    setAccountText(
+      '#loginPanel .account-panel-heading p',
+      t('loginText')
+    );
 
   }
 
@@ -422,19 +852,38 @@ function applyAccountLanguage() {
 
   if (registerHeading) {
 
-    registerHeading.querySelector('span')
-      .textContent =
-      t('newAccount');
+    setAccountText(
+      '#registerPanel .account-panel-heading span',
+      t('newAccount')
+    );
 
-    registerHeading.querySelector('h2')
-      .textContent =
-      t('registerTitle');
+    setAccountText(
+      '#registerPanel .account-panel-heading h2',
+      t('registerTitle')
+    );
 
-    registerHeading.querySelector('p')
-      .textContent =
-      t('registerText');
+    setAccountText(
+      '#registerPanel .account-panel-heading p',
+      t('registerText')
+    );
 
   }
+
+
+  setAccountText(
+    '#resetPanel .account-panel-heading span',
+    t('resetKicker')
+  );
+
+  setAccountText(
+    '#resetPanel .account-panel-heading h2',
+    t('resetTitle')
+  );
+
+  setAccountText(
+    '#resetPanel .account-panel-heading p',
+    t('resetText')
+  );
 
 
   setLabel(
@@ -467,33 +916,67 @@ function applyAccountLanguage() {
     t('passwordRepeat')
   );
 
-
-  document.querySelector(
-    '#customerLoginForm .account-primary-button'
-  ).textContent =
-    t('login');
-
-
-  document.querySelector(
-    '#customerRegisterForm .account-primary-button'
-  ).textContent =
-    t('register');
+  setLabel(
+    'resetEmail',
+    t('email')
+  );
 
 
-  $('forgotPasswordButton')
-    .textContent =
-    t('forgot');
+  setAccountPlaceholder(
+    'loginPassword',
+    t('passwordPlaceholder')
+  );
+
+  setAccountPlaceholder(
+    'registerName',
+    t('namePlaceholder')
+  );
+
+  setAccountPlaceholder(
+    'registerPassword',
+    t('passwordMinPlaceholder')
+  );
+
+  setAccountPlaceholder(
+    'registerPasswordConfirm',
+    t('passwordRepeatPlaceholder')
+  );
 
 
-  const rememberText =
-    document.querySelector(
-      '.remember-option span'
-    );
+  setAccountText(
+    '#customerLoginForm .account-primary-button',
+    t('login')
+  );
 
-  if (rememberText) {
-    rememberText.textContent =
-      t('remember');
-  }
+  setAccountText(
+    '#customerRegisterForm .account-primary-button',
+    t('register')
+  );
+
+  setAccountText(
+    '#resetPasswordForm .account-primary-button',
+    t('sendLink')
+  );
+
+  setAccountText(
+    '#backToLogin',
+    t('backLogin')
+  );
+
+  setAccountText(
+    '#forgotPasswordButton',
+    t('forgot')
+  );
+
+  setAccountText(
+    '.remember-option span',
+    t('remember')
+  );
+
+  setAccountText(
+    '.account-checkbox span',
+    t('termsAgreement')
+  );
 
 
   document
@@ -511,6 +994,151 @@ function applyAccountLanguage() {
           : t('show');
 
     });
+
+
+  setAccountText(
+    '.dashboard-heading .section-kicker',
+    t('dashboardKicker')
+  );
+
+
+  const cards =
+    document.querySelectorAll(
+      '.account-overview-card'
+    );
+
+  if (cards[0]) {
+
+    const title =
+      cards[0].querySelector('h3');
+
+    const text =
+      cards[0].querySelector('p');
+
+    const link =
+      cards[0].querySelector('a');
+
+    if (title) {
+      title.textContent =
+        t('dataTitle');
+    }
+
+    if (text) {
+      text.textContent =
+        t('dataText');
+    }
+
+    if (link) {
+      link.textContent =
+        t('editData');
+    }
+
+  }
+
+
+  if (cards[1]) {
+
+    const title =
+      cards[1].querySelector('h3');
+
+    const text =
+      cards[1].querySelector('p');
+
+    const coming =
+      cards[1].querySelector(
+        '.overview-coming'
+      );
+
+    if (title) {
+      title.textContent =
+        t('ordersTitle');
+    }
+
+    if (text) {
+      text.textContent =
+        t('ordersText');
+    }
+
+    if (coming) {
+      coming.textContent =
+        t('comingSoon');
+    }
+
+  }
+
+
+  if (cards[2]) {
+
+    const title =
+      cards[2].querySelector('h3');
+
+    const text =
+      cards[2].querySelector('p');
+
+    const link =
+      cards[2].querySelector('a');
+
+    if (title) {
+      title.textContent =
+        t('favoritesTitle');
+    }
+
+    if (text) {
+      text.textContent =
+        t('favoritesText');
+    }
+
+    if (link) {
+      link.textContent =
+        t('viewProducts');
+    }
+
+  }
+
+
+  if (cards[3]) {
+
+    const title =
+      cards[3].querySelector('h3');
+
+    const text =
+      cards[3].querySelector('p');
+
+    const link =
+      cards[3].querySelector('a');
+
+    if (title) {
+      title.textContent =
+        t('cartTitle');
+    }
+
+    if (text) {
+      text.textContent =
+        t('cartText');
+    }
+
+    if (link) {
+      link.textContent =
+        t('toShop');
+    }
+
+  }
+
+
+  setAccountText(
+    '.profile-heading .section-kicker',
+    t('profileKicker')
+  );
+
+  setAccountText(
+    '.profile-heading h2',
+    t('profile')
+  );
+
+  setAccountText(
+    '.profile-heading p',
+    t('profileText')
+  );
 
 
   setLabel(
@@ -549,26 +1177,111 @@ function applyAccountLanguage() {
   );
 
 
-  const saveProfileButton =
-    document.querySelector(
-      '.profile-save'
+  setAccountPlaceholder(
+    'profileName',
+    t('namePlaceholder')
+  );
+
+  setAccountPlaceholder(
+    'profileAddress1',
+    t('address1Placeholder')
+  );
+
+  setAccountPlaceholder(
+    'profileAddress2',
+    t('address2Placeholder')
+  );
+
+  setAccountPlaceholder(
+    'profilePostalCode',
+    t('postalPlaceholder')
+  );
+
+  setAccountPlaceholder(
+    'profileCity',
+    t('cityPlaceholder')
+  );
+
+
+  setAccountText(
+    '.profile-save',
+    t('save')
+  );
+
+  setAccountText(
+    '#customerLogout',
+    t('logout')
+  );
+
+
+  setAccountText(
+    'footer p',
+    t('footerText')
+  );
+
+  const footerLinks =
+    document.querySelectorAll(
+      'footer .footer-links a'
     );
 
-  if (saveProfileButton) {
-    saveProfileButton.textContent =
-      t('save');
+  if (footerLinks[0]) {
+    footerLinks[0].textContent =
+      t('imprint');
+  }
+
+  if (footerLinks[1]) {
+    footerLinks[1].textContent =
+      t('privacy');
+  }
+
+  if (footerLinks[2]) {
+    footerLinks[2].textContent =
+      t('termsLink');
   }
 
 
-  $('customerLogout')
-    .textContent =
-    t('logout');
+  /*
+    Password recovery mailinden
+    gelinen özel ekran da dili
+    anında değiştirsin.
+  */
+
+  if ($('newPasswordForm')) {
+
+    setAccountText(
+      '#authView .account-panel-heading span',
+      t('accountKicker')
+    );
+
+    setAccountText(
+      '#authView .account-panel-heading h2',
+      t('newPassword')
+    );
+
+    setAccountText(
+      '#authView .account-panel-heading p',
+      t('newPassword')
+    );
+
+    setLabel(
+      'newCustomerPassword',
+      t('newPassword')
+    );
+
+    setAccountText(
+      '#newPasswordForm .account-primary-button',
+      t('savePassword')
+    );
+
+  }
 
 
   if (currentCustomer) {
+
     updateCustomerHeader(
       currentCustomer
     );
+
   }
 
 }
