@@ -40,6 +40,81 @@ const translations = {
   }
 };
 
+/* =========================================
+   PREMIUM HERO TRANSLATIONS
+========================================= */
+
+translations.de.heroEyebrow = 'PREMIUM EXTENSIONS';
+translations.de.heroTitle =
+  'Deine perfekte <em>Haarlänge.</em>';
+translations.de.heroCopy =
+  'Natürlich. Schön. Selbstbewusst.';
+translations.de.discover =
+  'Jetzt entdecken';
+translations.de.whyUs =
+  'Echte Ergebnisse';
+
+translations.de.benefit1 =
+  '100% Echthaar';
+translations.de.benefit1Sub =
+  'Premium Qualität';
+translations.de.benefit2 =
+  'Schneller Versand';
+translations.de.benefit2Sub =
+  'Sicher & zuverlässig';
+translations.de.benefit3 =
+  'Zufriedene Kundinnen';
+translations.de.benefit3Sub =
+  'Vertrauen, das bleibt';
+
+translations.tr.heroEyebrow =
+  'PREMIUM GERÇEK SAÇ';
+translations.tr.heroTitle =
+  'Mükemmel <em>saç görünümün.</em>';
+translations.tr.heroCopy =
+  'Doğal. Güzel. Özgüvenli.';
+translations.tr.discover =
+  'Şimdi keşfet';
+translations.tr.whyUs =
+  'Gerçek sonuçlar';
+
+translations.tr.benefit1 =
+  '%100 Gerçek Saç';
+translations.tr.benefit1Sub =
+  'Premium kalite';
+translations.tr.benefit2 =
+  'Hızlı gönderim';
+translations.tr.benefit2Sub =
+  'Güvenli ve özenli';
+translations.tr.benefit3 =
+  'Mutlu müşteriler';
+translations.tr.benefit3Sub =
+  'Güvene dayalı kalite';
+
+translations.en.heroEyebrow =
+  'PREMIUM HUMAN HAIR';
+translations.en.heroTitle =
+  'Your perfect <em>hair look.</em>';
+translations.en.heroCopy =
+  'Natural. Beautiful. Confident.';
+translations.en.discover =
+  'Discover now';
+translations.en.whyUs =
+  'Real results';
+
+translations.en.benefit1 =
+  '100% Human Hair';
+translations.en.benefit1Sub =
+  'Premium quality';
+translations.en.benefit2 =
+  'Fast shipping';
+translations.en.benefit2Sub =
+  'Safe & reliable';
+translations.en.benefit3 =
+  'Happy customers';
+translations.en.benefit3Sub =
+  'Quality you can trust';
+
 let lang = localStorage.getItem('arda-lang') || 'de';
 if (!translations[lang]) lang = 'de';
 const galleryGrid = document.getElementById('galleryGrid');
