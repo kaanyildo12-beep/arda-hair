@@ -1,4 +1,4 @@
-const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
+﻿const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
 const ADMIN_EMAIL = 'kaanyildo12@gmail.com';
 
@@ -124,6 +124,7 @@ function renderProducts() {
   }
 
   $('products').innerHTML = products.map((product) => {
+
     const typeLabel =
       product.product_type === 'women_extension'
         ? 'Frauen · Extensions'
@@ -131,36 +132,118 @@ function renderProducts() {
           ? 'Männer · Hair System'
           : 'Produkt';
 
+    const stock = Number(product.stock ?? 0);
+
+    const stockClass =
+      stock <= 0
+        ? 'out'
+        : stock <= 5
+          ? 'low'
+          : 'ok';
+
+    const stockLabel =
+      stock <= 0
+        ? 'Ausverkauft'
+        : stock <= 5
+          ? 'Niedriger Bestand'
+          : 'Auf Lager';
+
+    const category =
+      product.category || 'Keine Kategorie';
+
     return `
-      <article class="card">
+      <article class="card product-card-pro">
 
-        <div>
-          <small>${escapeHtml(typeLabel)}</small>
+        <div class="product-card-badges">
+
+          <span class="admin-badge type">
+            ${escapeHtml(typeLabel)}
+          </span>
+
+          <span class="admin-badge ${product.is_active ? 'live' : 'draft'}">
+            ${product.is_active ? 'Veröffentlicht' : 'Entwurf'}
+          </span>
+
+          ${
+            product.featured
+              ? '<span class="admin-badge featured">★ Hervorgehoben</span>'
+              : ''
+          }
+
         </div>
 
-        <h3>${escapeHtml(product.name_de || '')}</h3>
+        <div class="product-card-content">
 
-        <div>
-          ${formatMoney(product.price_cents)}
-          · Bestand ${product.stock ?? 0}
+          <div class="product-card-name">
+
+            <h3>
+              ${escapeHtml(product.name_de || 'Ohne Namen')}
+            </h3>
+
+            <span>
+              ${escapeHtml(product.slug || '')}
+            </span>
+
+          </div>
+
+          <div class="product-card-stats">
+
+            <div class="product-stat">
+              <small>Preis</small>
+              <strong>
+                ${formatMoney(product.price_cents)}
+              </strong>
+            </div>
+
+            <div class="product-stat">
+              <small>Bestand</small>
+              <strong>${stock}</strong>
+
+              <span class="stock-state ${stockClass}">
+                ${stockLabel}
+              </span>
+            </div>
+
+            <div class="product-stat">
+              <small>Kategorie</small>
+              <strong>
+                ${escapeHtml(category)}
+              </strong>
+            </div>
+
+          </div>
+
         </div>
 
-        <div>
-          ${product.is_active ? '🟢 Veröffentlicht' : '⚪ Entwurf'}
-          ${product.featured ? ' · ⭐ Hervorgehoben' : ''}
-        </div>
+        <div class="product-card-footer">
 
-        <button onclick="editProduct('${product.id}')">
-          Bearbeiten
-        </button>
+          <span>
+            ${
+              product.is_active
+                ? 'Im Shop sichtbar'
+                : 'Noch nicht veröffentlicht'
+            }
+          </span>
+
+          <button
+            class="edit-product-btn"
+            onclick="editProduct('${product.id}')"
+          >
+            Bearbeiten
+            <span>→</span>
+          </button>
+
+        </div>
 
       </article>
     `;
   }).join('');
 }
-
 function formatMoney(cents) {
-  return `${((cents || 0) / 100).toFixed(2)} €`;
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR'
+  }).format((cents || 0) / 100);
 }
 
 function escapeHtml(value = '') {
@@ -320,7 +403,7 @@ async function openEditor(product = {}) {
 
   if ($('mediaFileName')) {
     $('mediaFileName').textContent =
-      'Noch keine Datei ausgewählt.';
+      'Noch keine Datei ausgewÃ¤hlt.';
   }
 
   $('deleteProduct').style.display =
@@ -415,7 +498,7 @@ function renderVariants() {
   if (!currentVariants.length) {
     container.innerHTML = `
       <p style="opacity:.7;margin-top:18px">
-        Noch keine Varianten hinzugefügt.
+        Noch keine Varianten hinzugefÃ¼gt.
       </p>
     `;
     return;
@@ -447,7 +530,7 @@ function renderVariants() {
         </label>
 
         <label>
-          Länge (cm)
+          LÃ¤nge (cm)
           <input
             type="number"
             value="${variant.length_cm ?? ''}"
@@ -465,7 +548,7 @@ function renderVariants() {
         </label>
 
         <label>
-          Strähnen
+          StrÃ¤hnen
           <input
             type="number"
             value="${variant.strand_count ?? ''}"
@@ -494,7 +577,7 @@ function renderVariants() {
         </label>
 
         <label>
-          Haarlänge (cm)
+          HaarlÃ¤nge (cm)
           <input
             type="number"
             value="${variant.length_cm ?? ''}"
@@ -513,7 +596,7 @@ function renderVariants() {
         </label>
 
         <label>
-          Base Länge
+          Base LÃ¤nge
           <input
             type="number"
             step="0.1"
@@ -557,7 +640,7 @@ function renderVariants() {
         ${specialFields}
 
         <label>
-          Preis (€)
+          Preis (â‚¬)
           <input
             type="number"
             step="0.01"
@@ -645,7 +728,7 @@ $('productForm').addEventListener('submit', async (e) => {
   const productType = $('productType').value;
 
   if (!productType) {
-    $('editorMsg').textContent = 'Bitte Produkttyp auswählen.';
+    $('editorMsg').textContent = 'Bitte Produkttyp auswÃ¤hlen.';
     return;
   }
 
@@ -1011,7 +1094,7 @@ $('deleteProduct').addEventListener('click', async () => {
   if (!productId) return;
 
   const confirmed = confirm(
-    'Dieses Produkt wirklich löschen?'
+    'Dieses Produkt wirklich lÃ¶schen?'
   );
 
   if (!confirmed) return;
@@ -1050,5 +1133,7 @@ $('media').addEventListener('change', () => {
 
   name.textContent = file
     ? file.name
-    : 'Noch keine Datei ausgewählt.';
+    : 'Noch keine Datei ausgewÃ¤hlt.';
 });
+
+
