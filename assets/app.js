@@ -148,6 +148,92 @@ translations.en.shadePlatinum = 'Platinum Blonde';
 translations.en.collectionNote =
   'More shades are available depending on the product.';
 
+
+
+/* =========================================
+   PREMIUM QUALITY TRANSLATIONS
+========================================= */
+
+translations.de.qualityKicker = 'UNSER ANSPRUCH';
+translations.de.qualityTitle =
+  'Qualität, die man sieht und fühlt.';
+translations.de.qualityText =
+  'Hochwertiges Haar, natürliche Bewegung und sorgfältig ausgewählte Details.';
+translations.de.qualityBadge =
+  'Premium Qualität';
+translations.de.quality1Title =
+  '100% Echthaar';
+translations.de.quality1Text =
+  'Natürliches Aussehen und Gefühl.';
+translations.de.quality2Title =
+  'Natürliche Bewegung';
+translations.de.quality2Text =
+  'Weich, fließend und harmonisch.';
+translations.de.quality3Title =
+  'Sorgfältige Auswahl';
+translations.de.quality3Text =
+  'Qualität bis ins kleinste Detail.';
+translations.de.quality4Title =
+  'Salonqualität';
+translations.de.quality4Text =
+  'Für ein professionelles Ergebnis.';
+translations.de.qualityQuote =
+  'Schönes Haar beginnt mit Qualität.';
+
+translations.tr.qualityKicker =
+  'KALİTE ANLAYIŞIMIZ';
+translations.tr.qualityTitle =
+  'Görünen ve hissedilen kalite.';
+translations.tr.qualityText =
+  'Yüksek kaliteli saç, doğal hareket ve özenle seçilmiş detaylar.';
+translations.tr.qualityBadge =
+  'Premium Kalite';
+translations.tr.quality1Title =
+  '%100 Gerçek Saç';
+translations.tr.quality1Text =
+  'Doğal görünüm ve doğal his.';
+translations.tr.quality2Title =
+  'Doğal Hareket';
+translations.tr.quality2Text =
+  'Yumuşak, akıcı ve uyumlu.';
+translations.tr.quality3Title =
+  'Özenli Seçim';
+translations.tr.quality3Text =
+  'En küçük detayına kadar kalite.';
+translations.tr.quality4Title =
+  'Salon Kalitesi';
+translations.tr.quality4Text =
+  'Profesyonel bir sonuç için.';
+translations.tr.qualityQuote =
+  'Güzel saç kaliteyle başlar.';
+
+translations.en.qualityKicker =
+  'OUR STANDARD';
+translations.en.qualityTitle =
+  'Quality you can see and feel.';
+translations.en.qualityText =
+  'Premium hair, natural movement and carefully selected details.';
+translations.en.qualityBadge =
+  'Premium Quality';
+translations.en.quality1Title =
+  '100% Human Hair';
+translations.en.quality1Text =
+  'A naturally beautiful look and feel.';
+translations.en.quality2Title =
+  'Natural Movement';
+translations.en.quality2Text =
+  'Soft, flowing and seamless.';
+translations.en.quality3Title =
+  'Carefully Selected';
+translations.en.quality3Text =
+  'Quality in every detail.';
+translations.en.quality4Title =
+  'Salon Quality';
+translations.en.quality4Text =
+  'Created for professional results.';
+translations.en.qualityQuote =
+  'Beautiful hair begins with quality.';
+
 let lang = localStorage.getItem('arda-lang') || 'de';
 if (!translations[lang]) lang = 'de';
 const galleryGrid = document.getElementById('galleryGrid');
