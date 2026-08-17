@@ -106,3 +106,246 @@ const observer = new IntersectionObserver(entries => entries.forEach(e => {
 }), {threshold:.1});
 document.querySelectorAll('.reveal').forEach(x => observer.observe(x));
 applyLang();
+/* =========================================
+   ARDA HAIR — SUPABASE SHOP
+========================================= */
+
+const SHOP_SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
+const SHOP_SUPABASE_KEY = 'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
+
+const shopDb = supabase.createClient(
+  SHOP_SUPABASE_URL,
+  SHOP_SUPABASE_KEY
+);
+
+let shopProducts = [];
+let currentProductFilter = 'all';
+
+
+async function loadShopProducts() {
+
+  const grid = document.getElementById('productGrid');
+  const empty = document.getElementById('productsEmpty');
+
+  if (!grid) return;
+
+  grid.innerHTML = `
+    <div class="products-loading">
+      Produkte werden geladen...
+    </div>
+  `;
+
+  const { data, error } = await shopDb
+    .from('products')
+    .select('*')
+    .eq('is_active', true)
+    .order('featured', { ascending: false })
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Produkte konnten nicht geladen werden:', error);
+
+    grid.innerHTML = `
+      <div class="products-loading">
+        Produkte konnten nicht geladen werden.
+      </div>
+    `;
+
+    return;
+  }
+
+  shopProducts = data || [];
+
+  renderShopProducts();
+}
+
+
+function renderShopProducts() {
+
+  const grid = document.getElementById('productGrid');
+  const empty = document.getElementById('productsEmpty');
+
+  if (!grid) return;
+
+  const filteredProducts =
+    currentProductFilter === 'all'
+      ? shopProducts
+      : shopProducts.filter(
+          product => product.product_type === currentProductFilter
+        );
+
+  if (!filteredProducts.length) {
+
+    grid.innerHTML = '';
+
+    if (empty) {
+      empty.hidden = false;
+    }
+
+    return;
+  }
+
+  if (empty) {
+    empty.hidden = true;
+  }
+
+  grid.innerHTML = filteredProducts.map(product => {
+
+    const name =
+      lang === 'tr'
+        ? (product.name_tr || product.name_de || product.name_en)
+        : lang === 'en'
+          ? (product.name_en || product.name_de || product.name_tr)
+          : (product.name_de || product.name_en || product.name_tr);
+
+    const typeLabel =
+      product.product_type === 'women_extension'
+        ? 'Haarverlängerung'
+        : product.product_type === 'men_hair_system'
+          ? 'Hair System'
+          : '';
+
+    const price =
+      product.price_cents != null
+        ? (product.price_cents / 100).toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+          })
+        : '';
+
+    /*
+      Şimdilik ürün fotoğrafı yoksa şık bir placeholder gösteriyoruz.
+      Sonraki adımda Supabase Storage fotoğraflarını buraya bağlayacağız.
+    */
+
+    return `
+      <article
+        class="shop-product-card"
+        data-product-id="${escapeShopHtml(product.id || '')}"
+      >
+
+        <div class="shop-product-image">
+
+          <div class="shop-product-placeholder">
+            <span>ARDA</span>
+            <small>HAIR</small>
+          </div>
+
+          ${
+            product.featured
+              ? `<span class="shop-product-badge">Featured</span>`
+              : ''
+          }
+
+        </div>
+
+        <div class="shop-product-info">
+
+          <span class="shop-product-type">
+            ${escapeShopHtml(typeLabel)}
+          </span>
+
+          <h3>
+            ${escapeShopHtml(name || 'ARDA HAIR')}
+          </h3>
+
+          ${
+            product.color
+              ? `
+                <div class="shop-product-detail">
+                  ${escapeShopHtml(product.color)}
+                </div>
+              `
+              : ''
+          }
+
+          ${
+            product.length_cm
+              ? `
+                <div class="shop-product-detail">
+                  ${escapeShopHtml(product.length_cm)} cm
+                </div>
+              `
+              : ''
+          }
+
+          <div class="shop-product-bottom">
+
+            <strong class="shop-product-price">
+              ${escapeShopHtml(price)}
+            </strong>
+
+            <button
+              class="shop-product-open"
+              type="button"
+              onclick="openShopProduct('${escapeShopHtml(product.slug || product.id)}')"
+            >
+              Ansehen
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+    `;
+
+  }).join('');
+}
+
+
+function escapeShopHtml(value = '') {
+
+  return String(value ?? '').replace(
+    /[&<>"']/g,
+    character => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    })[character]
+  );
+
+}
+
+
+function openShopProduct(slug) {
+
+  if (!slug) return;
+
+  window.location.href =
+    `product.html?product=${encodeURIComponent(slug)}`;
+
+}
+
+
+/* =========================
+   PRODUCT FILTERS
+========================= */
+
+document.querySelectorAll('.product-filter').forEach(button => {
+
+  button.addEventListener('click', () => {
+
+    document
+      .querySelectorAll('.product-filter')
+      .forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    currentProductFilter =
+      button.dataset.filter || 'all';
+
+    renderShopProducts();
+
+  });
+
+});
+
+
+/* =========================
+   START SHOP
+========================= */
+
+loadShopProducts();
