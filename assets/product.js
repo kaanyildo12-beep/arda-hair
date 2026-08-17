@@ -71,7 +71,9 @@ const productTranslations = {
     no: 'Nein',
     heat: 'Hitzestyling',
     dyeable: 'Färbbar',
-    stock: 'Bestand'
+    stock: 'Bestand',
+    lifespan: 'Lebensdauer',
+    attachment: 'Befestigung'
   },
 
   tr: {
@@ -109,7 +111,9 @@ const productTranslations = {
     no: 'Hayır',
     heat: 'Isı ile şekillendirme',
     dyeable: 'Boyanabilir',
-    stock: 'Stok'
+    stock: 'Stok',
+    lifespan: 'Kullanım ömrü',
+    attachment: 'Uygulama yöntemi'
   },
 
   en: {
@@ -147,7 +151,9 @@ const productTranslations = {
     no: 'No',
     heat: 'Heat styling',
     dyeable: 'Dyeable',
-    stock: 'Stock'
+    stock: 'Stock',
+    lifespan: 'Lifespan',
+    attachment: 'Attachment method'
   }
 
 };
@@ -334,6 +340,7 @@ function renderProduct() {
   renderPriceAndStock();
   renderCare();
   renderBoxContents();
+  renderShippingReturns();
   renderFavoriteButton();
 
 }
@@ -1346,6 +1353,32 @@ function renderTechnicalDetails() {
 
   }
 
+
+
+  const lifespanText =
+    currentLang === 'tr'
+      ? currentProduct.lifespan_note_tr
+      : currentLang === 'en'
+        ? currentProduct.lifespan_note_en
+        : currentProduct.lifespan_note_de;
+
+  addTechnicalRow(
+    rows,
+    t.lifespan,
+    lifespanText
+  );
+
+  const attachmentText =
+    Array.isArray(currentProduct.attachment_methods)
+      ? currentProduct.attachment_methods.join(', ')
+      : currentProduct.attachment_methods;
+
+  addTechnicalRow(
+    rows,
+    t.attachment,
+    attachmentText
+  );
+
   $('technicalDetails').innerHTML =
     `
       <div class="technical-table">
@@ -2207,3 +2240,43 @@ function showProductError(
 ========================================= */
 
 initProductPage();
+
+function renderShippingReturns() {
+
+  if (!currentProduct) return;
+
+  const text =
+    currentLang === 'tr'
+      ? currentProduct.shipping_return_tr
+      : currentLang === 'en'
+        ? currentProduct.shipping_return_en
+        : currentProduct.shipping_return_de;
+
+  let container =
+    document.getElementById('shippingReturns');
+
+  if (!container) {
+    const sections =
+      document.querySelectorAll('.product-accordion details');
+
+    for (const section of sections) {
+      const summary =
+        section.querySelector('summary');
+
+      if (
+        summary &&
+        summary.textContent.includes('Versand & R�ckgabe')
+      ) {
+        container =
+          section.querySelector('.accordion-content');
+        break;
+      }
+    }
+  }
+
+  if (!container) return;
+
+  container.textContent =
+    text || '�';
+}
+

@@ -272,6 +272,21 @@ async function openEditor(product = {}) {
   setValue('boxTr', product.box_contents_tr);
   setValue('boxEn', product.box_contents_en);
 
+  setValue(
+    'attachmentMethods',
+    Array.isArray(product.attachment_methods)
+      ? product.attachment_methods.join(', ')
+      : ''
+  );
+
+  setValue('lifespanDe', product.lifespan_note_de);
+  setValue('lifespanTr', product.lifespan_note_tr);
+  setValue('lifespanEn', product.lifespan_note_en);
+
+  setValue('shippingDe', product.shipping_return_de);
+  setValue('shippingTr', product.shipping_return_tr);
+  setValue('shippingEn', product.shipping_return_en);
+
   /* WOMEN */
 
   setValue('extensionType', product.extension_type);
@@ -676,6 +691,26 @@ $('productForm').addEventListener('submit', async (e) => {
     box_contents_de: $('boxDe').value.trim() || null,
     box_contents_tr: $('boxTr').value.trim() || null,
     box_contents_en: $('boxEn').value.trim() || null,
+
+    attachment_methods:
+      $('attachmentMethods').value
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean),
+
+    lifespan_note_de:
+      $('lifespanDe').value.trim() || null,
+    lifespan_note_tr:
+      $('lifespanTr').value.trim() || null,
+    lifespan_note_en:
+      $('lifespanEn').value.trim() || null,
+
+    shipping_return_de:
+      $('shippingDe').value.trim() || null,
+    shipping_return_tr:
+      $('shippingTr').value.trim() || null,
+    shipping_return_en:
+      $('shippingEn').value.trim() || null,
 
     category: $('category').value.trim() || null,
 
