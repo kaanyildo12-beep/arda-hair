@@ -110,7 +110,53 @@ async function loadProducts() {
 
   products = data || [];
 
+  const { data: mediaRows } = await sb
+    .from('product_media')
+    .select('product_id, media_type, path, sort_order')
+    .eq('media_type', 'image')
+    .order('sort_order', { ascending: true });
+
+  const firstImages = new Map();
+
+  (mediaRows || []).forEach((media) => {
+    if (firstImages.has(media.product_id)) return;
+
+    const { data: publicData } = sb.storage
+      .from('product-media')
+      .getPublicUrl(media.path);
+
+    if (publicData && publicData.publicUrl) {
+      firstImages.set(
+        media.product_id,
+        publicData.publicUrl
+      );
+    }
+  });
+
+  products = products.map((product) => ({
+    ...product,
+    _adminImage:
+      firstImages.get(product.id) || null
+  }));
+
   renderProducts();
+}
+
+function getAdminProductImageHtml(product) {
+
+  if (!product._adminImage) {
+    return '<div class="product-card-thumb"><span>ARDA</span></div>';
+  }
+
+  return (
+    '<div class="product-card-thumb">' +
+      '<img src="' +
+      escapeHtml(product._adminImage) +
+      '" alt="' +
+      escapeHtml(product.name_de || 'Produkt') +
+      '" loading="lazy">' +
+    '</div>'
+  );
 }
 
 function renderProducts() {
@@ -173,6 +219,8 @@ function renderProducts() {
         </div>
 
         <div class="product-card-content">
+
+          ${getAdminProductImageHtml(product)}
 
           <div class="product-card-name">
 
