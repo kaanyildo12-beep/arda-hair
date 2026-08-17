@@ -19,7 +19,16 @@ let currentProduct = null;
 let productVariants = [];
 let productMedia = [];
 let selectedVariant = null;
-let currentLang = 'de';
+let currentLang =
+  localStorage.getItem('arda-lang') || 'de';
+
+if (
+  !['de', 'tr', 'en'].includes(
+    currentLang
+  )
+) {
+  currentLang = 'de';
+}
 
 let cart = JSON.parse(
   localStorage.getItem('ardaHairCart') || '[]'
@@ -163,7 +172,546 @@ const productTranslations = {
    START
 ========================================= */
 
+
+/* =========================================
+   PRODUCT PAGE LANGUAGE COMPLETION 2026
+========================================= */
+
+Object.assign(
+  productTranslations.de,
+  {
+    announcement:
+      'Premium Hair · Natürliche Qualität · ARDA HAIR',
+
+    navCollection: 'Kollektion',
+    navQuality: 'Qualität',
+    navGallery: 'Galerie',
+    navShop: 'Shop',
+
+    benefit1: 'Premium Qualität',
+    benefit2: 'Sichere Auswahl',
+    benefit3: 'Persönlicher Support',
+
+    detailsKicker: 'DETAILS',
+    detailsTitle:
+      'Alles, was du wissen musst.',
+
+    accordionProduct:
+      'Produktdetails',
+
+    accordionCare:
+      'Pflege & Anwendung',
+
+    accordionBox:
+      'Lieferumfang',
+
+    accordionShipping:
+      'Versand & Rückgabe',
+
+    careFallback:
+      'Pflegehinweise werden nach Auswahl des Produkts angezeigt.',
+
+    boxFallback:
+      'Informationen zum Lieferumfang werden hier angezeigt.',
+
+    shippingFallback:
+      'Versand- und Rückgabeinformationen werden vor dem Verkaufsstart ergänzt.',
+
+    guideKicker:
+      'ARDA GUIDE',
+
+    guideTitle:
+      'Nicht sicher, welche Variante passt?',
+
+    guideText:
+      'Wähle Farbe, Länge und weitere Eigenschaften. ARDA HAIR zeigt dir automatisch die verfügbare Kombination.',
+
+    moreProducts:
+      'Weitere Produkte',
+
+    cartTitle:
+      'Warenkorb',
+
+    cartEmpty:
+      'Dein Warenkorb ist noch leer.',
+
+    favTitle:
+      'Favoriten',
+
+    favEmpty:
+      'Du hast noch keine Favoriten gespeichert.',
+
+    footerText:
+      'Premium Hair Extensions · Deutschland',
+
+    imprint:
+      'Impressum',
+
+    privacy:
+      'Datenschutz',
+
+    terms:
+      'AGB',
+
+    loadingProduct:
+      'Produkt wird geladen...',
+
+    loadingInfo:
+      'Produktinformationen werden geladen...',
+
+    notFoundTitle:
+      'Produkt nicht gefunden',
+
+    notFoundText:
+      'Das Produkt konnte nicht gefunden werden.',
+
+    pageTitle:
+      'ARDA HAIR — Produkt'
+  }
+);
+
+
+Object.assign(
+  productTranslations.tr,
+  {
+    announcement:
+      'Premium Saç · Doğal Kalite · ARDA HAIR',
+
+    navCollection: 'Koleksiyon',
+    navQuality: 'Kalite',
+    navGallery: 'Galeri',
+    navShop: 'Mağaza',
+
+    benefit1: 'Premium Kalite',
+    benefit2: 'Güvenli Seçim',
+    benefit3: 'Kişisel Destek',
+
+    detailsKicker: 'DETAYLAR',
+    detailsTitle:
+      'Bilmen gereken her şey.',
+
+    accordionProduct:
+      'Ürün detayları',
+
+    accordionCare:
+      'Bakım & Kullanım',
+
+    accordionBox:
+      'Kutu içeriği',
+
+    accordionShipping:
+      'Kargo & İade',
+
+    careFallback:
+      'Bakım bilgileri ürün seçildikten sonra burada gösterilir.',
+
+    boxFallback:
+      'Kutu içeriği bilgileri burada gösterilir.',
+
+    shippingFallback:
+      'Kargo ve iade bilgileri satış başlamadan önce eklenecektir.',
+
+    guideKicker:
+      'ARDA REHBERİ',
+
+    guideTitle:
+      'Hangi seçeneğin sana uygun olduğundan emin değil misin?',
+
+    guideText:
+      'Renk, uzunluk ve diğer özellikleri seç. ARDA HAIR mevcut kombinasyonu sana otomatik olarak gösterir.',
+
+    moreProducts:
+      'Diğer ürünler',
+
+    cartTitle:
+      'Sepet',
+
+    cartEmpty:
+      'Sepetin henüz boş.',
+
+    favTitle:
+      'Favoriler',
+
+    favEmpty:
+      'Henüz favori ürünün yok.',
+
+    footerText:
+      'Premium Hair Extensions · Almanya',
+
+    imprint:
+      'Künye',
+
+    privacy:
+      'Gizlilik',
+
+    terms:
+      'Şartlar',
+
+    loadingProduct:
+      'Ürün yükleniyor...',
+
+    loadingInfo:
+      'Ürün bilgileri yükleniyor...',
+
+    notFoundTitle:
+      'Ürün bulunamadı',
+
+    notFoundText:
+      'Ürün bulunamadı veya artık yayında değil.',
+
+    pageTitle:
+      'ARDA HAIR — Ürün'
+  }
+);
+
+
+Object.assign(
+  productTranslations.en,
+  {
+    announcement:
+      'Premium Hair · Natural Quality · ARDA HAIR',
+
+    navCollection: 'Collection',
+    navQuality: 'Quality',
+    navGallery: 'Gallery',
+    navShop: 'Shop',
+
+    benefit1: 'Premium Quality',
+    benefit2: 'Secure Selection',
+    benefit3: 'Personal Support',
+
+    detailsKicker: 'DETAILS',
+    detailsTitle:
+      'Everything you need to know.',
+
+    accordionProduct:
+      'Product details',
+
+    accordionCare:
+      'Care & Application',
+
+    accordionBox:
+      'What is included',
+
+    accordionShipping:
+      'Shipping & Returns',
+
+    careFallback:
+      'Care information will be displayed after selecting the product.',
+
+    boxFallback:
+      'Package contents will be displayed here.',
+
+    shippingFallback:
+      'Shipping and return information will be added before sales launch.',
+
+    guideKicker:
+      'ARDA GUIDE',
+
+    guideTitle:
+      'Not sure which option is right for you?',
+
+    guideText:
+      'Choose the shade, length and other properties. ARDA HAIR automatically shows you the available combination.',
+
+    moreProducts:
+      'More products',
+
+    cartTitle:
+      'Shopping Bag',
+
+    cartEmpty:
+      'Your shopping bag is empty.',
+
+    favTitle:
+      'Favorites',
+
+    favEmpty:
+      'You have no favorites yet.',
+
+    footerText:
+      'Premium Hair Extensions · Germany',
+
+    imprint:
+      'Legal Notice',
+
+    privacy:
+      'Privacy',
+
+    terms:
+      'Terms',
+
+    loadingProduct:
+      'Loading product...',
+
+    loadingInfo:
+      'Loading product information...',
+
+    notFoundTitle:
+      'Product not found',
+
+    notFoundText:
+      'The product could not be found.',
+
+    pageTitle:
+      'ARDA HAIR — Product'
+  }
+);
+
+
+function setProductStaticText(
+  selector,
+  value
+) {
+
+  const element =
+    document.querySelector(selector);
+
+  if (element) {
+    element.textContent = value;
+  }
+
+}
+
+
+function applyProductStaticLanguage() {
+
+  const t =
+    productTranslations[currentLang];
+
+  document.documentElement.lang =
+    currentLang;
+
+  localStorage.setItem(
+    'arda-lang',
+    currentLang
+  );
+
+
+  document
+    .querySelectorAll(
+      '[data-product-lang]'
+    )
+    .forEach(button => {
+
+      button.classList.toggle(
+        'active',
+        button.dataset.productLang ===
+          currentLang
+      );
+
+    });
+
+
+  setProductStaticText(
+    '.announcement',
+    t.announcement
+  );
+
+
+  setProductStaticText(
+    '.desktop-nav a[href="index.html#collection"]',
+    t.navCollection
+  );
+
+  setProductStaticText(
+    '.desktop-nav a[href="index.html#quality"]',
+    t.navQuality
+  );
+
+  setProductStaticText(
+    '.desktop-nav a[href="index.html#gallery"]',
+    t.navGallery
+  );
+
+  setProductStaticText(
+    '.desktop-nav a[href="index.html#shop"]',
+    t.navShop
+  );
+
+
+  setProductStaticText(
+    '.product-back',
+    t.back
+  );
+
+
+  setProductStaticText(
+    '.quantity-section > .option-label',
+    t.quantity
+  );
+
+
+  const benefits =
+    document.querySelectorAll(
+      '.product-benefits > div span'
+    );
+
+  const benefitTexts = [
+    t.benefit1,
+    t.benefit2,
+    t.benefit3
+  ];
+
+  benefits.forEach(
+    (element, index) => {
+
+      if (benefitTexts[index]) {
+        element.textContent =
+          benefitTexts[index];
+      }
+
+    }
+  );
+
+
+  setProductStaticText(
+    '.product-extra-heading .section-kicker',
+    t.detailsKicker
+  );
+
+  setProductStaticText(
+    '.product-extra-heading h2',
+    t.detailsTitle
+  );
+
+
+  const summaries =
+    document.querySelectorAll(
+      '.product-accordion summary'
+    );
+
+  const summaryTexts = [
+    t.accordionProduct,
+    t.accordionCare,
+    t.accordionBox,
+    t.accordionShipping
+  ];
+
+  summaries.forEach(
+    (element, index) => {
+
+      if (summaryTexts[index]) {
+        element.textContent =
+          summaryTexts[index];
+      }
+
+    }
+  );
+
+
+  setProductStaticText(
+    '.product-guide-section .section-kicker',
+    t.guideKicker
+  );
+
+  if ($('guideTitle')) {
+    $('guideTitle').textContent =
+      t.guideTitle;
+  }
+
+  if ($('guideText')) {
+    $('guideText').textContent =
+      t.guideText;
+  }
+
+  setProductStaticText(
+    '.product-guide-section .btn.primary',
+    t.moreProducts
+  );
+
+
+  setProductStaticText(
+    '#productCartDrawer h3',
+    t.cartTitle
+  );
+
+  setProductStaticText(
+    '#productFavDrawer h3',
+    t.favTitle
+  );
+
+
+  if (
+    $('productCartItems') &&
+    !cart.length
+  ) {
+    $('productCartItems').textContent =
+      t.cartEmpty;
+  }
+
+
+  if (
+    $('productFavItems') &&
+    !favorites.length
+  ) {
+    $('productFavItems').textContent =
+      t.favEmpty;
+  }
+
+
+  const footer =
+    document.querySelector(
+      '.product-page footer'
+    );
+
+  if (footer) {
+
+    const footerText =
+      footer.querySelector('p');
+
+    if (footerText) {
+      footerText.textContent =
+        t.footerText;
+    }
+
+
+    const footerLinks =
+      footer.querySelectorAll(
+        '.footer-links a'
+      );
+
+    if (footerLinks[0]) {
+      footerLinks[0].textContent =
+        t.imprint;
+    }
+
+    if (footerLinks[1]) {
+      footerLinks[1].textContent =
+        t.privacy;
+    }
+
+    if (footerLinks[2]) {
+      footerLinks[2].textContent =
+        t.terms;
+    }
+
+  }
+
+
+  if (!currentProduct) {
+
+    document.title =
+      t.pageTitle;
+
+    if ($('productName')) {
+      $('productName').textContent =
+        t.loadingProduct;
+    }
+
+    if ($('productStock')) {
+      $('productStock').textContent =
+        t.loadingInfo;
+    }
+
+  }
+
+}
+
+
 async function initProductPage() {
+
+  applyProductStaticLanguage();
 
   updateCartCount();
   updateFavoriteCount();
@@ -177,7 +725,7 @@ async function initProductPage() {
 
   if (!identifier) {
     showProductError(
-      'Produkt konnte nicht gefunden werden.'
+      productTranslations[currentLang].notFoundText
     );
     return;
   }
@@ -220,7 +768,7 @@ async function loadProduct(identifier) {
     console.error('Product load error:', error);
 
     showProductError(
-      'Produkt konnte nicht gefunden werden.'
+      productTranslations[currentLang].notFoundText
     );
 
     return;
@@ -1068,6 +1616,9 @@ function renderHighlights() {
   const container =
     $('productHighlights');
 
+  const t =
+    productTranslations[currentLang];
+
   const items = [];
 
   if (
@@ -1077,25 +1628,25 @@ function renderHighlights() {
 
     pushHighlight(
       items,
-      'Typ',
+      t.extensionType,
       currentProduct.extension_type
     );
 
     pushHighlight(
       items,
-      'Qualität',
+      t.hairQuality,
       currentProduct.quality_grade
     );
 
     pushHighlight(
       items,
-      'Struktur',
+      t.texture,
       currentProduct.texture
     );
 
     pushHighlight(
       items,
-      'Länge',
+      t.length,
       selectedVariant?.length_cm
         ? `${selectedVariant.length_cm} cm`
         : currentProduct.length_cm
@@ -1105,7 +1656,7 @@ function renderHighlights() {
 
     pushHighlight(
       items,
-      'Gewicht',
+      t.weight,
       selectedVariant?.weight_g
         ? `${selectedVariant.weight_g} g`
         : currentProduct.weight_g
@@ -1115,7 +1666,7 @@ function renderHighlights() {
 
     pushHighlight(
       items,
-      'Strähnen',
+      t.strands,
       selectedVariant?.strand_count ||
       currentProduct.strand_count
     );
@@ -1124,13 +1675,13 @@ function renderHighlights() {
 
     pushHighlight(
       items,
-      'Base',
+      t.baseType,
       currentProduct.base_type
     );
 
     pushHighlight(
       items,
-      'Density',
+      t.density,
       selectedVariant?.density_percent
         ? `${selectedVariant.density_percent}%`
         : currentProduct.density_percent
@@ -1140,7 +1691,7 @@ function renderHighlights() {
 
     pushHighlight(
       items,
-      'Länge',
+      t.length,
       selectedVariant?.length_cm
         ? `${selectedVariant.length_cm} cm`
         : currentProduct.length_cm
@@ -1150,7 +1701,7 @@ function renderHighlights() {
 
     pushHighlight(
       items,
-      'Material',
+      t.material,
       currentProduct.hair_material
     );
 
@@ -1449,6 +2000,9 @@ function booleanText(value) {
 
 function renderCare() {
 
+  const t =
+    productTranslations[currentLang];
+
   const text =
     currentLang === 'tr'
       ? currentProduct.care_tr
@@ -1456,15 +2010,16 @@ function renderCare() {
         ? currentProduct.care_en
         : currentProduct.care_de;
 
-  if (text) {
-    $('careInformation')
-      .textContent = text;
-  }
+  $('careInformation').textContent =
+    text || t.careFallback;
 
 }
 
 
 function renderBoxContents() {
+
+  const t =
+    productTranslations[currentLang];
 
   const text =
     currentLang === 'tr'
@@ -1473,10 +2028,8 @@ function renderBoxContents() {
         ? currentProduct.box_contents_en
         : currentProduct.box_contents_de;
 
-  if (text) {
-    $('boxContents')
-      .textContent = text;
-  }
+  $('boxContents').textContent =
+    text || t.boxFallback;
 
 }
 
@@ -2045,24 +2598,17 @@ function bindGlobalActions() {
             button.dataset
               .productLang;
 
-          document
-            .querySelectorAll(
-              '[data-product-lang]'
-            )
-            .forEach(
-              el =>
-                el.classList.remove(
-                  'active'
-                )
-            );
+          applyProductStaticLanguage();
 
-          button.classList.add(
-            'active'
-          );
+          $('productMessage')
+            .textContent = '';
 
           if (currentProduct) {
             renderProduct();
           }
+
+          renderCartDrawer();
+          renderFavoritesDrawer();
 
         }
       );
@@ -2331,12 +2877,16 @@ function showProductError(
   message
 ) {
 
+  const t =
+    productTranslations[currentLang];
+
   $('productName')
     .textContent =
-    'Produkt nicht gefunden';
+    t.notFoundTitle;
 
   $('productDescription')
-    .textContent = message;
+    .textContent =
+    message || t.notFoundText;
 
   $('productStock')
     .textContent = '';
@@ -2360,6 +2910,9 @@ function renderShippingReturns() {
 
   if (!currentProduct) return;
 
+  const t =
+    productTranslations[currentLang];
+
   const text =
     currentLang === 'tr'
       ? currentProduct.shipping_return_tr
@@ -2367,31 +2920,14 @@ function renderShippingReturns() {
         ? currentProduct.shipping_return_en
         : currentProduct.shipping_return_de;
 
-  let container =
-    document.getElementById('shippingReturns');
-
-  if (!container) {
-    const sections =
-      document.querySelectorAll('.product-accordion details');
-
-    for (const section of sections) {
-      const summary =
-        section.querySelector('summary');
-
-      if (
-        summary &&
-        summary.textContent.includes('Versand & R�ckgabe')
-      ) {
-        container =
-          section.querySelector('.accordion-content');
-        break;
-      }
-    }
-  }
+  const container =
+    document.getElementById(
+      'shippingReturns'
+    );
 
   if (!container) return;
 
   container.textContent =
-    text || '�';
-}
+    text || t.shippingFallback;
 
+}
