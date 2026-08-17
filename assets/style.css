@@ -417,3 +417,140 @@
 .saved-clear-button:hover {
   border-color: var(--ink);
 }
+
+/* =========================================
+   CUSTOMER ACCOUNT HEADER BUTTON
+========================================= */
+
+.account-header-button {
+  min-height: 38px;
+  max-width: 150px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  background: #fff;
+  color: var(--ink);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  overflow: hidden;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.account-header-button:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.account-header-icon {
+  width: 19px;
+  height: 19px;
+
+  flex: 0 0 19px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid currentColor;
+  border-radius: 50%;
+
+  font-size: 0;
+  position: relative;
+}
+
+.account-header-icon::before {
+  content: '';
+
+  position: absolute;
+  top: 4px;
+  left: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  transform: translateX(-50%);
+
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.account-header-icon::after {
+  content: '';
+
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+
+  width: 9px;
+  height: 5px;
+
+  transform: translateX(-50%);
+
+  border: 1px solid currentColor;
+  border-radius: 7px 7px 4px 4px;
+}
+
+#accountHeaderText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* Giriş yapılmışsa */
+
+.account-header-button.logged-in {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+
+  #accountHeaderText {
+    display: none;
+  }
+
+  .account-header-button {
+    width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+
+}
+
+
+/* Telefon */
+
+@media (max-width: 600px) {
+
+  .account-header-button {
+    width: 36px;
+    min-height: 36px;
+  }
+
+  .account-header-icon {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+
+}
