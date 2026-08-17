@@ -1218,3 +1218,116 @@ dialog::backdrop {
     height: 72px;
   }
 }
+
+
+/* =========================================
+   ADMIN VARIANT CARDS
+========================================= */
+
+#variantRows {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+#variantRows > div {
+  margin-top: 0 !important;
+  padding: 22px !important;
+
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 16px;
+
+  background: #fcfbfb;
+  border: 1px solid var(--border) !important;
+  border-radius: 18px !important;
+}
+
+#variantRows > div > strong {
+  grid-column: 1 / -1;
+
+  padding-bottom: 14px;
+  margin-bottom: 2px;
+
+  color: var(--black);
+  border-bottom: 1px solid var(--border);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+#variantRows > div > label {
+  margin: 0;
+}
+
+#variantRows > div > label input {
+  background: #fff;
+}
+
+#variantRows > div > label:has(input[type="checkbox"]) {
+  grid-column: 1 / 2;
+
+  min-height: 46px;
+  padding: 10px 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: var(--pink-soft);
+  border-radius: 12px;
+}
+
+#variantRows > div > label:has(input[type="checkbox"]) input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+#variantRows > div > .danger {
+  grid-column: 3 / 4;
+
+  align-self: end;
+  justify-self: end;
+
+  margin: 0;
+}
+
+#addVariant {
+  width: fit-content;
+  margin-top: 8px;
+}
+
+@media (max-width: 820px) {
+
+  #variantRows > div {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  #variantRows > div > .danger {
+    grid-column: 2 / 3;
+  }
+}
+
+@media (max-width: 560px) {
+
+  #variantRows > div {
+    grid-template-columns: 1fr;
+    padding: 17px !important;
+  }
+
+  #variantRows > div > strong,
+  #variantRows > div > label,
+  #variantRows > div > label:has(input[type="checkbox"]),
+  #variantRows > div > .danger {
+    grid-column: 1 / -1;
+  }
+
+  #variantRows > div > .danger {
+    width: 100%;
+    justify-self: stretch;
+  }
+}

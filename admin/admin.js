@@ -551,7 +551,7 @@ function renderVariants() {
   if (!currentVariants.length) {
     container.innerHTML = `
       <p style="opacity:.7;margin-top:18px">
-        Noch keine Varianten hinzugefÃ¼gt.
+        Noch keine Varianten hinzugefügt.
       </p>
     `;
     return;
@@ -583,7 +583,7 @@ function renderVariants() {
         </label>
 
         <label>
-          LÃ¤nge (cm)
+          Länge (cm)
           <input
             type="number"
             value="${variant.length_cm ?? ''}"
@@ -601,7 +601,7 @@ function renderVariants() {
         </label>
 
         <label>
-          StrÃ¤hnen
+          Strähnen
           <input
             type="number"
             value="${variant.strand_count ?? ''}"
@@ -630,7 +630,7 @@ function renderVariants() {
         </label>
 
         <label>
-          HaarlÃ¤nge (cm)
+          Haarlänge (cm)
           <input
             type="number"
             value="${variant.length_cm ?? ''}"
@@ -649,7 +649,7 @@ function renderVariants() {
         </label>
 
         <label>
-          Base LÃ¤nge
+          Base Länge
           <input
             type="number"
             step="0.1"
@@ -693,7 +693,7 @@ function renderVariants() {
         ${specialFields}
 
         <label>
-          Preis (â‚¬)
+          Preis (€)
           <input
             type="number"
             step="0.01"
