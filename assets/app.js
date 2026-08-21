@@ -1148,7 +1148,22 @@ function renderMainCart() {
 
     </div>
 
-    <button
+        <button
+      type="button"
+      class="saved-clear-button"
+      style="background:#0b0b0c;color:#fff;border-color:#0b0b0c;"
+      onclick="window.location.href='checkout.html'"
+    >
+      ${
+        lang === 'tr'
+          ? 'Ödemeye geç'
+          : lang === 'en'
+            ? 'Checkout'
+            : 'Zur Kasse'
+      }
+    </button>
+
+<button
       type="button"
       class="saved-clear-button"
       onclick="clearMainCart()"

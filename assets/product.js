@@ -2322,7 +2322,30 @@ function renderCartDrawer() {
         </div>
 
       </div>
-    `).join('');
+    `).join('') + `
+
+    <button
+      type="button"
+      style="
+        width:100%;
+        min-height:48px;
+        margin-top:20px;
+        border:1px solid #0b0b0c;
+        border-radius:999px;
+        background:#0b0b0c;
+        color:#fff;
+        font-weight:700;
+        cursor:pointer;
+      "
+      onclick="window.location.href='checkout.html'"
+    >
+      ${currentLang === 'tr'
+        ? 'Ödemeye geç'
+        : currentLang === 'en'
+          ? 'Checkout'
+          : 'Zur Kasse'}
+    </button>
+  `;
 
 }
 
