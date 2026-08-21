@@ -1,0 +1,508 @@
+﻿<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Checkout — ARDA HAIR</title>
+
+  <meta
+    name="description"
+    content="Sicherer Checkout bei ARDA HAIR."
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/arda-favicon.png?v=2"
+  >
+
+  <link
+    rel="stylesheet"
+    href="assets/checkout.css"
+  >
+</head>
+
+<body>
+
+  <header class="checkout-header">
+
+    <a
+      href="index.html"
+      class="checkout-logo"
+      aria-label="ARDA HAIR"
+    >
+      <img
+        src="assets/arda-logo.png"
+        alt="ARDA HAIR"
+      >
+    </a>
+
+    <div class="secure-label">
+      Sicherer Checkout
+    </div>
+
+  </header>
+
+
+  <main class="checkout-layout">
+
+    <section class="checkout-main">
+
+      <a
+        href="index.html"
+        class="back-link"
+      >
+        ← Zurück zum Shop
+      </a>
+
+      <div class="checkout-heading">
+        <span>CHECKOUT</span>
+
+        <h1>
+          Deine Bestellung
+        </h1>
+
+        <p>
+          Bitte überprüfe deine Angaben,
+          bevor du deine Bestellung abschließt.
+        </p>
+      </div>
+
+
+      <form
+        id="checkoutForm"
+        novalidate
+      >
+
+        <section class="checkout-card">
+
+          <div class="section-number">
+            01
+          </div>
+
+          <div>
+            <h2>Kontakt</h2>
+
+            <p class="section-copy">
+              Für Bestellbestätigung und Versandinformationen.
+            </p>
+          </div>
+
+
+          <div class="form-grid">
+
+            <label class="field full">
+              <span>E-Mail-Adresse *</span>
+
+              <input
+                type="email"
+                id="checkoutEmail"
+                name="email"
+                autocomplete="email"
+                required
+              >
+            </label>
+
+
+            <label class="field">
+              <span>Vorname *</span>
+
+              <input
+                type="text"
+                id="checkoutFirstName"
+                name="firstName"
+                autocomplete="given-name"
+                required
+              >
+            </label>
+
+
+            <label class="field">
+              <span>Nachname *</span>
+
+              <input
+                type="text"
+                id="checkoutLastName"
+                name="lastName"
+                autocomplete="family-name"
+                required
+              >
+            </label>
+
+
+            <label class="field full">
+              <span>Telefon</span>
+
+              <input
+                type="tel"
+                id="checkoutPhone"
+                name="phone"
+                autocomplete="tel"
+              >
+            </label>
+
+          </div>
+
+        </section>
+
+
+        <section class="checkout-card">
+
+          <div class="section-number">
+            02
+          </div>
+
+          <div>
+            <h2>Lieferadresse</h2>
+
+            <p class="section-copy">
+              Wir liefern derzeit ausschließlich
+              in Mitgliedstaaten der Europäischen Union.
+            </p>
+          </div>
+
+
+          <div class="form-grid">
+
+            <label class="field full">
+              <span>Land *</span>
+
+              <select
+                id="checkoutCountry"
+                name="country"
+                autocomplete="country"
+                required
+              >
+
+                <option value="">
+                  Land auswählen
+                </option>
+
+                <option value="AT">Österreich</option>
+                <option value="BE">Belgien</option>
+                <option value="BG">Bulgarien</option>
+                <option value="HR">Kroatien</option>
+                <option value="CY">Zypern</option>
+                <option value="CZ">Tschechien</option>
+                <option value="DK">Dänemark</option>
+                <option value="DE">Deutschland</option>
+                <option value="EE">Estland</option>
+                <option value="FI">Finnland</option>
+                <option value="FR">Frankreich</option>
+                <option value="GR">Griechenland</option>
+                <option value="HU">Ungarn</option>
+                <option value="IE">Irland</option>
+                <option value="IT">Italien</option>
+                <option value="LV">Lettland</option>
+                <option value="LT">Litauen</option>
+                <option value="LU">Luxemburg</option>
+                <option value="MT">Malta</option>
+                <option value="NL">Niederlande</option>
+                <option value="PL">Polen</option>
+                <option value="PT">Portugal</option>
+                <option value="RO">Rumänien</option>
+                <option value="SK">Slowakei</option>
+                <option value="SI">Slowenien</option>
+                <option value="ES">Spanien</option>
+                <option value="SE">Schweden</option>
+
+              </select>
+            </label>
+
+
+            <label class="field full">
+              <span>Straße und Hausnummer *</span>
+
+              <input
+                type="text"
+                id="checkoutStreet"
+                name="street"
+                autocomplete="street-address"
+                required
+              >
+            </label>
+
+
+            <label class="field">
+              <span>Postleitzahl *</span>
+
+              <input
+                type="text"
+                id="checkoutPostalCode"
+                name="postalCode"
+                autocomplete="postal-code"
+                required
+              >
+            </label>
+
+
+            <label class="field">
+              <span>Ort *</span>
+
+              <input
+                type="text"
+                id="checkoutCity"
+                name="city"
+                autocomplete="address-level2"
+                required
+              >
+            </label>
+
+
+            <label class="field full">
+              <span>
+                Firma / Salon
+                <small>(optional)</small>
+              </span>
+
+              <input
+                type="text"
+                id="checkoutCompany"
+                name="company"
+                autocomplete="organization"
+              >
+            </label>
+
+          </div>
+
+        </section>
+
+
+        <section class="checkout-card">
+
+          <div class="section-number">
+            03
+          </div>
+
+          <div>
+            <h2>Versand</h2>
+
+            <p class="section-copy">
+              Die Versandkosten werden
+              abhängig vom Lieferland berechnet.
+            </p>
+          </div>
+
+
+          <div class="shipping-placeholder">
+
+            <strong>
+              Lieferland auswählen
+            </strong>
+
+            <span>
+              Danach werden Versandart,
+              Lieferzeit und Versandkosten angezeigt.
+            </span>
+
+          </div>
+
+        </section>
+
+
+        <section class="checkout-card">
+
+          <div class="section-number">
+            04
+          </div>
+
+          <div>
+            <h2>Zahlung</h2>
+
+            <p class="section-copy">
+              Die Zahlung wird im nächsten Schritt
+              sicher verarbeitet.
+            </p>
+          </div>
+
+
+          <div class="payment-methods">
+
+            <div class="payment-method">
+              <strong>
+                Kredit- / Debitkarte
+              </strong>
+
+              <span>
+                Stripe
+              </span>
+            </div>
+
+
+            <div class="payment-method">
+              <strong>
+                PayPal
+              </strong>
+
+              <span>
+                PayPal
+              </span>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <section class="checkout-card legal-checkout">
+
+          <label class="checkbox-row">
+
+            <input
+              type="checkbox"
+              id="acceptTerms"
+              required
+            >
+
+            <span>
+              Ich akzeptiere die
+              <a href="agb.html" target="_blank">
+                AGB
+              </a>
+              und habe die
+              <a href="widerruf.html" target="_blank">
+                Widerrufsbelehrung
+              </a>
+              zur Kenntnis genommen.
+            </span>
+
+          </label>
+
+
+          <label class="checkbox-row">
+
+            <input
+              type="checkbox"
+              id="acceptPrivacy"
+              required
+            >
+
+            <span>
+              Ich habe die
+              <a href="datenschutz.html" target="_blank">
+                Datenschutzerklärung
+              </a>
+              zur Kenntnis genommen.
+            </span>
+
+          </label>
+
+
+          <button
+            type="submit"
+            id="checkoutSubmit"
+            class="checkout-submit"
+            disabled
+          >
+            Zahlungssystem wird eingerichtet
+          </button>
+
+
+          <p
+            class="checkout-message"
+            id="checkoutMessage"
+          >
+            Stripe und PayPal werden im nächsten Schritt verbunden.
+          </p>
+
+        </section>
+
+      </form>
+
+    </section>
+
+
+    <aside class="order-summary">
+
+      <div class="summary-inner">
+
+        <span class="summary-kicker">
+          BESTELLÜBERSICHT
+        </span>
+
+        <h2>
+          Dein Warenkorb
+        </h2>
+
+
+        <div
+          id="checkoutItems"
+          class="checkout-items"
+        >
+
+          <div class="checkout-empty">
+            Warenkorb wird geladen...
+          </div>
+
+        </div>
+
+
+        <div class="summary-totals">
+
+          <div>
+            <span>Zwischensumme</span>
+
+            <strong id="checkoutSubtotal">
+              0,00 €
+            </strong>
+          </div>
+
+
+          <div>
+            <span>Versand</span>
+
+            <strong id="checkoutShipping">
+              —
+            </strong>
+          </div>
+
+
+          <div class="summary-total">
+            <span>Gesamt</span>
+
+            <strong id="checkoutTotal">
+              0,00 €
+            </strong>
+          </div>
+
+        </div>
+
+
+        <p class="summary-note">
+          Der endgültige Gesamtpreis
+          einschließlich Versand wird vor
+          Abschluss der Bestellung angezeigt.
+        </p>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+
+  <footer class="checkout-footer">
+
+    <div>
+      © 2026 ARDA HAIR
+    </div>
+
+    <nav>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">AGB</a>
+      <a href="widerruf.html">Widerruf</a>
+      <a href="versand-rueckgabe.html">
+        Versand & Rückgabe
+      </a>
+    </nav>
+
+  </footer>
+
+
+  <script src="assets/checkout.js"></script>
+
+</body>
+</html>
