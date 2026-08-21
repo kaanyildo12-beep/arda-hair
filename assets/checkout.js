@@ -36,6 +36,11 @@ const shippingPlaceholder =
   document.querySelector('.shipping-placeholder');
 
 
+let checkoutQuote = null;
+let checkoutQuoteError = '';
+let checkoutQuoteLoading = false;
+
+
 /* =========================================
    HELPERS
 ========================================= */
@@ -90,33 +95,41 @@ function escapeCheckoutHtml(value) {
 }
 
 
-/* =========================================
-   CART SUMMARY
-========================================= */
+function getTrustedQuoteItem(cartItem) {
 
-function calculateCheckoutSubtotal(cart) {
+  if (!checkoutQuote?.items) {
+    return null;
+  }
 
-  return cart.reduce(
-    (total, item) => {
+  return checkoutQuote.items.find(item => {
 
-      const price =
-        Number(item.price_cents || 0);
+    const sameProduct =
+      String(item.productId) ===
+      String(cartItem.productId);
 
-      const quantity =
-        Math.max(
-          1,
-          Number(item.quantity || 1)
-        );
+    const quoteVariant =
+      item.variantId
+        ? String(item.variantId)
+        : '';
 
-      return total +
-        (price * quantity);
+    const cartVariant =
+      cartItem.variantId
+        ? String(cartItem.variantId)
+        : '';
 
-    },
-    0
-  );
+    return (
+      sameProduct &&
+      quoteVariant === cartVariant
+    );
+
+  }) || null;
 
 }
 
+
+/* =========================================
+   CART SUMMARY
+========================================= */
 
 function renderCheckoutCart() {
 
@@ -170,11 +183,17 @@ function renderCheckoutCart() {
           Number(item.quantity || 1)
         );
 
-      const unitPrice =
-        Number(item.price_cents || 0);
+      const trusted =
+        getTrustedQuoteItem(item);
 
-      const lineTotal =
-        unitPrice * quantity;
+      const linePrice =
+        trusted
+          ? formatCheckoutMoney(
+              trusted.lineTotalCents
+            )
+          : checkoutQuoteLoading
+            ? 'Wird geprüft …'
+            : '—';
 
       const image =
         item.image
@@ -219,7 +238,7 @@ function renderCheckoutCart() {
           </div>
 
           <div class="checkout-item-price">
-            ${formatCheckoutMoney(lineTotal)}
+            ${linePrice}
           </div>
 
         </div>
@@ -228,22 +247,173 @@ function renderCheckoutCart() {
     }).join('');
 
 
-  const subtotal =
-    calculateCheckoutSubtotal(cart);
+  if (checkoutQuote) {
 
-  checkoutSubtotal.textContent =
-    formatCheckoutMoney(subtotal);
+    checkoutSubtotal.textContent =
+      formatCheckoutMoney(
+        checkoutQuote.subtotalCents
+      );
 
-  /*
-    Versandkosten werden später
-    serverseitig / anhand des Lieferlandes
-    berechnet.
-  */
-  checkoutShipping.textContent =
-    '—';
+    checkoutTotal.textContent =
+      formatCheckoutMoney(
+        checkoutQuote.subtotalCents
+      );
 
-  checkoutTotal.textContent =
-    formatCheckoutMoney(subtotal);
+  } else {
+
+    checkoutSubtotal.textContent =
+      checkoutQuoteLoading
+        ? 'Wird geprüft …'
+        : '—';
+
+    checkoutTotal.textContent =
+      checkoutQuoteLoading
+        ? 'Wird geprüft …'
+        : '—';
+
+  }
+
+}
+
+
+/* =========================================
+   SECURE SERVER QUOTE
+========================================= */
+
+async function requestCheckoutQuote() {
+
+  const cart =
+    getCheckoutCart();
+
+  checkoutQuote = null;
+  checkoutQuoteError = '';
+
+  if (!cart.length) {
+
+    checkoutQuoteLoading = false;
+    renderCheckoutCart();
+    updateCheckoutState();
+
+    return;
+
+  }
+
+
+  checkoutQuoteLoading = true;
+
+  renderCheckoutCart();
+
+
+  try {
+
+    const response =
+      await fetch(
+        '/api/checkout-quote',
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify({
+            items:
+              cart.map(item => ({
+                productId:
+                  item.productId,
+
+                variantId:
+                  item.variantId || null,
+
+                quantity:
+                  Number(item.quantity || 1)
+              }))
+          })
+        }
+      );
+
+
+    const data =
+      await response
+        .json()
+        .catch(() => ({}));
+
+
+    if (!response.ok) {
+
+      if (
+        data.error ===
+        'INSUFFICIENT_STOCK'
+      ) {
+
+        throw new Error(
+          'STOCK'
+        );
+
+      }
+
+
+      if (
+        data.error ===
+        'PRODUCT_UNAVAILABLE'
+      ) {
+
+        throw new Error(
+          'UNAVAILABLE'
+        );
+
+      }
+
+
+      throw new Error(
+        'QUOTE'
+      );
+
+    }
+
+
+    checkoutQuote =
+      data.quote || null;
+
+
+  } catch (error) {
+
+    checkoutQuote = null;
+
+
+    if (
+      error.message ===
+      'STOCK'
+    ) {
+
+      checkoutQuoteError =
+        'Ein Produkt ist nicht mehr in der gewünschten Menge verfügbar. Bitte passe den Warenkorb an.';
+
+    } else if (
+      error.message ===
+      'UNAVAILABLE'
+    ) {
+
+      checkoutQuoteError =
+        'Ein Produkt oder eine Variante ist nicht mehr verfügbar. Bitte passe den Warenkorb an.';
+
+    } else {
+
+      checkoutQuoteError =
+        'Preis und Bestand konnten nicht geprüft werden. Bitte versuche es erneut.';
+
+    }
+
+  } finally {
+
+    checkoutQuoteLoading =
+      false;
+
+    renderCheckoutCart();
+    updateCheckoutState();
+
+  }
 
 }
 
@@ -322,34 +492,59 @@ function updateCheckoutState() {
     );
 
 
+  checkoutSubmit.disabled =
+    true;
+
+
   if (!cart.length) {
 
-    checkoutSubmit.disabled =
-      true;
+    checkoutMessage.textContent =
+      'Bitte lege zuerst ein Produkt in den Warenkorb.';
 
     return;
 
   }
 
 
-  /*
-    Der Button bleibt bis zur
-    Stripe-/PayPal-Integration deaktiviert.
-  */
+  if (checkoutQuoteLoading) {
 
-  checkoutSubmit.disabled =
-    true;
+    checkoutMessage.textContent =
+      'Preis und Bestand werden sicher geprüft …';
+
+    return;
+
+  }
+
+
+  if (checkoutQuoteError) {
+
+    checkoutMessage.textContent =
+      checkoutQuoteError;
+
+    return;
+
+  }
+
+
+  if (!checkoutQuote) {
+
+    checkoutMessage.textContent =
+      'Preisprüfung nicht verfügbar.';
+
+    return;
+
+  }
 
 
   if (legalAccepted) {
 
     checkoutMessage.textContent =
-      'Angaben bestätigt. Stripe und PayPal werden als Nächstes verbunden.';
+      'Preis und Bestand bestätigt. Stripe und PayPal werden als Nächstes verbunden.';
 
   } else {
 
     checkoutMessage.textContent =
-      'Bitte bestätige die rechtlichen Hinweise. Die Zahlungsfunktion wird anschließend eingerichtet.';
+      'Preis und Bestand bestätigt. Bitte bestätige anschließend die rechtlichen Hinweise.';
 
   }
 
@@ -399,26 +594,26 @@ checkoutForm
    SYNC
 ========================================= */
 
+async function refreshCheckout() {
+
+  renderCheckoutCart();
+  updateCheckoutShipping();
+  updateCheckoutState();
+
+  await requestCheckoutQuote();
+
+}
+
+
 window.addEventListener(
   'storage',
-  () => {
-
-    renderCheckoutCart();
-    updateCheckoutState();
-
-  }
+  refreshCheckout
 );
 
 
 window.addEventListener(
   'pageshow',
-  () => {
-
-    renderCheckoutCart();
-    updateCheckoutShipping();
-    updateCheckoutState();
-
-  }
+  refreshCheckout
 );
 
 
@@ -426,6 +621,4 @@ window.addEventListener(
    START
 ========================================= */
 
-renderCheckoutCart();
-updateCheckoutShipping();
-updateCheckoutState();
+refreshCheckout();
