@@ -39,6 +39,7 @@ const shippingPlaceholder =
 let checkoutQuote = null;
 let checkoutQuoteError = '';
 let checkoutQuoteLoading = false;
+let checkoutSubmitting = false;
 
 
 /* =========================================
@@ -562,6 +563,16 @@ function updateCheckoutState() {
     true;
 
 
+  if (checkoutSubmitting) {
+
+    checkoutMessage.textContent =
+      'Du wirst sicher zu Stripe weitergeleitet …';
+
+    return;
+
+  }
+
+
   if (!cart.length) {
 
     checkoutMessage.textContent =
@@ -614,8 +625,11 @@ function updateCheckoutState() {
 
   if (legalAccepted) {
 
+    checkoutSubmit.disabled =
+      false;
+
     checkoutMessage.textContent =
-      'Preis und Bestand bestätigt. Stripe und PayPal werden als Nächstes verbunden.';
+      'Alles geprüft. Du kannst jetzt sicher mit Stripe fortfahren.';
 
   } else {
 
@@ -655,12 +669,235 @@ acceptPrivacy
 checkoutForm
   ?.addEventListener(
     'submit',
-    event => {
+    async event => {
 
       event.preventDefault();
 
-      checkoutMessage.textContent =
-        'Die Zahlungsfunktion ist noch nicht aktiviert.';
+
+      if (checkoutSubmitting) {
+        return;
+      }
+
+
+      const cart =
+        getCheckoutCart();
+
+
+      if (
+        !cart.length ||
+        !checkoutQuote ||
+        checkoutQuoteLoading ||
+        checkoutQuoteError ||
+        !checkoutCountry?.value
+      ) {
+
+        updateCheckoutState();
+        return;
+
+      }
+
+
+      if (
+        !acceptTerms?.checked ||
+        !acceptPrivacy?.checked
+      ) {
+
+        checkoutMessage.textContent =
+          'Bitte bestätige zuerst die rechtlichen Hinweise.';
+
+        return;
+
+      }
+
+
+      if (!checkoutForm.checkValidity()) {
+
+        checkoutForm.reportValidity();
+
+        checkoutMessage.textContent =
+          'Bitte fülle alle Pflichtfelder korrekt aus.';
+
+        return;
+
+      }
+
+
+      const formData =
+        new FormData(checkoutForm);
+
+
+      checkoutSubmitting =
+        true;
+
+      updateCheckoutState();
+
+
+      try {
+
+        const response =
+          await fetch(
+            '/api/create-stripe-session',
+            {
+              method: 'POST',
+
+              headers: {
+                'Content-Type':
+                  'application/json'
+              },
+
+              body: JSON.stringify({
+
+                country:
+                  checkoutCountry.value,
+
+                customer: {
+                  email:
+                    formData.get('email'),
+
+                  firstName:
+                    formData.get('firstName'),
+
+                  lastName:
+                    formData.get('lastName'),
+
+                  phone:
+                    formData.get('phone') || '',
+
+                  company:
+                    formData.get('company') || '',
+
+                  street:
+                    formData.get('street'),
+
+                  postalCode:
+                    formData.get('postalCode'),
+
+                  city:
+                    formData.get('city')
+                },
+
+                items:
+                  cart.map(item => ({
+                    productId:
+                      item.productId,
+
+                    variantId:
+                      item.variantId || null,
+
+                    quantity:
+                      Number(item.quantity || 1)
+                  }))
+
+              })
+            }
+          );
+
+
+        const data =
+          await response
+            .json()
+            .catch(() => ({}));
+
+
+        if (!response.ok) {
+
+          if (
+            data.error ===
+            'INSUFFICIENT_STOCK'
+          ) {
+
+            throw new Error(
+              'STOCK'
+            );
+
+          }
+
+
+          if (
+            data.error ===
+            'PRODUCT_UNAVAILABLE'
+          ) {
+
+            throw new Error(
+              'UNAVAILABLE'
+            );
+
+          }
+
+
+          if (
+            data.error ===
+            'SHIPPING_RATE_UNAVAILABLE'
+          ) {
+
+            throw new Error(
+              'SHIPPING'
+            );
+
+          }
+
+
+          throw new Error(
+            'PAYMENT'
+          );
+
+        }
+
+
+        if (!data.checkoutUrl) {
+
+          throw new Error(
+            'PAYMENT'
+          );
+
+        }
+
+
+        window.location.href =
+          data.checkoutUrl;
+
+
+      } catch (error) {
+
+        checkoutSubmitting =
+          false;
+
+
+        if (
+          error.message ===
+          'STOCK'
+        ) {
+
+          checkoutMessage.textContent =
+            'Ein Produkt ist nicht mehr in der gewünschten Menge verfügbar.';
+
+        } else if (
+          error.message ===
+          'UNAVAILABLE'
+        ) {
+
+          checkoutMessage.textContent =
+            'Ein Produkt oder eine Variante ist nicht mehr verfügbar.';
+
+        } else if (
+          error.message ===
+          'SHIPPING'
+        ) {
+
+          checkoutMessage.textContent =
+            'Für dieses Lieferland konnte der Versand nicht berechnet werden.';
+
+        } else {
+
+          checkoutMessage.textContent =
+            'Stripe konnte nicht gestartet werden. Bitte versuche es erneut.';
+
+        }
+
+
+        updateCheckoutState();
+
+      }
 
     }
   );
