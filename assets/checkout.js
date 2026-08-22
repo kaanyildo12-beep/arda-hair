@@ -254,10 +254,53 @@ function renderCheckoutCart() {
         checkoutQuote.subtotalCents
       );
 
-    checkoutTotal.textContent =
-      formatCheckoutMoney(
-        checkoutQuote.subtotalCents
+
+    const hasShipping =
+      Number.isInteger(
+        checkoutQuote.shippingCents
       );
+
+
+    checkoutShipping.textContent =
+      hasShipping
+        ? formatCheckoutMoney(
+            checkoutQuote.shippingCents
+          )
+        : '—';
+
+
+    checkoutTotal.textContent =
+      hasShipping
+        ? formatCheckoutMoney(
+            checkoutQuote.totalCents
+          )
+        : formatCheckoutMoney(
+            checkoutQuote.subtotalCents
+          );
+
+
+    if (
+      hasShipping &&
+      checkoutQuote.shippingMethod &&
+      shippingPlaceholder
+    ) {
+
+      shippingPlaceholder.innerHTML = `
+        <strong>
+          ${escapeCheckoutHtml(
+            checkoutQuote.shippingMethod
+          )}
+        </strong>
+
+        <span>
+          Versandkosten:
+          ${formatCheckoutMoney(
+            checkoutQuote.shippingCents
+          )}
+        </span>
+      `;
+
+    }
 
   } else {
 
@@ -318,6 +361,9 @@ async function requestCheckoutQuote() {
           },
 
           body: JSON.stringify({
+            country:
+              checkoutCountry?.value || '',
+
             items:
               cart.map(item => ({
                 productId:
@@ -366,6 +412,18 @@ async function requestCheckoutQuote() {
       }
 
 
+      if (
+        data.error ===
+        'SHIPPING_RATE_UNAVAILABLE'
+      ) {
+
+        throw new Error(
+          'SHIPPING'
+        );
+
+      }
+
+
       throw new Error(
         'QUOTE'
       );
@@ -397,6 +455,14 @@ async function requestCheckoutQuote() {
 
       checkoutQuoteError =
         'Ein Produkt oder eine Variante ist nicht mehr verfügbar. Bitte passe den Warenkorb an.';
+
+    } else if (
+      error.message ===
+      'SHIPPING'
+    ) {
+
+      checkoutQuoteError =
+        'Für dieses Lieferland ist der Versandpreis noch nicht eingerichtet.';
 
     } else {
 
@@ -536,6 +602,16 @@ function updateCheckoutState() {
   }
 
 
+  if (!checkoutCountry?.value) {
+
+    checkoutMessage.textContent =
+      'Bitte wähle zuerst dein Lieferland.';
+
+    return;
+
+  }
+
+
   if (legalAccepted) {
 
     checkoutMessage.textContent =
@@ -558,7 +634,7 @@ function updateCheckoutState() {
 checkoutCountry
   ?.addEventListener(
     'change',
-    updateCheckoutShipping
+    refreshCheckout
   );
 
 

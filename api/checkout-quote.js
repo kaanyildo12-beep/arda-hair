@@ -160,9 +160,57 @@ module.exports = async function handler(req, res) {
     );
 
 
+    const country =
+      String(body?.country || '')
+        .trim()
+        .toUpperCase();
+
+
+    let shippingCents = null;
+    let shippingMethod = null;
+
+
+    if (country) {
+
+      if (country === 'DE') {
+
+        shippingCents = 690;
+        shippingMethod = 'DHL Paket';
+
+      } else {
+
+        return res.status(422).json({
+          error: 'SHIPPING_RATE_UNAVAILABLE'
+        });
+
+      }
+
+    }
+
+
+    const subtotalCents =
+      Number(data?.subtotalCents || 0);
+
+    const totalCents =
+      subtotalCents +
+      Number(shippingCents || 0);
+
+
     return res.status(200).json({
       ok: true,
-      quote: data
+
+      quote: {
+        ...data,
+
+        shippingCountry:
+          country || null,
+
+        shippingMethod,
+
+        shippingCents,
+
+        totalCents
+      }
     });
 
 
