@@ -450,7 +450,7 @@ module.exports = async function handler(
 
     params.set(
       'success_url',
-      `${SITE_URL}/checkout.html?stripe=success&session_id={CHECKOUT_SESSION_ID}`
+      `${SITE_URL}/checkout-success.html?session_id={CHECKOUT_SESSION_ID}`
     );
 
     params.set(
