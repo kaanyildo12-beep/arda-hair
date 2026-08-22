@@ -177,6 +177,20 @@ module.exports = async function handler(req, res) {
         shippingCents = 690;
         shippingMethod = 'DHL Paket';
 
+      } else if (
+        [
+          'AT', 'BE', 'BG', 'HR', 'CY',
+          'CZ', 'DK', 'EE', 'FI', 'FR',
+          'GR', 'HU', 'IE', 'IT', 'LV',
+          'LT', 'LU', 'MT', 'NL', 'PL',
+          'PT', 'RO', 'SK', 'SI', 'ES',
+          'SE'
+        ].includes(country)
+      ) {
+
+        shippingCents = 1790;
+        shippingMethod = 'DHL Paket';
+
       } else {
 
         return res.status(422).json({
