@@ -320,7 +320,15 @@
 
           <div class="payment-methods">
 
-            <div class="payment-method">
+            <label class="payment-method">
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="stripe"
+                checked
+              >
+
               <strong>
                 Kredit- / Debitkarte
               </strong>
@@ -328,18 +336,27 @@
               <span>
                 Sicher bezahlen mit Stripe
               </span>
-            </div>
+
+            </label>
 
 
-            <div class="payment-method">
+            <label class="payment-method">
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="paypal"
+              >
+
               <strong>
                 PayPal
               </strong>
 
               <span>
-                Wird als Nächstes eingerichtet
+                Sicher bezahlen mit PayPal
               </span>
-            </div>
+
+            </label>
 
           </div>
 

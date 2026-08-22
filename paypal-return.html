@@ -1,0 +1,543 @@
+﻿<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    PayPal-Zahlung — ARDA HAIR
+  </title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/arda-favicon.png?v=2"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(
+          circle at top,
+          #fff8fa,
+          #f8f1f3 55%,
+          #f4eef0
+        );
+      color: #111;
+    }
+
+    .header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+    }
+
+    .logo img {
+      width: 140px;
+      display: block;
+    }
+
+    .secure {
+      background: #0a0a0a;
+      color: #fff;
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .main {
+      min-height:
+        calc(100vh - 82px);
+      display: grid;
+      place-items: center;
+      padding: 50px 20px;
+    }
+
+    .card {
+      width:
+        min(650px, 100%);
+      padding: 54px 42px;
+      text-align: center;
+      background:
+        rgba(255,255,255,.96);
+      border:
+        1px solid #eadfe3;
+      border-radius: 28px;
+      box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.08);
+    }
+
+    .icon {
+      width: 74px;
+      height: 74px;
+      margin:
+        0 auto 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #111;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .kicker {
+      display: block;
+      margin-bottom: 12px;
+      color: #c87391;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .16em;
+    }
+
+    h1 {
+      margin:
+        0 0 18px;
+      font-family:
+        Georgia, serif;
+      font-size:
+        clamp(
+          38px,
+          6vw,
+          58px
+        );
+      line-height: 1.03;
+    }
+
+    .message {
+      max-width: 510px;
+      margin: 0 auto;
+      color: #666;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .details {
+      display: none;
+      margin-top: 34px;
+      padding: 22px;
+      background: #faf7f8;
+      border:
+        1px solid #eee2e6;
+      border-radius: 18px;
+    }
+
+    .details.show {
+      display: block;
+    }
+
+    .row {
+      display: flex;
+      justify-content:
+        space-between;
+      gap: 20px;
+      padding: 8px 0;
+      text-align: left;
+    }
+
+    .row span {
+      color: #777;
+    }
+
+    .row strong {
+      text-align: right;
+    }
+
+    .actions {
+      display: none;
+      margin-top: 32px;
+    }
+
+    .actions.show {
+      display: block;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 30px;
+      border-radius: 999px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .error .icon {
+      background: #b3261e;
+    }
+
+    @media (
+      max-width: 600px
+    ) {
+
+      .header {
+        padding:
+          0 20px;
+      }
+
+      .logo img {
+        width: 115px;
+      }
+
+      .secure {
+        font-size: 10px;
+        padding:
+          9px 12px;
+      }
+
+      .card {
+        padding:
+          40px 22px;
+        border-radius: 22px;
+      }
+
+      .row {
+        flex-direction:
+          column;
+        gap: 4px;
+      }
+
+      .row strong {
+        text-align: left;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      <img
+        src="assets/arda-logo.png"
+        alt="ARDA HAIR"
+      >
+    </a>
+
+    <div class="secure">
+      Sichere PayPal-Zahlung
+    </div>
+
+  </header>
+
+
+  <main class="main">
+
+    <section
+      class="card"
+      id="card"
+    >
+
+      <div
+        class="icon"
+        id="icon"
+      >
+        …
+      </div>
+
+      <span class="kicker">
+        ARDA HAIR
+      </span>
+
+      <h1 id="title">
+        Zahlung wird bestätigt
+      </h1>
+
+      <p
+        class="message"
+        id="message"
+      >
+        Einen Moment bitte.
+        Wir bestätigen deine
+        PayPal-Zahlung sicher.
+      </p>
+
+
+      <div
+        class="details"
+        id="details"
+      >
+
+        <div class="row">
+          <span>
+            Bestellnummer
+          </span>
+
+          <strong id="orderNumber">
+            —
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>
+            Gesamtbetrag
+          </span>
+
+          <strong id="orderTotal">
+            —
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>Status</span>
+
+          <strong>
+            Bezahlt
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div
+        class="actions"
+        id="actions"
+      >
+
+        <a
+          href="index.html"
+          class="button"
+        >
+          Zurück zum Shop
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    function formatMoney(
+      cents,
+      currency
+    ) {
+
+      return new Intl.NumberFormat(
+        'de-DE',
+        {
+          style:
+            'currency',
+
+          currency:
+            currency || 'EUR'
+        }
+      ).format(
+        Number(cents || 0) /
+        100
+      );
+
+    }
+
+
+    async function capturePayPal() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const paypalOrderId =
+        params.get('token');
+
+
+      const card =
+        document.getElementById(
+          'card'
+        );
+
+      const icon =
+        document.getElementById(
+          'icon'
+        );
+
+      const title =
+        document.getElementById(
+          'title'
+        );
+
+      const message =
+        document.getElementById(
+          'message'
+        );
+
+      const details =
+        document.getElementById(
+          'details'
+        );
+
+      const actions =
+        document.getElementById(
+          'actions'
+        );
+
+
+      if (!paypalOrderId) {
+
+        card.classList.add(
+          'error'
+        );
+
+        icon.textContent =
+          '!';
+
+        title.textContent =
+          'PayPal-Zahlung konnte nicht geprüft werden';
+
+        message.textContent =
+          'Die PayPal-Bestellnummer fehlt. Bitte bezahle nicht erneut und kontaktiere uns, falls du bereits bezahlt hast.';
+
+        actions.classList.add(
+          'show'
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+            '/api/capture-paypal-order',
+            {
+              method:
+                'POST',
+
+              headers: {
+                'Content-Type':
+                  'application/json'
+              },
+
+              body:
+                JSON.stringify({
+                  paypalOrderId
+                })
+            }
+          );
+
+
+        const data =
+          await response
+            .json()
+            .catch(
+              () => ({})
+            );
+
+
+        if (
+          !response.ok ||
+          !data.ok ||
+          data.paymentStatus !==
+            'paid'
+        ) {
+
+          throw new Error(
+            'CAPTURE_FAILED'
+          );
+
+        }
+
+
+        localStorage.removeItem(
+          'ardaHairCart'
+        );
+
+
+        icon.textContent =
+          '✓';
+
+        title.textContent =
+          'Vielen Dank!';
+
+        message.textContent =
+          'Deine PayPal-Zahlung war erfolgreich und deine Bestellung wurde bestätigt.';
+
+
+        document
+          .getElementById(
+            'orderNumber'
+          )
+          .textContent =
+            data.orderNumber;
+
+
+        document
+          .getElementById(
+            'orderTotal'
+          )
+          .textContent =
+            formatMoney(
+              data.totalCents,
+              data.currency
+            );
+
+
+        details.classList.add(
+          'show'
+        );
+
+        actions.classList.add(
+          'show'
+        );
+
+
+      } catch (error) {
+
+        card.classList.add(
+          'error'
+        );
+
+        icon.textContent =
+          '!';
+
+        title.textContent =
+          'Bestätigung noch nicht verfügbar';
+
+        message.textContent =
+          'Die Zahlung konnte gerade nicht sicher bestätigt werden. Bitte bezahle nicht erneut. Lade diese Seite in wenigen Sekunden neu.';
+
+        actions.classList.add(
+          'show'
+        );
+
+      }
+
+    }
+
+
+    capturePayPal();
+
+  </script>
+
+</body>
+</html>

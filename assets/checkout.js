@@ -35,6 +35,23 @@ const acceptPrivacy =
 const shippingPlaceholder =
   document.querySelector('.shipping-placeholder');
 
+const paymentMethodInputs =
+  document.querySelectorAll(
+    'input[name="paymentMethod"]'
+  );
+
+
+function getPaymentMethod() {
+
+  return (
+    document.querySelector(
+      'input[name="paymentMethod"]:checked'
+    )?.value ||
+    'stripe'
+  );
+
+}
+
 
 let checkoutQuote = null;
 let checkoutQuoteError = '';
@@ -629,7 +646,9 @@ function updateCheckoutState() {
       false;
 
     checkoutMessage.textContent =
-      'Alles geprüft. Du kannst jetzt sicher mit Stripe fortfahren.';
+      getPaymentMethod() === 'paypal'
+        ? 'Alles geprüft. Du kannst jetzt sicher mit PayPal fortfahren.'
+        : 'Alles geprüft. Du kannst jetzt sicher mit Stripe fortfahren.';
 
   } else {
 
@@ -650,6 +669,17 @@ checkoutCountry
     'change',
     refreshCheckout
   );
+
+
+paymentMethodInputs
+  .forEach(input => {
+
+    input.addEventListener(
+      'change',
+      updateCheckoutState
+    );
+
+  });
 
 
 acceptTerms
@@ -725,6 +755,9 @@ checkoutForm
       const formData =
         new FormData(checkoutForm);
 
+      const paymentMethod =
+        getPaymentMethod();
+
 
       checkoutSubmitting =
         true;
@@ -734,9 +767,15 @@ checkoutForm
 
       try {
 
+        const endpoint =
+          paymentMethod === 'paypal'
+            ? '/api/create-paypal-order'
+            : '/api/create-stripe-session';
+
+
         const response =
           await fetch(
-            '/api/create-stripe-session',
+            endpoint,
             {
               method: 'POST',
 
@@ -844,7 +883,13 @@ checkoutForm
         }
 
 
-        if (!data.checkoutUrl) {
+        const paymentUrl =
+          paymentMethod === 'paypal'
+            ? data.approveUrl
+            : data.checkoutUrl;
+
+
+        if (!paymentUrl) {
 
           throw new Error(
             'PAYMENT'
@@ -854,7 +899,7 @@ checkoutForm
 
 
         window.location.href =
-          data.checkoutUrl;
+          paymentUrl;
 
 
       } catch (error) {
@@ -890,7 +935,9 @@ checkoutForm
         } else {
 
           checkoutMessage.textContent =
-            'Stripe konnte nicht gestartet werden. Bitte versuche es erneut.';
+            paymentMethod === 'paypal'
+              ? 'PayPal konnte nicht gestartet werden. Bitte versuche es erneut.'
+              : 'Stripe konnte nicht gestartet werden. Bitte versuche es erneut.';
 
         }
 
