@@ -514,67 +514,13 @@ module.exports = async function handler(
                 invoice_id:
                   orderNumber,
 
-                description:
-                  `ARDA HAIR ${orderNumber}`,
-
                 amount: {
                   currency_code:
                     'EUR',
 
                   value:
                     grandTotal
-                      .toFixed(2),
-
-                  breakdown: {
-                    item_total: {
-                      currency_code:
-                        'EUR',
-
-                      value:
-                        itemTotal
-                          .toFixed(2)
-                    },
-
-                    shipping: {
-                      currency_code:
-                        'EUR',
-
-                      value:
-                        shippingTotal
-                          .toFixed(2)
-                    }
-                  }
-                },
-
-                items:
-                  paypalItems,
-
-                shipping: {
-                  name: {
-                    full_name:
-                      `${customer.firstName} ${customer.lastName}`
-                        .trim()
-                  },
-
-                  address: {
-                    address_line_1:
-                      String(
-                        customer.street || ''
-                      ),
-
-                    admin_area_2:
-                      String(
-                        customer.city || ''
-                      ),
-
-                    postal_code:
-                      String(
-                        customer.postalCode || ''
-                      ),
-
-                    country_code:
-                      country
-                  }
+                      .toFixed(2)
                 }
               }
             ],
@@ -582,14 +528,6 @@ module.exports = async function handler(
             payment_source: {
               paypal: {
                 experience_context: {
-                  brand_name:
-                    'ARDA HAIR',
-
-                  locale:
-                    'de-DE',
-
-                  shipping_preference:
-                    'SET_PROVIDED_ADDRESS',
 
                   user_action:
                     'PAY_NOW',
