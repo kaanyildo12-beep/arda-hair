@@ -10,6 +10,9 @@ const SERVICE_KEY =
 const STRIPE_SECRET_KEY =
   process.env.STRIPE_SECRET_KEY;
 
+const { getAuthenticatedUser } =
+  require('../lib/auth-user');
+
 
 async function deleteOrder(orderId) {
 
@@ -125,6 +128,9 @@ module.exports = async function handler(
       typeof req.body === 'string'
         ? JSON.parse(req.body)
         : req.body;
+
+    const authenticatedUser =
+      await getAuthenticatedUser(req);
 
 
     const customer =
@@ -262,7 +268,7 @@ module.exports = async function handler(
               'stripe',
 
             p_user_id:
-              null
+              authenticatedUser?.id || null
 
           })
 
@@ -652,6 +658,12 @@ module.exports = async function handler(
 
 
   } catch (error) {
+
+    if (error?.code === 'INVALID_AUTH_TOKEN') {
+      return res.status(401).json({
+        error: 'INVALID_AUTH_TOKEN'
+      });
+    }
 
     console.error(
       'Stripe checkout API error:',

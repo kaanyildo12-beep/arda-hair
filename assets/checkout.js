@@ -1,6 +1,56 @@
 ﻿/* =========================================
    ARDA HAIR — CHECKOUT
 ========================================= */
+const CHECKOUT_SUPABASE_URL =
+  'https://zehtftzxrjuoqcpcqmcs.supabase.co';
+
+const CHECKOUT_SUPABASE_KEY =
+  'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
+
+const checkoutAuthStorage = {
+
+  getItem(key) {
+    return (
+      localStorage.getItem(key) ??
+      sessionStorage.getItem(key)
+    );
+  },
+
+  setItem(key, value) {
+
+    const remember =
+      localStorage.getItem('ardaRememberLogin') !== '0';
+
+    if (remember) {
+      localStorage.setItem(key, value);
+      sessionStorage.removeItem(key);
+    } else {
+      sessionStorage.setItem(key, value);
+      localStorage.removeItem(key);
+    }
+
+  },
+
+  removeItem(key) {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+  }
+
+};
+
+const checkoutDb = supabase.createClient(
+  CHECKOUT_SUPABASE_URL,
+  CHECKOUT_SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+      storage: checkoutAuthStorage
+    }
+  }
+);
+
 
 const checkoutItems =
   document.getElementById('checkoutItems');
@@ -982,3 +1032,5 @@ window.addEventListener(
 ========================================= */
 
 refreshCheckout();
+
+

@@ -16,6 +16,9 @@ const PAYPAL_CLIENT_SECRET =
 const PAYPAL_BASE_URL =
   'https://api-m.sandbox.paypal.com';
 
+const { getAuthenticatedUser } =
+  require('../lib/auth-user');
+
 
 async function deleteOrder(orderId) {
 
@@ -153,6 +156,9 @@ module.exports = async function handler(
         ? JSON.parse(req.body)
         : req.body;
 
+    const authenticatedUser =
+      await getAuthenticatedUser(req);
+
 
     const customer =
       body?.customer;
@@ -289,7 +295,7 @@ module.exports = async function handler(
               'paypal',
 
             p_user_id:
-              null
+              authenticatedUser?.id || null
 
           })
 
@@ -662,6 +668,12 @@ module.exports = async function handler(
 
   } catch (error) {
 
+    if (error?.code === 'INVALID_AUTH_TOKEN') {
+      return res.status(401).json({
+        error: 'INVALID_AUTH_TOKEN'
+      });
+    }
+
     console.error(
       'PayPal checkout API error:',
       error
@@ -685,3 +697,7 @@ module.exports = async function handler(
   }
 
 };
+
+
+
+
