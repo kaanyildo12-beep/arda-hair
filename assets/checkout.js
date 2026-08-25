@@ -823,6 +823,13 @@ checkoutForm
             : '/api/create-stripe-session';
 
 
+        const { data: sessionData } =
+          await checkoutDb.auth.getSession();
+
+        const accessToken =
+          sessionData?.session?.access_token || null;
+
+
         const response =
           await fetch(
             endpoint,
@@ -831,7 +838,11 @@ checkoutForm
 
               headers: {
                 'Content-Type':
-                  'application/json'
+                  'application/json',
+
+                ...(accessToken
+                  ? { Authorization: 'Bearer ' + accessToken }
+                  : {})
               },
 
               body: JSON.stringify({
@@ -1032,5 +1043,3 @@ window.addEventListener(
 ========================================= */
 
 refreshCheckout();
-
-
