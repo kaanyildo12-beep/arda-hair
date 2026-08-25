@@ -1,5 +1,5 @@
-/* =========================================
-   ARDA HAIR — CUSTOMER ACCOUNT
+﻿/* =========================================
+   ARDA HAIR â€” CUSTOMER ACCOUNT
 ========================================= */
 
 const ACCOUNT_SUPABASE_URL =
@@ -84,21 +84,21 @@ if (!['de', 'tr', 'en'].includes(accountLang)) {
 const accountText = {
 
   de: {
-    mainTitle: 'Dein persönlicher Bereich.',
+    mainTitle: 'Dein persÃ¶nlicher Bereich.',
     mainText:
-      'Melde dich an oder erstelle ein Konto, um deine persönlichen Daten, Favoriten und deinen Warenkorb zu verwalten.',
+      'Melde dich an oder erstelle ein Konto, um deine persÃ¶nlichen Daten, Favoriten und deinen Warenkorb zu verwalten.',
 
     loginTab: 'Anmelden',
     registerTab: 'Konto erstellen',
 
-    welcomeBack: 'WILLKOMMEN ZURÜCK',
+    welcomeBack: 'WILLKOMMEN ZURÃœCK',
     loginTitle: 'Anmelden',
     loginText: 'Greife auf dein ARDA HAIR Konto zu.',
 
     newAccount: 'NEUES KONTO',
     registerTitle: 'Registrieren',
     registerText:
-      'Erstelle dein persönliches ARDA HAIR Konto.',
+      'Erstelle dein persÃ¶nliches ARDA HAIR Konto.',
 
     email: 'E-Mail-Adresse',
     password: 'Passwort',
@@ -113,23 +113,23 @@ const accountText = {
     show: 'Anzeigen',
     hide: 'Verbergen',
 
-    resetTitle: 'Passwort zurücksetzen',
+    resetTitle: 'Passwort zurÃ¼cksetzen',
     resetText:
-      'Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen.',
+      'Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum ZurÃ¼cksetzen.',
     sendLink: 'Link senden',
-    backLogin: 'Zurück zur Anmeldung',
+    backLogin: 'ZurÃ¼ck zur Anmeldung',
 
     loginSuccess: 'Anmeldung erfolgreich.',
     registerSuccess:
-      'Konto erstellt. Bitte prüfe gegebenenfalls deine E-Mails und bestätige deine Adresse.',
+      'Konto erstellt. Bitte prÃ¼fe gegebenenfalls deine E-Mails und bestÃ¤tige deine Adresse.',
     resetSuccess:
-      'Wir haben dir eine E-Mail zum Zurücksetzen des Passworts gesendet.',
+      'Wir haben dir eine E-Mail zum ZurÃ¼cksetzen des Passworts gesendet.',
 
     passwordsDifferent:
-      'Die Passwörter stimmen nicht überein.',
+      'Die PasswÃ¶rter stimmen nicht Ã¼berein.',
 
     terms:
-      'Bitte akzeptiere die Datenschutzbestimmungen und Geschäftsbedingungen.',
+      'Bitte akzeptiere die Datenschutzbestimmungen und GeschÃ¤ftsbedingungen.',
 
     welcome: 'Willkommen',
 
@@ -148,96 +148,96 @@ const accountText = {
       'Neues Passwort speichern',
 
     passwordChanged:
-      'Dein Passwort wurde erfolgreich geändert.',
+      'Dein Passwort wurde erfolgreich geÃ¤ndert.',
 
-    profile: 'Persönliche Daten',
+    profile: 'PersÃ¶nliche Daten',
 
     phone: 'Telefonnummer',
     country: 'Land',
-    address1: 'Straße und Hausnummer',
+    address1: 'StraÃŸe und Hausnummer',
     address2: 'Adresszusatz',
     postalCode: 'Postleitzahl',
     city: 'Stadt',
-    save: 'Änderungen speichern'
+    save: 'Ã„nderungen speichern'
   },
 
 
   tr: {
-    mainTitle: 'Kişisel hesabın.',
+    mainTitle: 'KiÅŸisel hesabÄ±n.',
     mainText:
-      'Kişisel bilgilerini, favorilerini ve sepetini yönetmek için giriş yap veya yeni bir hesap oluştur.',
+      'KiÅŸisel bilgilerini, favorilerini ve sepetini yÃ¶netmek iÃ§in giriÅŸ yap veya yeni bir hesap oluÅŸtur.',
 
-    loginTab: 'Giriş Yap',
-    registerTab: 'Hesap Oluştur',
+    loginTab: 'GiriÅŸ Yap',
+    registerTab: 'Hesap OluÅŸtur',
 
-    welcomeBack: 'TEKRAR HOŞ GELDİN',
-    loginTitle: 'Giriş Yap',
-    loginText: 'ARDA HAIR hesabına giriş yap.',
+    welcomeBack: 'TEKRAR HOÅž GELDÄ°N',
+    loginTitle: 'GiriÅŸ Yap',
+    loginText: 'ARDA HAIR hesabÄ±na giriÅŸ yap.',
 
-    newAccount: 'YENİ HESAP',
-    registerTitle: 'Kayıt Ol',
+    newAccount: 'YENÄ° HESAP',
+    registerTitle: 'KayÄ±t Ol',
     registerText:
-      'Kendine ait ARDA HAIR hesabını oluştur.',
+      'Kendine ait ARDA HAIR hesabÄ±nÄ± oluÅŸtur.',
 
     email: 'E-posta adresi',
-    password: 'Şifre',
-    passwordRepeat: 'Şifreyi tekrar gir',
+    password: 'Åžifre',
+    passwordRepeat: 'Åžifreyi tekrar gir',
     fullName: 'Ad Soyad',
 
-    login: 'Giriş Yap',
-    register: 'Hesap Oluştur',
-    forgot: 'Şifremi unuttum',
-    remember: 'Oturumumu açık tut',
+    login: 'GiriÅŸ Yap',
+    register: 'Hesap OluÅŸtur',
+    forgot: 'Åžifremi unuttum',
+    remember: 'Oturumumu aÃ§Ä±k tut',
 
-    show: 'Göster',
+    show: 'GÃ¶ster',
     hide: 'Gizle',
 
-    resetTitle: 'Şifreni sıfırla',
+    resetTitle: 'Åžifreni sÄ±fÄ±rla',
     resetText:
-      'E-posta adresini gir. Şifre yenileme bağlantısını sana göndereceğiz.',
-    sendLink: 'Bağlantıyı gönder',
-    backLogin: 'Giriş ekranına dön',
+      'E-posta adresini gir. Åžifre yenileme baÄŸlantÄ±sÄ±nÄ± sana gÃ¶ndereceÄŸiz.',
+    sendLink: 'BaÄŸlantÄ±yÄ± gÃ¶nder',
+    backLogin: 'GiriÅŸ ekranÄ±na dÃ¶n',
 
-    loginSuccess: 'Giriş başarılı.',
+    loginSuccess: 'GiriÅŸ baÅŸarÄ±lÄ±.',
     registerSuccess:
-      'Hesabın oluşturuldu. Gerekirse e-posta adresine gelen doğrulama bağlantısını onayla.',
+      'HesabÄ±n oluÅŸturuldu. Gerekirse e-posta adresine gelen doÄŸrulama baÄŸlantÄ±sÄ±nÄ± onayla.',
     resetSuccess:
-      'Şifre sıfırlama bağlantısını e-posta adresine gönderdik.',
+      'Åžifre sÄ±fÄ±rlama baÄŸlantÄ±sÄ±nÄ± e-posta adresine gÃ¶nderdik.',
 
     passwordsDifferent:
-      'Girdiğin şifreler aynı değil.',
+      'GirdiÄŸin ÅŸifreler aynÄ± deÄŸil.',
 
     terms:
-      'Lütfen gizlilik politikasını ve kullanım koşullarını kabul et.',
+      'LÃ¼tfen gizlilik politikasÄ±nÄ± ve kullanÄ±m koÅŸullarÄ±nÄ± kabul et.',
 
-    welcome: 'Hoş geldin',
+    welcome: 'HoÅŸ geldin',
 
-    logout: 'Çıkış Yap',
+    logout: 'Ã‡Ä±kÄ±ÅŸ Yap',
 
     profileSaved:
       'Bilgilerin kaydedildi.',
 
     genericError:
-      'Bir hata oluştu. Lütfen tekrar dene.',
+      'Bir hata oluÅŸtu. LÃ¼tfen tekrar dene.',
 
     newPassword:
-      'Yeni şifre',
+      'Yeni ÅŸifre',
 
     savePassword:
-      'Yeni şifreyi kaydet',
+      'Yeni ÅŸifreyi kaydet',
 
     passwordChanged:
-      'Şifren başarıyla değiştirildi.',
+      'Åžifren baÅŸarÄ±yla deÄŸiÅŸtirildi.',
 
-    profile: 'Kişisel bilgiler',
+    profile: 'KiÅŸisel bilgiler',
 
-    phone: 'Telefon numarası',
-    country: 'Ülke',
-    address1: 'Sokak ve kapı numarası',
-    address2: 'Adres detayı',
+    phone: 'Telefon numarasÄ±',
+    country: 'Ãœlke',
+    address1: 'Sokak ve kapÄ± numarasÄ±',
+    address2: 'Adres detayÄ±',
     postalCode: 'Posta kodu',
-    city: 'Şehir',
-    save: 'Değişiklikleri kaydet'
+    city: 'Åžehir',
+    save: 'DeÄŸiÅŸiklikleri kaydet'
   },
 
 
@@ -331,16 +331,16 @@ Object.assign(
   accountText.de,
   {
     pageTitle:
-      'ARDA HAIR — Mein Konto',
+      'ARDA HAIR â€” Mein Konto',
 
     pageDescription:
-      'ARDA HAIR Kundenkonto – anmelden, registrieren und persönliche Daten verwalten.',
+      'ARDA HAIR Kundenkonto â€“ anmelden, registrieren und persÃ¶nliche Daten verwalten.',
 
     announcement:
-      'Premium Hair · Natürliche Qualität · ARDA HAIR',
+      'Premium Hair Â· NatÃ¼rliche QualitÃ¤t Â· ARDA HAIR',
 
     navCollection: 'Kollektion',
-    navQuality: 'Qualität',
+    navQuality: 'QualitÃ¤t',
     navGallery: 'Galerie',
     navShop: 'Shop',
     homeShop: 'Shop',
@@ -349,7 +349,7 @@ Object.assign(
       'ARDA ACCOUNT',
 
     termsAgreement:
-      'Ich akzeptiere die Datenschutzbestimmungen und Geschäftsbedingungen.',
+      'Ich akzeptiere die Datenschutzbestimmungen und GeschÃ¤ftsbedingungen.',
 
     resetKicker:
       'PASSWORT',
@@ -364,16 +364,16 @@ Object.assign(
       'Name, Telefonnummer und Adresse verwalten.',
 
     editData:
-      'Daten bearbeiten →',
+      'Daten bearbeiten â†’',
 
     ordersTitle:
       'Bestellungen',
 
     ordersText:
-      'Deine zukünftigen Bestellungen werden hier angezeigt.',
+      'Deine zukÃ¼nftigen Bestellungen werden hier angezeigt.',
 
     comingSoon:
-      'Bald verfügbar',
+      'Bald verfÃ¼gbar',
 
     favoritesTitle:
       'Favoriten',
@@ -382,16 +382,16 @@ Object.assign(
       'Gespeicherte Produkte jederzeit wiederfinden.',
 
     viewProducts:
-      'Produkte ansehen →',
+      'Produkte ansehen â†’',
 
     cartTitle:
       'Warenkorb',
 
     cartText:
-      'Deine ausgewählten Produkte bleiben gespeichert.',
+      'Deine ausgewÃ¤hlten Produkte bleiben gespeichert.',
 
     toShop:
-      'Zum Shop →',
+      'Zum Shop â†’',
 
     profileKicker:
       'PROFIL',
@@ -400,7 +400,7 @@ Object.assign(
       'Diese Informationen werden in deinem ARDA HAIR Konto gespeichert.',
 
     footerText:
-      'Premium Hair Extensions · Deutschland',
+      'Premium Hair Extensions Â· Deutschland',
 
     imprint:
       'Impressum',
@@ -424,7 +424,7 @@ Object.assign(
       'Passwort wiederholen',
 
     address1Placeholder:
-      'Straße 10',
+      'StraÃŸe 10',
 
     address2Placeholder:
       'Wohnung, Etage usw. (optional)',
@@ -442,28 +442,28 @@ Object.assign(
   accountText.tr,
   {
     pageTitle:
-      'ARDA HAIR — Hesabım',
+      'ARDA HAIR â€” HesabÄ±m',
 
     pageDescription:
-      'ARDA HAIR müşteri hesabı – giriş yap, kayıt ol ve kişisel bilgilerini yönet.',
+      'ARDA HAIR mÃ¼ÅŸteri hesabÄ± â€“ giriÅŸ yap, kayÄ±t ol ve kiÅŸisel bilgilerini yÃ¶net.',
 
     announcement:
-      'Premium Saç · Doğal Kalite · ARDA HAIR',
+      'Premium SaÃ§ Â· DoÄŸal Kalite Â· ARDA HAIR',
 
     navCollection: 'Koleksiyon',
     navQuality: 'Kalite',
     navGallery: 'Galeri',
-    navShop: 'Mağaza',
-    homeShop: 'Mağaza',
+    navShop: 'MaÄŸaza',
+    homeShop: 'MaÄŸaza',
 
     accountKicker:
       'ARDA HESAP',
 
     termsAgreement:
-      'Gizlilik politikasını ve genel şartları kabul ediyorum.',
+      'Gizlilik politikasÄ±nÄ± ve genel ÅŸartlarÄ± kabul ediyorum.',
 
     resetKicker:
-      'ŞİFRE',
+      'ÅžÄ°FRE',
 
     dashboardKicker:
       'HESABIM',
@@ -472,58 +472,58 @@ Object.assign(
       'Bilgilerim',
 
     dataText:
-      'Ad, telefon numarası ve adres bilgilerini yönet.',
+      'Ad, telefon numarasÄ± ve adres bilgilerini yÃ¶net.',
 
     editData:
-      'Bilgileri düzenle →',
+      'Bilgileri dÃ¼zenle â†’',
 
     ordersTitle:
-      'Siparişler',
+      'SipariÅŸler',
 
     ordersText:
-      'Gelecekteki siparişlerin burada gösterilecek.',
+      'Gelecekteki sipariÅŸlerin burada gÃ¶sterilecek.',
 
     comingSoon:
-      'Yakında',
+      'YakÄ±nda',
 
     favoritesTitle:
       'Favoriler',
 
     favoritesText:
-      'Kaydettiğin ürünlere istediğin zaman tekrar ulaş.',
+      'KaydettiÄŸin Ã¼rÃ¼nlere istediÄŸin zaman tekrar ulaÅŸ.',
 
     viewProducts:
-      'Ürünleri görüntüle →',
+      'ÃœrÃ¼nleri gÃ¶rÃ¼ntÃ¼le â†’',
 
     cartTitle:
       'Sepet',
 
     cartText:
-      'Seçtiğin ürünler sepetinde kayıtlı kalır.',
+      'SeÃ§tiÄŸin Ã¼rÃ¼nler sepetinde kayÄ±tlÄ± kalÄ±r.',
 
     toShop:
-      'Mağazaya git →',
+      'MaÄŸazaya git â†’',
 
     profileKicker:
-      'PROFİL',
+      'PROFÄ°L',
 
     profileText:
-      'Bu bilgiler ARDA HAIR hesabında saklanır.',
+      'Bu bilgiler ARDA HAIR hesabÄ±nda saklanÄ±r.',
 
     footerText:
-      'Premium Hair Extensions · Almanya',
+      'Premium Hair Extensions Â· Almanya',
 
     imprint:
-      'Künye',
+      'KÃ¼nye',
 
     privacy:
       'Gizlilik',
 
     termsLink:
-      'Şartlar',
+      'Åžartlar',
 
     passwordPlaceholder:
-      'Şifren',
+      'Åžifren',
 
     namePlaceholder:
       'Ad Soyad',
@@ -532,19 +532,19 @@ Object.assign(
       'En az 8 karakter',
 
     passwordRepeatPlaceholder:
-      'Şifreyi tekrar gir',
+      'Åžifreyi tekrar gir',
 
     address1Placeholder:
-      'Sokak ve kapı numarası',
+      'Sokak ve kapÄ± numarasÄ±',
 
     address2Placeholder:
-      'Daire, kat vb. (isteğe bağlı)',
+      'Daire, kat vb. (isteÄŸe baÄŸlÄ±)',
 
     postalPlaceholder:
       'Posta kodu',
 
     cityPlaceholder:
-      'Şehir'
+      'Åžehir'
   }
 );
 
@@ -553,13 +553,13 @@ Object.assign(
   accountText.en,
   {
     pageTitle:
-      'ARDA HAIR — My Account',
+      'ARDA HAIR â€” My Account',
 
     pageDescription:
-      'ARDA HAIR customer account – sign in, register and manage your personal details.',
+      'ARDA HAIR customer account â€“ sign in, register and manage your personal details.',
 
     announcement:
-      'Premium Hair · Natural Quality · ARDA HAIR',
+      'Premium Hair Â· Natural Quality Â· ARDA HAIR',
 
     navCollection: 'Collection',
     navQuality: 'Quality',
@@ -586,7 +586,7 @@ Object.assign(
       'Manage your name, phone number and address.',
 
     editData:
-      'Edit details →',
+      'Edit details â†’',
 
     ordersTitle:
       'Orders',
@@ -604,7 +604,7 @@ Object.assign(
       'Find your saved products anytime.',
 
     viewProducts:
-      'View products →',
+      'View products â†’',
 
     cartTitle:
       'Shopping Bag',
@@ -613,7 +613,7 @@ Object.assign(
       'Your selected products remain saved.',
 
     toShop:
-      'Go to shop →',
+      'Go to shop â†’',
 
     profileKicker:
       'PROFILE',
@@ -622,7 +622,7 @@ Object.assign(
       'This information is stored in your ARDA HAIR account.',
 
     footerText:
-      'Premium Hair Extensions · Germany',
+      'Premium Hair Extensions Â· Germany',
 
     imprint:
       'Legal Notice',
@@ -697,6 +697,55 @@ function t(key) {
   );
 }
 
+
+
+function formatOrderMoney(
+  cents,
+  currency = 'EUR'
+) {
+
+  return new Intl.NumberFormat(
+    accountLang === 'tr'
+      ? 'tr-TR'
+      : accountLang === 'en'
+        ? 'en-GB'
+        : 'de-DE',
+    {
+      style: 'currency',
+      currency: currency || 'EUR'
+    }
+  ).format(
+    Number(cents || 0) / 100
+  );
+
+}
+
+
+function formatOrderDate(value) {
+
+  const date =
+    new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return '';
+  }
+
+  return new Intl.DateTimeFormat(
+    accountLang === 'tr'
+      ? 'tr-TR'
+      : accountLang === 'en'
+        ? 'en-GB'
+        : 'de-DE',
+    {
+      dateStyle: 'medium'
+    }
+  ).format(date);
+
+}
 
 /* =========================================
    LANGUAGE
@@ -1242,8 +1291,8 @@ function applyAccountLanguage() {
 
   /*
     Password recovery mailinden
-    gelinen özel ekran da dili
-    anında değiştirsin.
+    gelinen Ã¶zel ekran da dili
+    anÄ±nda deÄŸiÅŸtirsin.
   */
 
   if ($('newPasswordForm')) {
@@ -1640,8 +1689,8 @@ $('customerRegisterForm')
 
 
       /*
-       Eğer Supabase e-posta doğrulaması istemiyorsa
-       session hemen oluşur.
+       EÄŸer Supabase e-posta doÄŸrulamasÄ± istemiyorsa
+       session hemen oluÅŸur.
       */
 
       if (data.session?.user) {
@@ -1773,7 +1822,7 @@ function showPasswordRecovery() {
             type="password"
             minlength="8"
             required
-            placeholder="••••••••"
+            placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
           >
 
         </label>
@@ -2165,7 +2214,7 @@ async function syncCart(
 
 
   /*
-    Tarayıcıda artık olmayan ürünleri
+    TarayÄ±cÄ±da artÄ±k olmayan Ã¼rÃ¼nleri
     Supabase'den de tamamen sil.
   */
 
@@ -2215,8 +2264,8 @@ async function syncCart(
 
 
   /*
-    Sepet tamamen boşsa
-    yukarıdaki işlem sunucuyu da temizledi.
+    Sepet tamamen boÅŸsa
+    yukarÄ±daki iÅŸlem sunucuyu da temizledi.
   */
 
   if (!localCart.length) {
@@ -2226,7 +2275,7 @@ async function syncCart(
 
   /*
     Mevcut sepeti birebir kaydet.
-    Adet artık Math.max ile eski değere dönmez.
+    Adet artÄ±k Math.max ile eski deÄŸere dÃ¶nmez.
   */
 
   const rows =
@@ -2594,8 +2643,8 @@ $('customerLogout')
 
 
             /*
-        Başka biri aynı cihazda giriş yaparsa
-        önceki hesabın sepetini görmemesi için.
+        BaÅŸka biri aynÄ± cihazda giriÅŸ yaparsa
+        Ã¶nceki hesabÄ±n sepetini gÃ¶rmemesi iÃ§in.
       */
 
       localStorage.removeItem(
@@ -2659,7 +2708,7 @@ accountDb.auth
 
       /*
         Recovery mailinden gelindiyse
-        yeni şifre ekranı.
+        yeni ÅŸifre ekranÄ±.
       */
 
       if (
@@ -2738,3 +2787,5 @@ document
 applyAccountLanguage();
 
 checkInitialSession();
+
+
