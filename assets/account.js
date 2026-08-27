@@ -68,6 +68,7 @@ const $ = id =>
 
 
 let currentCustomer = null;
+let currentOrders = [];
 
 let accountLang =
   localStorage.getItem('arda-lang') || 'de';
@@ -660,6 +661,73 @@ Object.assign(
 );
 
 
+
+Object.assign(
+  accountText.de,
+  {
+    ordersKicker: 'BESTELLUNGEN',
+    ordersHeading: 'Meine Bestellungen',
+    ordersIntro: 'Hier findest du deine bisherigen Bestellungen.',
+    ordersLoading: 'Bestellungen werden geladen...',
+    ordersEmpty: 'Du hast noch keine Bestellungen.',
+    ordersError: 'Bestellungen konnten nicht geladen werden.',
+    orderPayment: 'Zahlung',
+    orderStatus: 'Status',
+    orderQuantity: 'Menge'
+  }
+);
+
+Object.assign(
+  accountText.tr,
+  {
+    ordersKicker: 'SİPARİŞLER',
+    ordersHeading: 'Siparişlerim',
+    ordersIntro: 'Geçmiş siparişlerini burada görebilirsin.',
+    ordersLoading: 'Siparişler yükleniyor...',
+    ordersEmpty: 'Henüz siparişin bulunmuyor.',
+    ordersError: 'Siparişler yüklenemedi.',
+    orderPayment: 'Ödeme',
+    orderStatus: 'Durum',
+    orderQuantity: 'Adet'
+  }
+);
+
+Object.assign(
+  accountText.en,
+  {
+    ordersKicker: 'ORDERS',
+    ordersHeading: 'My Orders',
+    ordersIntro: 'You can find your previous orders here.',
+    ordersLoading: 'Loading orders...',
+    ordersEmpty: 'You do not have any orders yet.',
+    ordersError: 'Orders could not be loaded.',
+    orderPayment: 'Payment',
+    orderStatus: 'Status',
+    orderQuantity: 'Quantity'
+  }
+);
+
+
+Object.assign(
+  accountText.de,
+  {
+    viewOrders: 'Bestellungen ansehen →'
+  }
+);
+
+Object.assign(
+  accountText.tr,
+  {
+    viewOrders: 'Siparişleri gör →'
+  }
+);
+
+Object.assign(
+  accountText.en,
+  {
+    viewOrders: 'View orders →'
+  }
+);
 function setAccountText(
   selector,
   value
@@ -1093,9 +1161,9 @@ function applyAccountLanguage() {
     const text =
       cards[1].querySelector('p');
 
-    const coming =
+    const link =
       cards[1].querySelector(
-        '.overview-coming'
+        '.orders-overview-link'
       );
 
     if (title) {
@@ -1108,9 +1176,9 @@ function applyAccountLanguage() {
         t('ordersText');
     }
 
-    if (coming) {
-      coming.textContent =
-        t('comingSoon');
+    if (link) {
+      link.textContent =
+        t('viewOrders');
     }
 
   }
@@ -1174,6 +1242,21 @@ function applyAccountLanguage() {
   }
 
 
+
+  setAccountText(
+    '#ordersKicker',
+    t('ordersKicker')
+  );
+
+  setAccountText(
+    '#ordersHeading',
+    t('ordersHeading')
+  );
+
+  setAccountText(
+    '#ordersIntro',
+    t('ordersIntro')
+  );
   setAccountText(
     '.profile-heading .section-kicker',
     t('profileKicker')
@@ -2563,6 +2646,354 @@ async function loadAccountShoppingData(
 }
 
 
+
+function renderOrderHistory() {
+
+  const container =
+    $('ordersContent');
+
+  if (!container) {
+    return;
+  }
+
+
+  container.replaceChildren();
+
+
+  if (
+    !Array.isArray(currentOrders) ||
+    currentOrders.length === 0
+  ) {
+
+    const empty =
+      document.createElement('p');
+
+    empty.className =
+      'orders-state';
+
+    empty.textContent =
+      t('ordersEmpty');
+
+    container.appendChild(empty);
+
+    return;
+
+  }
+
+
+  currentOrders.forEach(order => {
+
+    const card =
+      document.createElement('article');
+
+    card.className =
+      'order-history-card';
+
+
+    const top =
+      document.createElement('div');
+
+    top.className =
+      'order-history-top';
+
+
+    const info =
+      document.createElement('div');
+
+
+    const number =
+      document.createElement('div');
+
+    number.className =
+      'order-history-number';
+
+    number.textContent =
+      order.orderNumber || '—';
+
+
+    const date =
+      document.createElement('div');
+
+    date.className =
+      'order-history-meta';
+
+    date.textContent =
+      formatOrderDate(
+        order.createdAt
+      );
+
+
+    info.append(
+      number,
+      date
+    );
+
+
+    const total =
+      document.createElement('div');
+
+    total.className =
+      'order-history-total';
+
+    total.textContent =
+      formatOrderMoney(
+        order.totalCents,
+        order.currency
+      );
+
+
+    top.append(
+      info,
+      total
+    );
+
+
+    const statuses =
+      document.createElement('div');
+
+    statuses.className =
+      'order-history-status';
+
+
+    const payment =
+      document.createElement('span');
+
+    payment.className =
+      'order-status-badge';
+
+    payment.textContent =
+      `${t('orderPayment')}: ${order.paymentStatus || '—'}`;
+
+
+    const status =
+      document.createElement('span');
+
+    status.className =
+      'order-status-badge';
+
+    status.textContent =
+      `${t('orderStatus')}: ${order.orderStatus || '—'}`;
+
+
+    statuses.append(
+      payment,
+      status
+    );
+
+
+    const items =
+      document.createElement('div');
+
+    items.className =
+      'order-history-items';
+
+
+    const orderItems =
+      Array.isArray(order.items)
+        ? order.items
+        : [];
+
+
+    orderItems.forEach(item => {
+
+      const row =
+        document.createElement('div');
+
+      row.className =
+        'order-history-item';
+
+
+      const itemInfo =
+        document.createElement('div');
+
+
+      const name =
+        document.createElement('div');
+
+      name.className =
+        'order-history-item-name';
+
+      name.textContent =
+        item.product_name || '—';
+
+
+      const meta =
+        document.createElement('div');
+
+      meta.className =
+        'order-history-item-meta';
+
+      meta.textContent =
+        [
+          item.variant_name || null,
+          `${t('orderQuantity')}: ${Number(item.quantity || 0)}`
+        ]
+          .filter(Boolean)
+          .join(' · ');
+
+
+      itemInfo.append(
+        name,
+        meta
+      );
+
+
+      const price =
+        document.createElement('div');
+
+      price.textContent =
+        formatOrderMoney(
+          item.line_total_cents,
+          order.currency
+        );
+
+
+      row.append(
+        itemInfo,
+        price
+      );
+
+      items.appendChild(row);
+
+    });
+
+
+    card.append(
+      top,
+      statuses,
+      items
+    );
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+async function loadOrderHistory() {
+
+  const container =
+    $('ordersContent');
+
+  if (!container) {
+    return;
+  }
+
+
+  container.replaceChildren();
+
+
+  const loading =
+    document.createElement('p');
+
+  loading.className =
+    'orders-state';
+
+  loading.textContent =
+    t('ordersLoading');
+
+  container.appendChild(
+    loading
+  );
+
+
+  try {
+
+    const {
+      data: {
+        session
+      },
+      error
+    } =
+      await accountDb.auth
+        .getSession();
+
+
+    if (
+      error ||
+      !session?.access_token
+    ) {
+
+      throw new Error(
+        'AUTH_REQUIRED'
+      );
+
+    }
+
+
+    const response =
+      await fetch(
+        '/api/my-orders',
+        {
+          method: 'GET',
+
+          headers: {
+            Authorization:
+              `Bearer ${session.access_token}`
+          }
+        }
+      );
+
+
+    const data =
+      await response
+        .json()
+        .catch(() => ({}));
+
+
+    if (
+      !response.ok ||
+      !data?.ok ||
+      !Array.isArray(data.orders)
+    ) {
+
+      throw new Error(
+        data?.error ||
+        'ORDERS_FETCH_FAILED'
+      );
+
+    }
+
+
+    currentOrders =
+      data.orders;
+
+
+    renderOrderHistory();
+
+
+  } catch (error) {
+
+    console.error(
+      'Order history error:',
+      error
+    );
+
+
+    currentOrders = [];
+
+
+    container.replaceChildren();
+
+
+    const state =
+      document.createElement('p');
+
+    state.className =
+      'orders-state';
+
+    state.textContent =
+      t('ordersError');
+
+    container.appendChild(
+      state
+    );
+
+  }
+
+}
+
 /* =========================================
    DASHBOARD
 ========================================= */
@@ -2614,6 +3045,8 @@ async function showCustomerDashboard(
   await syncShoppingData(
     user.id
   );
+
+  await loadOrderHistory();
 
 }
 
@@ -2774,6 +3207,10 @@ document
 
         applyAccountLanguage();
 
+        if (currentCustomer) {
+          renderOrderHistory();
+        }
+
       }
     );
 
@@ -2787,5 +3224,3 @@ document
 applyAccountLanguage();
 
 checkInitialSession();
-
-
