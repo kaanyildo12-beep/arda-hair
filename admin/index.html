@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8">
@@ -118,6 +118,48 @@
 </div>
 
 <div id="products"></div>
+    <section id="adminOrdersSection" class="admin-orders-section">
+
+      <div class="title admin-orders-title">
+
+        <div>
+          <small>BESTELLUNGEN</small>
+          <h1>Bestellungen verwalten</h1>
+        </div>
+
+        <span id="adminOrderCount"></span>
+
+      </div>
+
+      <div class="admin-order-toolbar">
+
+        <input
+          id="adminOrderSearch"
+          type="search"
+          placeholder="Bestellnummer oder E-Mail suchen..."
+          autocomplete="off"
+        >
+
+        <select id="adminOrderStatusFilter">
+          <option value="all">Alle Status</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="refunded">Refunded</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+
+      </div>
+
+      <div id="adminOrders">
+        <div class="card">
+          Bestellungen werden geladen...
+        </div>
+      </div>
+
+    </section>
+
 
   </section>
 
@@ -1066,6 +1108,57 @@
 
 </dialog>
 
+
+<!-- ORDER DETAILS -->
+<dialog id="orderDialog">
+
+  <div class="admin-order-dialog">
+
+    <div class="admin-order-dialog-header">
+      <div>
+        <small>BESTELLUNG</small>
+        <h2 id="orderDialogNumber">Bestellung</h2>
+      </div>
+
+      <button
+        id="closeOrderDialog"
+        type="button"
+        class="secondary"
+      >
+        Schließen
+      </button>
+    </div>
+
+    <div id="orderDialogContent"></div>
+
+    <div class="admin-order-dialog-actions">
+
+      <label>
+        Bestellstatus
+        <select id="orderDialogStatus">
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="refunded">Refunded</option>
+        </select>
+      </label>
+
+      <button
+        id="saveOrderStatus"
+        type="button"
+      >
+        Status speichern
+      </button>
+
+    </div>
+
+    <p id="orderDialogMsg"></p>
+
+  </div>
+
+</dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 

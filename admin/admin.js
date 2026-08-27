@@ -1,4 +1,4 @@
-﻿const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
+const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
 const ADMIN_EMAIL = 'kaanyildo12@gmail.com';
 
@@ -7,6 +7,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = (id) => document.getElementById(id);
 
 let products = [];
+let orders = [];
 let currentVariants = [];
 
 /* =========================
@@ -45,6 +46,7 @@ async function showDashboard() {
   $('logout').hidden = false;
 
   await loadProducts();
+  await loadOrders();
 }
 
 $('loginForm').addEventListener('submit', async (e) => {
@@ -307,6 +309,409 @@ function escapeHtml(value = '') {
     }[char];
   });
 }
+
+
+async function loadOrders() {
+
+  const { data, error } =
+    await sb
+      .from('orders')
+      .select(`
+        id,
+        order_number,
+        user_id,
+        email,
+        first_name,
+        last_name,
+        phone,
+        company,
+        shipping_country,
+        shipping_street,
+        shipping_postal_code,
+        shipping_city,
+        currency,
+        subtotal_cents,
+        shipping_cents,
+        total_cents,
+        payment_provider,
+        payment_status,
+        order_status,
+        created_at,
+        updated_at
+      `)
+      .order(
+        'created_at',
+        {
+          ascending: false
+        }
+      );
+
+
+  if (error) {
+
+    $('adminOrders').innerHTML = `
+      <div class="card">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  orders =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  renderOrders();
+
+}
+
+
+function renderOrders() {
+
+  const container =
+    $('adminOrders');
+
+  if (!container) {
+    return;
+  }
+
+
+  const search =
+    String(
+      $('adminOrderSearch')?.value || ''
+    )
+      .trim()
+      .toLowerCase();
+
+
+  const status =
+    $('adminOrderStatusFilter')?.value ||
+    'all';
+
+
+  const filtered =
+    orders.filter(order => {
+
+      const searchable =
+        [
+          order.order_number,
+          order.email,
+          order.first_name,
+          order.last_name
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
+
+
+      const matchesSearch =
+        !search ||
+        searchable.includes(search);
+
+
+      const matchesStatus =
+        status === 'all' ||
+        order.order_status === status;
+
+
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
+
+    });
+
+
+  if ($('adminOrderCount')) {
+
+    $('adminOrderCount').textContent =
+      `${filtered.length} Bestellung(en)`;
+
+  }
+
+
+  if (filtered.length === 0) {
+
+    container.innerHTML = `
+      <div class="card">
+        Keine Bestellungen gefunden.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    filtered
+      .map(order => {
+
+        const customerName =
+          [
+            order.first_name,
+            order.last_name
+          ]
+            .filter(Boolean)
+            .join(' ');
+
+
+        const date =
+          order.created_at
+            ? new Date(
+                order.created_at
+              ).toLocaleString(
+                'de-DE'
+              )
+            : '—';
+
+
+        return `
+          <article class="admin-order-card">
+
+            <div class="admin-order-top">
+
+              <div>
+
+                <div class="admin-order-number">
+                  ${escapeHtml(order.order_number || '—')}
+                </div>
+
+                <div class="admin-order-meta">
+                  ${escapeHtml(customerName || '—')}
+                  ·
+                  ${escapeHtml(order.email || '—')}
+                  <br>
+                  ${escapeHtml(date)}
+                </div>
+
+              </div>
+
+              <div class="admin-order-total">
+                ${formatMoney(order.total_cents)}
+              </div>
+
+            </div>
+
+            <div class="admin-order-badges">
+
+              <span class="admin-order-badge">
+                Zahlung:
+                ${escapeHtml(order.payment_status || '—')}
+              </span>
+
+              <span class="admin-order-badge">
+                Status:
+                ${escapeHtml(order.order_status || '—')}
+              </span>
+
+              <span class="admin-order-badge">
+                ${escapeHtml(order.payment_provider || '—')}
+              </span>
+
+            </div>
+            <div class="admin-order-card-actions">
+              <button
+                type="button"
+                class="secondary"
+                onclick="openOrderDetails('${escapeHtml(order.id)}')"
+              >
+                Details
+              </button>
+            </div>
+
+          </article>
+        `;
+
+      })
+      .join('');
+
+}
+
+
+window.openOrderDetails = async function (id) {
+
+  const order =
+    orders.find(
+      (item) => item.id === id
+    );
+
+  if (!order) {
+    return;
+  }
+
+
+  const dialog =
+    $('orderDialog');
+
+  const content =
+    $('orderDialogContent');
+
+  if (!dialog || !content) {
+    return;
+  }
+
+
+  dialog.dataset.orderId =
+    order.id;
+
+
+  $('orderDialogNumber').textContent =
+    order.order_number || 'Bestellung';
+
+
+  $('orderDialogStatus').value =
+    order.order_status || 'pending';
+
+
+  $('orderDialogMsg').textContent =
+    '';
+
+
+  const customerName =
+    [
+      order.first_name,
+      order.last_name
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+
+  const address =
+    [
+      order.shipping_street,
+      `${order.shipping_postal_code || ''} ${order.shipping_city || ''}`.trim(),
+      order.shipping_country
+    ]
+      .filter(Boolean)
+      .map(value => escapeHtml(value))
+      .join('<br>');
+
+
+  const createdAt =
+    order.created_at
+      ? new Date(order.created_at)
+          .toLocaleString('de-DE')
+      : '—';
+
+
+  const { data: items, error: itemsError } =
+    await sb
+      .from('order_items')
+      .select(`
+        id,
+        product_name,
+        variant_name,
+        unit_price_cents,
+        quantity,
+        line_total_cents
+      `)
+      .eq('order_id', order.id)
+      .order('created_at', {
+        ascending: true
+      });
+
+
+  const orderItems =
+    Array.isArray(items)
+      ? items
+      : [];
+
+
+  const itemsHtml =
+    itemsError
+      ? `
+          <p>
+            Artikel konnten nicht geladen werden:
+            ${escapeHtml(itemsError.message)}
+          </p>
+        `
+      : orderItems.length === 0
+        ? '<p>Keine Artikel gefunden.</p>'
+        : `
+          <div class="admin-order-items">
+            ${orderItems.map(item => `
+              <div class="admin-order-item">
+                <div>
+                  <strong>
+                    ${escapeHtml(item.product_name || '—')}
+                  </strong>
+
+                  ${
+                    item.variant_name
+                      ? `<span>${escapeHtml(item.variant_name)}</span>`
+                      : ''
+                  }
+                </div>
+
+                <div class="admin-order-item-meta">
+                  ${Number(item.quantity || 0)} ×
+                  ${formatMoney(item.unit_price_cents)}
+                  =
+                  ${formatMoney(item.line_total_cents)}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+  content.innerHTML = `
+
+    <div class="admin-order-detail-block">
+      <strong>Kunde</strong>
+      <p>
+        ${escapeHtml(customerName || '—')}<br>
+        ${escapeHtml(order.email || '—')}<br>
+        ${escapeHtml(order.phone || '—')}
+      </p>
+    </div>
+
+    <div class="admin-order-detail-block">
+      <strong>Lieferadresse</strong>
+      <p>
+        ${address || '—'}
+      </p>
+    </div>
+
+    <div class="admin-order-detail-block">
+      <strong>Zahlung</strong>
+      <p>
+        Anbieter: ${escapeHtml(order.payment_provider || '—')}<br>
+        Zahlungsstatus: ${escapeHtml(order.payment_status || '—')}<br>
+        Bestellstatus: ${escapeHtml(order.order_status || '—')}
+      </p>
+    </div>
+
+    <div class="admin-order-detail-block">
+      <strong>Artikel</strong>
+      ${itemsHtml}
+    </div>
+
+    <div class="admin-order-detail-block">
+      <strong>Beträge</strong>
+      <p>
+        Zwischensumme: ${formatMoney(order.subtotal_cents)}<br>
+        Versand: ${formatMoney(order.shipping_cents)}<br>
+        Gesamt: ${formatMoney(order.total_cents)}
+      </p>
+    </div>
+
+    <div class="admin-order-detail-block">
+      <strong>Bestelldatum</strong>
+      <p>${escapeHtml(createdAt)}</p>
+    </div>
+
+  `;
+
+
+  dialog.showModal();
+
+};
 
 /* =========================
    EDITOR
@@ -1282,4 +1687,77 @@ $('productTypeFilter')?.addEventListener(
 $('productStatusFilter')?.addEventListener(
   'change',
   applyProductFilters
+);
+
+
+
+
+
+
+$('adminOrderSearch')?.addEventListener(
+  'input',
+  renderOrders
+);
+
+$('adminOrderStatusFilter')?.addEventListener(
+  'change',
+  renderOrders
+);
+
+$('closeOrderDialog')?.addEventListener(
+  'click',
+  () => {
+    $('orderDialog')?.close();
+  }
+);
+
+$('saveOrderStatus')?.addEventListener(
+  'click',
+  async () => {
+
+    const dialog = $('orderDialog');
+    const message = $('orderDialogMsg');
+
+    const orderId =
+      dialog?.dataset.orderId;
+
+    const newStatus =
+      $('orderDialogStatus')?.value;
+
+    if (!orderId || !newStatus) {
+      return;
+    }
+
+    message.textContent =
+      'Status wird gespeichert...';
+
+    const { error } =
+      await sb
+        .from('orders')
+        .update({
+          order_status: newStatus
+        })
+        .eq('id', orderId);
+
+    if (error) {
+      message.textContent =
+        'Fehler: ' + error.message;
+      return;
+    }
+
+    const order =
+      orders.find(
+        item => item.id === orderId
+      );
+
+    if (order) {
+      order.order_status = newStatus;
+    }
+
+    renderOrders();
+
+    message.textContent =
+      'Status gespeichert.';
+
+  }
 );
