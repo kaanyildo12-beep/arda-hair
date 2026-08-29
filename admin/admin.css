@@ -1600,3 +1600,31 @@ dialog::backdrop {
     white-space: normal;
   }
 }
+
+.admin-order-shipping-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.admin-order-shipping-actions label {
+  margin: 0;
+}
+
+.admin-order-shipping-actions input,
+.admin-order-shipping-actions select {
+  width: 100%;
+  margin-top: 8px;
+}
+
+@media (max-width: 700px) {
+  .admin-order-shipping-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-order-shipping-actions button {
+    width: 100%;
+  }
+}

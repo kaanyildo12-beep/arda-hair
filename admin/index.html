@@ -1154,6 +1154,40 @@
 
     </div>
 
+
+    <div class="admin-order-shipping-actions">
+
+      <label>
+        Versandstatus
+        <select id="orderDialogShippingStatus">
+          <option value="pending">Pending</option>
+          <option value="preparing">Preparing</option>
+          <option value="shipped">Shipped</option>
+          <option value="in_transit">In transit</option>
+          <option value="delivered">Delivered</option>
+          <option value="returned">Returned</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </label>
+
+      <label>
+        Sendungsnummer
+        <input
+          id="orderDialogTrackingNumber"
+          type="text"
+          placeholder="z. B. 003404..."
+          autocomplete="off"
+        >
+      </label>
+
+      <button
+        id="saveOrderShipping"
+        type="button"
+      >
+        Versand speichern
+      </button>
+
+    </div>
     <p id="orderDialogMsg"></p>
 
   </div>
@@ -1166,4 +1200,3 @@
 
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
+﻿const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
 const ADMIN_EMAIL = 'kaanyildo12@gmail.com';
 
@@ -329,6 +329,8 @@ async function loadOrders() {
         shipping_street,
         shipping_postal_code,
         shipping_city,
+        tracking_number,
+        shipping_status,
         currency,
         subtotal_cents,
         shipping_cents,
@@ -567,6 +569,14 @@ window.openOrderDetails = async function (id) {
 
   $('orderDialogStatus').value =
     order.order_status || 'pending';
+
+
+  $('orderDialogShippingStatus').value =
+    order.shipping_status || 'pending';
+
+
+  $('orderDialogTrackingNumber').value =
+    order.tracking_number || '';
 
 
   $('orderDialogMsg').textContent =
@@ -1758,6 +1768,64 @@ $('saveOrderStatus')?.addEventListener(
 
     message.textContent =
       'Status gespeichert.';
+
+  }
+);
+
+
+
+$('saveOrderShipping')?.addEventListener(
+  'click',
+  async () => {
+
+    const dialog = $('orderDialog');
+    const message = $('orderDialogMsg');
+
+    const orderId =
+      dialog?.dataset.orderId;
+
+    const shippingStatus =
+      $('orderDialogShippingStatus')?.value;
+
+    const trackingNumber =
+      String(
+        $('orderDialogTrackingNumber')?.value || ''
+      ).trim();
+
+    if (!orderId || !shippingStatus) {
+      return;
+    }
+
+    message.textContent =
+      'Versand wird gespeichert...';
+
+    const { error } =
+      await sb
+        .from('orders')
+        .update({
+          shipping_status: shippingStatus,
+          tracking_number: trackingNumber || null
+        })
+        .eq('id', orderId);
+
+    if (error) {
+      message.textContent =
+        'Fehler: ' + error.message;
+      return;
+    }
+
+    const order =
+      orders.find(
+        item => item.id === orderId
+      );
+
+    if (order) {
+      order.shipping_status = shippingStatus;
+      order.tracking_number = trackingNumber || null;
+    }
+
+    message.textContent =
+      'Versand gespeichert.';
 
   }
 );
