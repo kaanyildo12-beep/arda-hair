@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="de">
 
 <head>
@@ -213,7 +213,61 @@
         border-radius: 22px;
       }
     }
-  </style>
+  
+    .withdrawal-form {
+      display: grid;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .withdrawal-form label {
+      display: grid;
+      gap: 8px;
+      color: #222;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .withdrawal-form input,
+    .withdrawal-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 16px;
+      border: 1px solid rgba(0,0,0,.14);
+      border-radius: 14px;
+      background: #fff;
+      color: #171214;
+      font: inherit;
+    }
+
+    .withdrawal-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .withdrawal-form button {
+      justify-self: start;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 999px;
+      background: #171214;
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .withdrawal-form button:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    .withdrawal-form-status {
+      min-height: 22px;
+      margin: 0;
+      font-size: 14px;
+    }
+</style>
 </head>
 
 <body class="legal-page">
@@ -524,20 +578,66 @@
 
     <section class="legal-card legal-warning">
 
-      <h2>Elektronische Widerrufsfunktion</h2>
+      <h2>Vertrag online widerrufen</h2>
 
       <p>
-        Für Online-Bestellungen wird vor Aufnahme
-        des Verkaufs zusätzlich eine elektronische
-        Widerrufsfunktion bereitgestellt.
+        Hier können Sie den Widerruf Ihrer Online-Bestellung elektronisch übermitteln.
       </p>
 
-      <p>
-        Diese Funktion wird so eingerichtet,
-        dass Verbraucher ihren Vertrag online widerrufen
-        und anschließend eine elektronische
-        Eingangsbestätigung erhalten können.
-      </p>
+      <form id="withdrawalForm" class="withdrawal-form">
+
+        <label>
+          Name
+          <input
+            id="withdrawalName"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          >
+        </label>
+
+        <label>
+          Bestellnummer
+          <input
+            id="withdrawalOrderNumber"
+            name="orderNumber"
+            type="text"
+            placeholder="z. B. AH-20260829-ABC123"
+            required
+          >
+        </label>
+
+        <label>
+          E-Mail-Adresse für die Eingangsbestätigung
+          <input
+            id="withdrawalEmail"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          >
+        </label>
+
+        <label>
+          Zusätzliche Mitteilung (optional)
+          <textarea
+            id="withdrawalMessage"
+            name="message"
+          ></textarea>
+        </label>
+
+        <button id="withdrawalSubmit" type="submit">
+          Widerruf bestätigen
+        </button>
+
+        <p
+          id="withdrawalStatus"
+          class="withdrawal-form-status"
+          aria-live="polite"
+        ></p>
+
+      </form>
 
     </section>
 
@@ -570,5 +670,117 @@
 
   </footer>
 
+<script>
+(() => {
+
+  const form =
+    document.getElementById('withdrawalForm');
+
+  if (!form) return;
+
+  const submit =
+    document.getElementById('withdrawalSubmit');
+
+  const status =
+    document.getElementById('withdrawalStatus');
+
+
+  form.addEventListener(
+    'submit',
+    async (event) => {
+
+      event.preventDefault();
+
+      submit.disabled = true;
+
+      status.textContent =
+        'Widerruf wird übermittelt...';
+
+
+      try {
+
+        const response =
+          await fetch(
+            '/api/create-withdrawal-request',
+            {
+              method: 'POST',
+
+              headers: {
+                'Content-Type':
+                  'application/json'
+              },
+
+              body: JSON.stringify({
+                name:
+                  document.getElementById(
+                    'withdrawalName'
+                  ).value,
+
+                orderNumber:
+                  document.getElementById(
+                    'withdrawalOrderNumber'
+                  ).value,
+
+                email:
+                  document.getElementById(
+                    'withdrawalEmail'
+                  ).value,
+
+                message:
+                  document.getElementById(
+                    'withdrawalMessage'
+                  ).value
+              })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          status.textContent =
+            'Der Widerruf konnte nicht übermittelt werden. Bitte prüfen Sie Bestellnummer und E-Mail-Adresse.';
+
+          return;
+
+        }
+
+
+        const receivedAt =
+          data.receivedAt
+            ? new Date(
+                data.receivedAt
+              ).toLocaleString('de-DE')
+            : new Date()
+                .toLocaleString('de-DE');
+
+
+        status.textContent =
+          'Ihr Widerruf wurde am ' +
+          receivedAt +
+          ' erfolgreich übermittelt.';
+
+
+        form.reset();
+
+      } catch (error) {
+
+        status.textContent =
+          'Der Widerruf konnte momentan nicht übermittelt werden. Bitte versuchen Sie es erneut.';
+
+      } finally {
+
+        submit.disabled = false;
+
+      }
+
+    }
+  );
+
+})();
+</script>
 </body>
 </html>
