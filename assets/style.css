@@ -2885,3 +2885,40 @@ footer {
 .newsletter-consent span {
   display: block;
 }
+
+/* Newsletter GDPR layout fix */
+.premium-notify-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "email button"
+    "consent consent";
+  gap: 10px;
+  border-radius: 24px;
+}
+
+.premium-notify-form > input[type="email"] {
+  grid-area: email;
+  min-width: 0;
+  min-height: 48px;
+}
+
+.premium-notify-form .newsletter-submit {
+  grid-area: button;
+}
+
+.premium-notify-form .newsletter-consent {
+  grid-area: consent;
+  margin: 4px 12px 8px;
+}
+
+@media (max-width: 600px) {
+  .premium-notify-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "email"
+      "consent"
+      "button";
+  }
+}
