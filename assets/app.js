@@ -10,7 +10,7 @@ const translations = {
     shopKicker:'SHOP', shopTitle:'Der Shop wird gerade vorbereitet.', shopText:'Aktuell sind noch keine Produkte veröffentlicht. Bald kannst du hier direkt nach Farbe, Länge und Struktur filtern und bestellen.', zeroProducts:'0 Produkte', comingSoon:'Neue Produkte folgen in Kürze.',
     newsKicker:'NEUHEITEN', newsTitle:'Sei zuerst dabei.', newsText:'Erfahre, wenn die ersten Produkte online gehen.', emailPlaceholder:'E-Mail-Adresse', notifyBtn:'Benachrichtigen',
     footerText:'Premium Hair Extensions · Deutschland', imprint:'Impressum', privacy:'Datenschutz', terms:'AGB', cartTitle:'Warenkorb', cartEmpty:'Dein Warenkorb ist noch leer.', favTitle:'Favoriten', favEmpty:'Du hast noch keine Favoriten gespeichert.',
-    thanks:'Danke! Diese Demo speichert noch keine E-Mails – die Funktion kann beim Livegang verbunden werden.'
+    thanks:'Danke! Deine Anmeldung wurde vorgemerkt. Eine Bestätigung per E-Mail ist erforderlich, bevor Newsletter versendet werden.'
   },
   tr: {
     announcement:'Premium saç. Doğal görünüm. Zamansız güzellik.', navCollection:'Koleksiyon', navQuality:'Kalite', navGallery:'Galeri', navShop:'Mağaza',
@@ -23,7 +23,7 @@ const translations = {
     shopKicker:'MAĞAZA', shopTitle:'Mağaza şu anda hazırlanıyor.', shopText:'Henüz yayınlanmış ürün bulunmuyor. Yakında renk, uzunluk ve dokuya göre filtreleyip doğrudan sipariş verebileceksin.', zeroProducts:'0 Ürün', comingSoon:'Yeni ürünler çok yakında.',
     newsKicker:'YENİLİKLER', newsTitle:'İlk sen haberdar ol.', newsText:'İlk ürünler yayına girdiğinde haber al.', emailPlaceholder:'E-posta adresi', notifyBtn:'Haber ver',
     footerText:'Premium Hair Extensions · Almanya', imprint:'Künye', privacy:'Gizlilik', terms:'Şartlar', cartTitle:'Sepet', cartEmpty:'Sepetin şu anda boş.', favTitle:'Favoriler', favEmpty:'Henüz favori ürün kaydetmedin.',
-    thanks:'Teşekkürler! Bu demo henüz e-posta kaydetmiyor; canlı yayına geçerken bağlantısı kurulabilir.'
+    thanks:'Teşekkürler! Kaydın alındı. Bülten gönderilmeden önce e-posta adresinin onaylanması gereklidir.'
   },
   en: {
     announcement:'Premium hair. Natural results. Timeless beauty.', navCollection:'Collection', navQuality:'Quality', navGallery:'Gallery', navShop:'Shop',
@@ -36,7 +36,7 @@ const translations = {
     shopKicker:'SHOP', shopTitle:'Our shop is getting ready.', shopText:'There are no products published yet. Soon you will be able to filter by shade, length and texture and order directly online.', zeroProducts:'0 Products', comingSoon:'New products are coming soon.',
     newsKicker:'UPDATES', newsTitle:'Be the first to know.', newsText:'Get notified when our first products go live.', emailPlaceholder:'Email address', notifyBtn:'Notify me',
     footerText:'Premium Hair Extensions · Germany', imprint:'Legal Notice', privacy:'Privacy', terms:'Terms', cartTitle:'Shopping Bag', cartEmpty:'Your bag is currently empty.', favTitle:'Favorites', favEmpty:'You have not saved any favorites yet.',
-    thanks:'Thank you! This demo does not store email addresses yet — the feature can be connected when the store goes live.'
+    thanks:'Thank you! Your signup has been recorded. Email confirmation is required before newsletters are sent.'
   }
 };
 
