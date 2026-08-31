@@ -1,4 +1,4 @@
-﻿const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
+const SUPABASE_URL = 'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
 const ADMIN_EMAIL = 'kaanyildo12@gmail.com';
 
@@ -8,6 +8,7 @@ const $ = (id) => document.getElementById(id);
 
 let products = [];
 let orders = [];
+let withdrawals = [];
 let currentVariants = [];
 
 /* =========================
@@ -47,6 +48,7 @@ async function showDashboard() {
 
   await loadProducts();
   await loadOrders();
+  await loadWithdrawals();
 }
 
 $('loginForm').addEventListener('submit', async (e) => {
@@ -372,6 +374,197 @@ async function loadOrders() {
 
 }
 
+
+
+async function loadWithdrawals() {
+
+  const { data, error } =
+    await sb
+      .from('withdrawal_requests')
+      .select(`
+        id,
+        name,
+        order_number,
+        email,
+        message,
+        status,
+        created_at
+      `)
+      .order('created_at', {
+        ascending: false
+      });
+
+  if (error) {
+
+    $('adminWithdrawals').innerHTML = `
+      <div class="card">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  withdrawals =
+    Array.isArray(data)
+      ? data
+      : [];
+
+  renderWithdrawals();
+}
+
+
+function renderWithdrawals() {
+
+  const container =
+    $('adminWithdrawals');
+
+  if (!container) {
+    return;
+  }
+
+
+  const search =
+    String(
+      $('adminWithdrawalSearch')?.value || ''
+    )
+      .trim()
+      .toLowerCase();
+
+
+  const status =
+    $('adminWithdrawalStatusFilter')?.value ||
+    'all';
+
+
+  const filtered =
+    withdrawals.filter(item => {
+
+      const searchable =
+        [
+          item.order_number,
+          item.email,
+          item.name
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
+
+      const matchesSearch =
+        !search ||
+        searchable.includes(search);
+
+      const matchesStatus =
+        status === 'all' ||
+        item.status === status;
+
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
+
+    });
+
+
+  if ($('adminWithdrawalCount')) {
+    $('adminWithdrawalCount').textContent =
+      `${filtered.length} Widerruf(e)`;
+  }
+
+
+  if (filtered.length === 0) {
+
+    container.innerHTML = `
+      <div class="card">
+        Keine Widerrufe gefunden.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML =
+    filtered.map(item => {
+
+      const date =
+        item.created_at
+          ? new Date(item.created_at)
+              .toLocaleString('de-DE')
+          : '—';
+
+      return `
+        <article class="admin-order-card">
+
+          <div class="admin-order-top">
+
+            <div>
+
+              <div class="admin-order-number">
+                ${escapeHtml(item.order_number || '—')}
+              </div>
+
+              <div class="admin-order-meta">
+                ${escapeHtml(item.name || '—')}
+                ·
+                ${escapeHtml(item.email || '—')}
+                <br>
+                ${escapeHtml(date)}
+              </div>
+
+            </div>
+
+            <div class="admin-withdrawal-status-actions">
+
+              <select
+                id="withdrawalStatus-${escapeHtml(item.id)}"
+              >
+                <option value="received"
+                  ${item.status === 'received' ? 'selected' : ''}>
+                  Received
+                </option>
+
+                <option value="processing"
+                  ${item.status === 'processing' ? 'selected' : ''}>
+                  Processing
+                </option>
+
+                <option value="completed"
+                  ${item.status === 'completed' ? 'selected' : ''}>
+                  Completed
+                </option>
+              </select>
+
+              <button
+                type="button"
+                class="secondary"
+                onclick="saveWithdrawalStatus('${escapeHtml(item.id)}')"
+              >
+                Speichern
+              </button>
+
+            </div>
+
+          </div>
+
+          ${
+            item.message
+              ? `
+                <div class="admin-order-detail-block"
+                     style="margin-top:16px">
+                  <strong>Mitteilung</strong>
+                  <p>${escapeHtml(item.message)}</p>
+                </div>
+              `
+              : ''
+          }
+
+        </article>
+      `;
+
+    }).join('');
+
+}
 
 function renderOrders() {
 
@@ -1829,3 +2022,60 @@ $('saveOrderShipping')?.addEventListener(
 
   }
 );
+
+
+
+
+
+$('adminWithdrawalSearch')?.addEventListener(
+  'input',
+  renderWithdrawals
+);
+
+$('adminWithdrawalStatusFilter')?.addEventListener(
+  'change',
+  renderWithdrawals
+);
+
+window.saveWithdrawalStatus = async function (id) {
+
+  const select =
+    $('withdrawalStatus-' + id);
+
+  if (!select) {
+    return;
+  }
+
+  const newStatus =
+    select.value;
+
+  const { error } =
+    await sb
+      .from('withdrawal_requests')
+      .update({
+        status: newStatus
+      })
+      .eq('id', id);
+
+  if (error) {
+
+    alert(
+      'Fehler: ' +
+      error.message
+    );
+
+    return;
+  }
+
+  const item =
+    withdrawals.find(
+      row => row.id === id
+    );
+
+  if (item) {
+    item.status = newStatus;
+  }
+
+  renderWithdrawals();
+
+};

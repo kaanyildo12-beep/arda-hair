@@ -1628,3 +1628,25 @@ dialog::backdrop {
     width: 100%;
   }
 }
+
+.admin-withdrawal-status-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-withdrawal-status-actions select {
+  min-width: 150px;
+}
+
+@media (max-width: 700px) {
+  .admin-withdrawal-status-actions {
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .admin-withdrawal-status-actions select,
+  .admin-withdrawal-status-actions button {
+    width: 100%;
+  }
+}

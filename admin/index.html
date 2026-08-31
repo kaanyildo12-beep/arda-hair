@@ -159,6 +159,43 @@
       </div>
 
     </section>
+    <section id="adminWithdrawalsSection" class="admin-orders-section">
+
+      <div class="title admin-orders-title">
+        <div>
+          <small>WIDERRUFE</small>
+          <h1>Widerrufe verwalten</h1>
+        </div>
+
+        <span id="adminWithdrawalCount"></span>
+      </div>
+
+      <div class="admin-order-toolbar">
+
+        <input
+          id="adminWithdrawalSearch"
+          type="search"
+          placeholder="Bestellnummer oder E-Mail suchen..."
+          autocomplete="off"
+        >
+
+        <select id="adminWithdrawalStatusFilter">
+          <option value="all">Alle Status</option>
+          <option value="received">Received</option>
+          <option value="processing">Processing</option>
+          <option value="completed">Completed</option>
+        </select>
+
+      </div>
+
+      <div id="adminWithdrawals">
+        <div class="card">
+          Widerrufe werden geladen...
+        </div>
+      </div>
+
+    </section>
+
 
 
   </section>
