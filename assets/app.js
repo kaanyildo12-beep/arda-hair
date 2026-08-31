@@ -248,6 +248,8 @@ translations.de.newsText =
   'Erhalte Updates zu neuen Produkten, Kollektionen und ausgewählten ARDA Highlights.';
 translations.de.newsletterNote =
   'Kein Spam. Nur ausgewählte ARDA Neuigkeiten.';
+translations.de.newsletterConsent =
+  'Ich möchte den ARDA HAIR Newsletter per E-Mail erhalten. Ich kann meine Einwilligung jederzeit widerrufen. Weitere Informationen finden Sie in der Datenschutzerklärung.';
 translations.de.footerExplore =
   'Entdecken';
 translations.de.footerLegal =
@@ -265,6 +267,8 @@ translations.tr.newsText =
   'Yeni ürünler, koleksiyonlar ve seçili ARDA yeniliklerinden haberdar ol.';
 translations.tr.newsletterNote =
   'Spam yok. Sadece seçilmiş ARDA yenilikleri.';
+translations.tr.newsletterConsent =
+  'ARDA HAIR e-posta bültenini almak istiyorum. Onayımı istediğim zaman geri çekebilirim. Daha fazla bilgi Gizlilik Politikası sayfasında yer almaktadır.';
 translations.tr.footerExplore =
   'Keşfet';
 translations.tr.footerLegal =
@@ -282,6 +286,8 @@ translations.en.newsText =
   'Get updates on new products, collections and selected ARDA highlights.';
 translations.en.newsletterNote =
   'No spam. Only selected ARDA updates.';
+translations.en.newsletterConsent =
+  'I would like to receive the ARDA HAIR newsletter by email. I can withdraw my consent at any time. More information is available in the Privacy Policy.';
 translations.en.footerExplore =
   'Explore';
 translations.en.footerLegal =
@@ -399,10 +405,69 @@ function openLightbox(src){ lightboxImg.src = src; lightbox.classList.add('show'
 document.getElementById('lightboxClose').onclick = () => lightbox.classList.remove('show');
 lightbox.onclick = e => { if (e.target === lightbox) lightbox.classList.remove('show'); };
 
-document.getElementById('notifyForm').onsubmit = e => {
+document.getElementById('notifyForm').onsubmit = async e => {
+
   e.preventDefault();
-  document.getElementById('formMsg').textContent = translations[lang].thanks;
-  e.target.reset();
+
+  const form = e.target;
+  const emailInput = form.querySelector('input[type="email"]');
+  const consentInput = document.getElementById('newsletterConsent');
+  const consentText = document.querySelector('[data-i18n="newsletterConsent"]');
+  const message = document.getElementById('formMsg');
+  const button = form.querySelector('button[type="submit"]');
+
+  if (
+    !emailInput ||
+    !consentInput?.checked ||
+    !consentText
+  ) {
+    return;
+  }
+
+  button.disabled = true;
+  message.textContent = '...';
+
+  try {
+
+    const response = await fetch(
+      '/api/newsletter-subscribe',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: emailInput.value,
+          language: lang,
+          consentText: consentText.textContent.trim()
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('NEWSLETTER_SIGNUP_FAILED');
+    }
+
+    message.textContent =
+      translations[lang].thanks;
+
+    form.reset();
+
+  } catch (error) {
+
+    message.textContent =
+      lang === 'tr'
+        ? 'Kayıt şu anda tamamlanamadı. Lütfen tekrar deneyin.'
+        : lang === 'en'
+          ? 'Signup could not be completed. Please try again.'
+          : 'Die Anmeldung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.';
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+
 };
 
 const observer = new IntersectionObserver(entries => entries.forEach(e => {
