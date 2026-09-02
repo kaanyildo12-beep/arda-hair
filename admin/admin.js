@@ -12,37 +12,138 @@ let withdrawals = [];
 let currentVariants = [];
 
 /* =========================
-   AUTH
+   AUTH + MFA
 ========================= */
+
+let mfaFactorId = null;
+let mfaMode = null;
+let mfaEnrollmentStarting = false;
 
 async function boot() {
   const {
     data: { session }
   } = await sb.auth.getSession();
 
-  if (session?.user?.email?.toLowerCase() === ADMIN_EMAIL) {
-    showDashboard();
-  } else {
-    showLogin();
-  }
+  await handleAdminSession(session);
 
   sb.auth.onAuthStateChange((_event, session) => {
-    if (session?.user?.email?.toLowerCase() === ADMIN_EMAIL) {
-      showDashboard();
-    } else {
-      showLogin();
-    }
+    setTimeout(() => {
+      handleAdminSession(session);
+    }, 0);
   });
+}
+
+async function handleAdminSession(session) {
+  const isAdmin =
+    session?.user?.email?.toLowerCase() === ADMIN_EMAIL;
+
+  if (!isAdmin) {
+    showLogin();
+    return;
+  }
+
+  const { data, error } =
+    await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+
+  if (error) {
+    showLogin();
+    $('loginMsg').textContent =
+      'Sicherheitsstatus konnte nicht geprüft werden.';
+    return;
+  }
+
+  if (data.currentLevel === 'aal2') {
+    await showDashboard();
+    return;
+  }
+
+  if (data.nextLevel === 'aal2') {
+    await showMfaChallenge();
+    return;
+  }
+
+  await showMfaEnrollment();
 }
 
 function showLogin() {
   $('login').hidden = false;
+  $('mfa').hidden = true;
   $('dashboard').hidden = true;
   $('logout').hidden = true;
 }
 
+function showMfaPanel() {
+  $('login').hidden = true;
+  $('mfa').hidden = false;
+  $('dashboard').hidden = true;
+  $('logout').hidden = false;
+  $('mfaMsg').textContent = '';
+  $('mfaCode').value = '';
+}
+
+async function showMfaChallenge() {
+  showMfaPanel();
+
+  const { data, error } =
+    await sb.auth.mfa.listFactors();
+
+  if (error) {
+    mfaEnrollmentStarting = false;
+    mfaMsg.textContent = error.message;
+    return;
+  }
+
+  const factor =
+    data?.totp?.find(item => item.status === 'verified') ||
+    data?.totp?.[0];
+
+  if (!factor) {
+    await showMfaEnrollment();
+    return;
+  }
+
+  mfaMode = 'challenge';
+  mfaFactorId = factor.id;
+
+  $('mfaEnroll').hidden = true;
+  $('mfaIntro').textContent =
+    'Geben Sie den 6-stelligen Code aus Ihrer Authenticator-App ein.';
+  $('mfaSubmit').textContent = 'Anmelden';
+}
+
+async function showMfaEnrollment() {
+  if (mfaEnrollmentStarting) return;
+  mfaEnrollmentStarting = true;
+
+  showMfaPanel();
+
+  mfaMode = 'enroll';
+
+  $('mfaIntro').textContent =
+    'Für das Admin-Konto ist Zwei-Faktor-Authentifizierung erforderlich.';
+  $('mfaEnroll').hidden = false;
+  $('mfaSubmit').textContent = 'MFA aktivieren';
+
+  const { data, error } =
+    await sb.auth.mfa.enroll({
+      factorType: 'totp',
+      friendlyName: 'ARDA HAIR Admin'
+    });
+
+  if (error) {
+    mfaEnrollmentStarting = false;
+    mfaMsg.textContent = error.message;
+    return;
+  }
+
+  mfaFactorId = data.id;
+  $('mfaQr').src = data.totp.qr_code;
+  $('mfaSecret').textContent = data.totp.secret;
+}
+
 async function showDashboard() {
   $('login').hidden = true;
+  $('mfa').hidden = true;
   $('dashboard').hidden = false;
   $('logout').hidden = false;
 
@@ -60,7 +161,8 @@ $('loginForm').addEventListener('submit', async (e) => {
   const password = $('password').value;
 
   if (email !== ADMIN_EMAIL) {
-    $('loginMsg').textContent = 'Dieses Konto ist nicht als Admin autorisiert.';
+    $('loginMsg').textContent =
+      'Dieses Konto ist nicht als Admin autorisiert.';
     return;
   }
 
@@ -71,13 +173,68 @@ $('loginForm').addEventListener('submit', async (e) => {
 
   $('loginMsg').textContent = error
     ? error.message
-    : 'Anmeldung erfolgreich.';
+    : 'Passwort korrekt. Sicherheitsprüfung...';
+});
+
+$('mfaForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const code = $('mfaCode').value.trim();
+
+  if (!/^\d{6}$/.test(code) || !mfaFactorId) {
+    $('mfaMsg').textContent =
+      'Bitte einen gültigen 6-stelligen Code eingeben.';
+    return;
+  }
+
+  $('mfaSubmit').disabled = true;
+  $('mfaMsg').textContent = 'Code wird geprüft...';
+
+  try {
+    const challenge =
+      await sb.auth.mfa.challenge({
+        factorId: mfaFactorId
+      });
+
+    if (challenge.error) {
+      throw challenge.error;
+    }
+
+    const verify =
+      await sb.auth.mfa.verify({
+        factorId: mfaFactorId,
+        challengeId: challenge.data.id,
+        code
+      });
+
+    if (verify.error) {
+      throw verify.error;
+    }
+
+    $('mfaMsg').textContent =
+      mfaMode === 'enroll'
+        ? 'MFA erfolgreich aktiviert.'
+        : 'MFA erfolgreich bestätigt.';
+
+    await sb.auth.refreshSession();
+
+    const {
+      data: { session }
+    } = await sb.auth.getSession();
+
+    await handleAdminSession(session);
+
+  } catch (error) {
+    $('mfaMsg').textContent =
+      error?.message || 'MFA-Prüfung fehlgeschlagen.';
+  } finally {
+    $('mfaSubmit').disabled = false;
+  }
 });
 
 $('logout').addEventListener('click', async () => {
   await sb.auth.signOut();
 });
-
 /* =========================
    PRODUCT TYPE
 ========================= */

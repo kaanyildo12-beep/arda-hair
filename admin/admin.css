@@ -1650,3 +1650,44 @@ dialog::backdrop {
     width: 100%;
   }
 }
+
+/* ADMIN MFA */
+#mfaEnroll {
+  margin: 22px 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #faf7f8;
+  text-align: center;
+}
+
+#mfaQr {
+  display: block;
+  width: min(240px, 100%);
+  height: auto;
+  margin: 18px auto;
+  padding: 10px;
+  border-radius: 14px;
+  background: #fff;
+}
+
+#mfaSecret {
+  display: inline-block;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f1ecee;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+#mfaForm {
+  margin-top: 20px;
+}
+
+#mfaMsg {
+  margin-top: 14px;
+  color: var(--pink-dark);
+  line-height: 1.5;
+}

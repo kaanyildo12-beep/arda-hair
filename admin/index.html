@@ -72,6 +72,62 @@
   </section>
 
 
+  <!-- MFA -->
+  <section id="mfa" class="panel" hidden>
+
+    <h1>Zwei-Faktor-Authentifizierung</h1>
+
+    <p id="mfaIntro">
+      Geben Sie den 6-stelligen Code aus Ihrer Authenticator-App ein.
+    </p>
+
+    <div id="mfaEnroll" hidden>
+
+      <p>
+        Scannen Sie diesen QR-Code einmalig mit Ihrer Authenticator-App.
+      </p>
+
+      <img
+        id="mfaQr"
+        alt="MFA QR-Code"
+      >
+
+      <p>
+        Alternativer Einrichtungsschlüssel:
+        <br>
+        <code id="mfaSecret"></code>
+      </p>
+
+    </div>
+
+    <form id="mfaForm">
+
+      <label>
+        6-stelliger Code
+        <input
+          id="mfaCode"
+          type="text"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          pattern="[0-9]{6}"
+          maxlength="6"
+          required
+        >
+      </label>
+
+      <button
+        id="mfaSubmit"
+        type="submit"
+      >
+        Bestätigen
+      </button>
+
+      <p id="mfaMsg"></p>
+
+    </form>
+
+  </section>
+
   <!-- DASHBOARD -->
   <section id="dashboard" hidden>
 
