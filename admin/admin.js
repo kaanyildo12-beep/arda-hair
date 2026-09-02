@@ -89,7 +89,7 @@ async function showMfaChallenge() {
 
   if (error) {
     mfaEnrollmentStarting = false;
-    mfaMsg.textContent = error.message;
+    $('mfaMsg').textContent = error.message;
     return;
   }
 
@@ -132,7 +132,7 @@ async function showMfaEnrollment() {
 
   if (error) {
     mfaEnrollmentStarting = false;
-    mfaMsg.textContent = error.message;
+    $('mfaMsg').textContent = error.message;
     return;
   }
 
