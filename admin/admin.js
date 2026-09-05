@@ -124,23 +124,64 @@ async function showMfaEnrollment() {
   $('mfaEnroll').hidden = false;
   $('mfaSubmit').textContent = 'MFA aktivieren';
 
-  const { data, error } =
-    await sb.auth.mfa.enroll({
-      factorType: 'totp',
-      friendlyName: 'ARDA HAIR Admin'
-    });
+  try {
+    const factors = await sb.auth.mfa.listFactors();
 
-  if (error) {
+    if (factors.error) {
+      throw factors.error;
+    }
+
+    const allFactors =
+      factors.data?.all ||
+      factors.data?.totp ||
+      [];
+
+    const unverifiedTotp = allFactors.filter(
+      factor =>
+        factor.factor_type === 'totp' &&
+        factor.status === 'unverified'
+    );
+
+    for (const factor of unverifiedTotp) {
+      const { error } = await sb.auth.mfa.unenroll({
+        factorId: factor.id
+      });
+
+      if (error) {
+        throw error;
+      }
+    }
+
+    const { data, error } =
+      await sb.auth.mfa.enroll({
+        factorType: 'totp',
+        friendlyName: 'ARDA HAIR Admin'
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    if (
+      !data?.id ||
+      !data?.totp?.qr_code ||
+      !data?.totp?.secret
+    ) {
+      throw new Error('MFA QR-Code konnte nicht erstellt werden.');
+    }
+
+    mfaFactorId = data.id;
+    $('mfaQr').src = data.totp.qr_code;
+    $('mfaSecret').textContent = data.totp.secret;
+
+  } catch (error) {
     mfaEnrollmentStarting = false;
-    $('mfaMsg').textContent = error.message;
-    return;
+    $('mfaQr').removeAttribute('src');
+    $('mfaSecret').textContent = '';
+    $('mfaMsg').textContent =
+      error?.message || 'MFA-Einrichtung fehlgeschlagen.';
   }
-
-  mfaFactorId = data.id;
-  $('mfaQr').src = data.totp.qr_code;
-  $('mfaSecret').textContent = data.totp.secret;
 }
-
 async function showDashboard() {
   $('login').hidden = true;
   $('mfa').hidden = true;
