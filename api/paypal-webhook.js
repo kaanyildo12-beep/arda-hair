@@ -1,4 +1,4 @@
-﻿const SUPABASE_URL =
+const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const SERVICE_KEY =
@@ -14,6 +14,7 @@ const PAYPAL_WEBHOOK_ID =
   process.env.PAYPAL_WEBHOOK_ID;
 
 const PAYPAL_BASE_URL =
+  process.env.PAYPAL_BASE_URL ||
   'https://api-m.sandbox.paypal.com';
 
 

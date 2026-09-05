@@ -1,4 +1,4 @@
-﻿const SUPABASE_URL =
+const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const SERVICE_KEY =
@@ -11,6 +11,7 @@ const PAYPAL_CLIENT_SECRET =
   process.env.PAYPAL_CLIENT_SECRET;
 
 const PAYPAL_BASE_URL =
+  process.env.PAYPAL_BASE_URL ||
   'https://api-m.sandbox.paypal.com';
 
 
