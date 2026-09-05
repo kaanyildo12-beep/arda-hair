@@ -1,8 +1,11 @@
-﻿const SUPABASE_URL =
+const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const SERVICE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+const { checkRateLimit } =
+  require('../lib/rate-limit');
 
 
 module.exports = async function handler(req, res) {
@@ -77,6 +80,28 @@ module.exports = async function handler(req, res) {
 
     }
 
+
+    const rateLimit =
+      await checkRateLimit(
+        req,
+        {
+          scope: 'newsletter',
+          limit: 5,
+          windowSeconds: 600,
+          identifier: cleanEmail
+        }
+      );
+
+    if (!rateLimit.allowed) {
+      res.setHeader(
+        'Retry-After',
+        String(rateLimit.retryAfter)
+      );
+
+      return res.status(429).json({
+        error: 'RATE_LIMITED'
+      });
+    }
 
     const response =
       await fetch(
