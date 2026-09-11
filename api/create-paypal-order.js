@@ -20,6 +20,9 @@ const PAYPAL_BASE_URL =
 const { getAuthenticatedUser } =
   require('../lib/auth-user');
 
+const { checkRateLimit } =
+  require('../lib/rate-limit');
+
 
 async function deleteOrder(orderId) {
 
@@ -240,6 +243,31 @@ module.exports = async function handler(
 
     }
 
+
+    const rateLimit =
+      await checkRateLimit(
+        req,
+        {
+          scope: 'payment-checkout',
+          limit: 10,
+          windowSeconds: 600,
+          identifier:
+            authenticatedUser?.id ||
+            customer.email ||
+            'guest'
+        }
+      );
+
+    if (!rateLimit.allowed) {
+      res.setHeader(
+        'Retry-After',
+        String(rateLimit.retryAfter)
+      );
+
+      return res.status(429).json({
+        error: 'RATE_LIMITED'
+      });
+    }
 
     const orderResponse =
       await fetch(
