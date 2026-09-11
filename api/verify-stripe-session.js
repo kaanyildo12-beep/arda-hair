@@ -1,4 +1,4 @@
-﻿const SUPABASE_URL =
+const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const SERVICE_KEY =
@@ -6,6 +6,9 @@ const SERVICE_KEY =
 
 const STRIPE_SECRET_KEY =
   process.env.STRIPE_SECRET_KEY;
+
+const { checkRateLimit } =
+  require('../lib/rate-limit');
 
 
 module.exports = async function handler(
@@ -62,6 +65,28 @@ module.exports = async function handler(
 
     }
 
+
+    const rateLimit =
+      await checkRateLimit(
+        req,
+        {
+          scope: 'stripe-verify',
+          limit: 30,
+          windowSeconds: 600,
+          identifier: 'verify'
+        }
+      );
+
+    if (!rateLimit.allowed) {
+      res.setHeader(
+        'Retry-After',
+        String(rateLimit.retryAfter)
+      );
+
+      return res.status(429).json({
+        error: 'RATE_LIMITED'
+      });
+    }
 
     const stripeResponse =
       await fetch(
