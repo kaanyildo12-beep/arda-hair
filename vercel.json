@@ -18,6 +18,10 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy-Report-Only",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-0Xpkt12CvtfZ2ckTNUgbGiZ39rJPCQ2wD/iEYN3a/O4=' 'sha256-iY2lUwDnIklKOLmWR7L8eJuAVId+55I1osEaLgRpTR0=' 'sha256-8vu2wU+hxPU55c2WgAhIEFo3qs9IDYswOrXKdVDr63M='; style-src 'self' 'unsafe-inline'; img-src 'self' https://zehtftzxrjuoqcpcqmcs.supabase.co; font-src 'self'; connect-src 'self' https://zehtftzxrjuoqcpcqmcs.supabase.co; form-action 'self';"
         }
       ]
     }
