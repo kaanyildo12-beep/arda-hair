@@ -1,4 +1,4 @@
-﻿const SUPABASE_URL =
+const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const SERVICE_KEY =
@@ -6,6 +6,9 @@ const SERVICE_KEY =
 
 const { getAuthenticatedUser } =
   require('../lib/auth-user');
+
+const { checkRateLimit } =
+  require('../lib/rate-limit');
 
 
 module.exports = async function handler(req, res) {
@@ -50,6 +53,28 @@ module.exports = async function handler(req, res) {
 
     }
 
+
+    const rateLimit =
+      await checkRateLimit(
+        req,
+        {
+          scope: 'my-orders',
+          limit: 60,
+          windowSeconds: 600,
+          identifier: user.id
+        }
+      );
+
+    if (!rateLimit.allowed) {
+      res.setHeader(
+        'Retry-After',
+        String(rateLimit.retryAfter)
+      );
+
+      return res.status(429).json({
+        error: 'RATE_LIMITED'
+      });
+    }
 
     const ordersResponse =
       await fetch(
