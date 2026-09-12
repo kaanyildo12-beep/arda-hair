@@ -14,6 +14,9 @@ const PAYPAL_BASE_URL =
   process.env.PAYPAL_BASE_URL ||
   'https://api-m.sandbox.paypal.com';
 
+const { checkRateLimit } =
+  require('../lib/rate-limit');
+
 
 async function getPayPalAccessToken() {
 
@@ -125,6 +128,28 @@ module.exports = async function handler(
 
     }
 
+
+    const rateLimit =
+      await checkRateLimit(
+        req,
+        {
+          scope: 'paypal-capture',
+          limit: 20,
+          windowSeconds: 600,
+          identifier: 'capture'
+        }
+      );
+
+    if (!rateLimit.allowed) {
+      res.setHeader(
+        'Retry-After',
+        String(rateLimit.retryAfter)
+      );
+
+      return res.status(429).json({
+        error: 'RATE_LIMITED'
+      });
+    }
 
     const existingResponse =
       await fetch(
