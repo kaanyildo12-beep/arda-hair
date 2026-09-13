@@ -1262,7 +1262,7 @@ async function openEditor(product = {}) {
 
   if ($('mediaFileName')) {
     $('mediaFileName').textContent =
-      'Noch keine Datei ausgewÃ¤hlt.';
+      'Noch keine Datei ausgewählt.';
   }
 
   $('deleteProduct').style.display =
@@ -1587,7 +1587,7 @@ $('productForm').addEventListener('submit', async (e) => {
   const productType = $('productType').value;
 
   if (!productType) {
-    $('editorMsg').textContent = 'Bitte Produkttyp auswÃ¤hlen.';
+    $('editorMsg').textContent = 'Bitte Produkttyp auswählen.';
     return;
   }
 
@@ -1953,7 +1953,7 @@ $('deleteProduct').addEventListener('click', async () => {
   if (!productId) return;
 
   const confirmed = confirm(
-    'Dieses Produkt wirklich lÃ¶schen?'
+    'Dieses Produkt wirklich löschen?'
   );
 
   if (!confirmed) return;
@@ -1992,7 +1992,7 @@ $('media').addEventListener('change', () => {
 
   name.textContent = file
     ? file.name
-    : 'Noch keine Datei ausgewÃ¤hlt.';
+    : 'Noch keine Datei ausgewählt.';
 });
 
 
