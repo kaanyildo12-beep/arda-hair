@@ -477,7 +477,7 @@ function renderProducts() {
 
           <button
             class="edit-product-btn"
-            onclick="editProduct('${product.id}')"
+            data-edit-product="${product.id}"
           >
             Bearbeiten
             <span>→</span>
@@ -736,7 +736,7 @@ function renderWithdrawals() {
               <button
                 type="button"
                 class="secondary"
-                onclick="saveWithdrawalStatus('${escapeHtml(item.id)}')"
+                data-save-withdrawal="${escapeHtml(item.id)}"
               >
                 Speichern
               </button>
@@ -912,7 +912,7 @@ function renderOrders() {
               <button
                 type="button"
                 class="secondary"
-                onclick="openOrderDetails('${escapeHtml(order.id)}')"
+                data-open-order="${escapeHtml(order.id)}"
               >
                 Details
               </button>
@@ -1531,7 +1531,7 @@ function renderVariants() {
         <button
           type="button"
           class="danger"
-          onclick="removeVariant(${index})"
+          data-remove-variant="${index}"
         >
           Variante entfernen
         </button>
@@ -2277,3 +2277,31 @@ window.saveWithdrawalStatus = async function (id) {
   renderWithdrawals();
 
 };
+
+//
+// data-admin-action-listener
+//
+document.addEventListener('click', async (event) => {
+  const editButton = event.target.closest('[data-edit-product]');
+  if (editButton) {
+    await window.editProduct(editButton.dataset.editProduct);
+    return;
+  }
+
+  const withdrawalButton = event.target.closest('[data-save-withdrawal]');
+  if (withdrawalButton) {
+    await window.saveWithdrawalStatus(withdrawalButton.dataset.saveWithdrawal);
+    return;
+  }
+
+  const orderButton = event.target.closest('[data-open-order]');
+  if (orderButton) {
+    await window.openOrderDetails(orderButton.dataset.openOrder);
+    return;
+  }
+
+  const variantButton = event.target.closest('[data-remove-variant]');
+  if (variantButton) {
+    window.removeVariant(Number(variantButton.dataset.removeVariant));
+  }
+});
