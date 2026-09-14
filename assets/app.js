@@ -698,6 +698,34 @@ function openShopProduct(slug) {
 
 
 document.addEventListener('click', (event) => {
+  const quantityButton = event.target.closest('[data-cart-index][data-cart-delta]');
+  if (quantityButton) {
+    window.changeMainCartQuantity(Number(quantityButton.dataset.cartIndex), Number(quantityButton.dataset.cartDelta));
+    return;
+  }
+
+  const removeCartButton = event.target.closest('[data-remove-cart]');
+  if (removeCartButton) {
+    window.removeMainCartItem(Number(removeCartButton.dataset.removeCart));
+    return;
+  }
+
+  if (event.target.closest('[data-go-checkout]')) {
+    window.location.href = 'checkout.html';
+    return;
+  }
+
+  if (event.target.closest('[data-clear-cart]')) {
+    window.clearMainCart();
+    return;
+  }
+
+  const removeFavoriteButton = event.target.closest('[data-remove-favorite]');
+  if (removeFavoriteButton) {
+    window.removeMainFavorite(Number(removeFavoriteButton.dataset.removeFavorite));
+    return;
+  }
+
   const trigger = event.target.closest('[data-open-product]');
   if (!trigger) return;
   openShopProduct(trigger.dataset.openProduct);
@@ -1185,10 +1213,10 @@ function renderMainCart() {
             }
 
             <div class="saved-cart-controls">
-  <button type="button" onclick="changeMainCartQuantity(${index}, -1)">−</button>
+  <button type="button" data-cart-index="${index}" data-cart-delta="-1">−</button>
   <span>${Number(item.quantity || 1)}</span>
-  <button type="button" onclick="changeMainCartQuantity(${index}, 1)">+</button>
-  <button type="button" class="saved-remove" onclick="removeMainCartItem(${index})">
+  <button type="button" data-cart-index="${index}" data-cart-delta="1">+</button>
+  <button type="button" class="saved-remove" data-remove-cart="${index}">
     ${lang === 'tr' ? 'Kaldır' : lang === 'en' ? 'Remove' : 'Entfernen'}
   </button>
 </div>
@@ -1223,7 +1251,7 @@ function renderMainCart() {
       type="button"
       class="saved-clear-button"
       style="background:#0b0b0c;color:#fff;border-color:#0b0b0c;"
-      onclick="window.location.href='checkout.html'"
+      data-go-checkout
     >
       ${
         lang === 'tr'
@@ -1237,7 +1265,7 @@ function renderMainCart() {
 <button
       type="button"
       class="saved-clear-button"
-      onclick="clearMainCart()"
+      data-clear-cart
     >
       ${
         lang === 'tr'
@@ -1483,7 +1511,7 @@ function renderMainFavorites() {
             <button
               type="button"
               class="saved-remove"
-              onclick="removeMainFavorite(${index})"
+              data-remove-favorite="${index}"
             >
               ${
                 lang === 'tr'

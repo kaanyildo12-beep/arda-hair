@@ -1324,10 +1324,7 @@ function createOptionGroup(
               class="option-btn ${
                 active ? 'active' : ''
               }"
-              onclick="selectProductOption(
-                '${field}',
-                '${escapeJsValue(value)}'
-              )"
+              data-product-option-field="${escapeProductHtml(field)}" data-product-option-value="${escapeProductHtml(value)}"
             >
               ${escapeProductHtml(
                 formatter(value)
@@ -1375,9 +1372,7 @@ function createBaseSizeGroup(
                 ? 'active'
                 : ''
             }"
-            onclick="selectBaseSize(
-              '${escapeJsValue(value)}'
-            )"
+            data-base-size="${escapeProductHtml(value)}"
           >
             ${escapeProductHtml(value)} cm
           </button>
@@ -2292,7 +2287,7 @@ function renderCartDrawer() {
 
             <button
               type="button"
-              onclick="changeProductCartQuantity(${index}, -1)"
+              data-product-cart-index="${index}" data-product-cart-delta="-1"
             >−</button>
 
             <strong>
@@ -2301,12 +2296,12 @@ function renderCartDrawer() {
 
             <button
               type="button"
-              onclick="changeProductCartQuantity(${index}, 1)"
+              data-product-cart-index="${index}" data-product-cart-delta="1"
             >+</button>
 
             <button
               type="button"
-              onclick="removeProductCartItem(${index})"
+              data-remove-product-cart="${index}"
             >
               ${
                 currentLang === 'tr'
@@ -2337,7 +2332,7 @@ function renderCartDrawer() {
         font-weight:700;
         cursor:pointer;
       "
-      onclick="window.location.href='checkout.html'"
+      data-product-checkout
     >
       ${currentLang === 'tr'
         ? 'Ödemeye geç'
@@ -2954,3 +2949,44 @@ function renderShippingReturns() {
     text || t.shippingFallback;
 
 }
+
+//
+// data-product-action-listener
+//
+document.addEventListener('click', (event) => {
+  const optionButton = event.target.closest('[data-product-option-field][data-product-option-value]');
+  if (optionButton) {
+    window.selectProductOption(
+      optionButton.dataset.productOptionField,
+      optionButton.dataset.productOptionValue
+    );
+    return;
+  }
+
+  const baseSizeButton = event.target.closest('[data-base-size]');
+  if (baseSizeButton) {
+    window.selectBaseSize(baseSizeButton.dataset.baseSize);
+    return;
+  }
+
+  const quantityButton = event.target.closest('[data-product-cart-index][data-product-cart-delta]');
+  if (quantityButton) {
+    window.changeProductCartQuantity(
+      Number(quantityButton.dataset.productCartIndex),
+      Number(quantityButton.dataset.productCartDelta)
+    );
+    return;
+  }
+
+  const removeButton = event.target.closest('[data-remove-product-cart]');
+  if (removeButton) {
+    window.removeProductCartItem(
+      Number(removeButton.dataset.removeProductCart)
+    );
+    return;
+  }
+
+  if (event.target.closest('[data-product-checkout]')) {
+    window.location.href = 'checkout.html';
+  }
+});
