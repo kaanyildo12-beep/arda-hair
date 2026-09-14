@@ -655,7 +655,7 @@ function renderShopProducts() {
             <button
               class="shop-product-open"
               type="button"
-              onclick="openShopProduct('${escapeShopHtml(product.slug || product.id)}')"
+              data-open-product="${escapeShopHtml(product.slug || product.id)}"
             >
               Ansehen
             </button>
@@ -696,6 +696,12 @@ function openShopProduct(slug) {
 
 }
 
+
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-open-product]');
+  if (!trigger) return;
+  openShopProduct(trigger.dataset.openProduct);
+});
 
 /* =========================
    PRODUCT FILTERS
@@ -896,7 +902,7 @@ function renderEnhancedShopProducts() {
 
         <div
           class="shop-product-image"
-          onclick="openShopProduct('${escapeShopHtml(product.slug || product.id)}')"
+          data-open-product="${escapeShopHtml(product.slug || product.id)}"
         >
 
           ${
@@ -971,7 +977,7 @@ function renderEnhancedShopProducts() {
             <button
               class="shop-product-open"
               type="button"
-              onclick="openShopProduct('${escapeShopHtml(product.slug || product.id)}')"
+              data-open-product="${escapeShopHtml(product.slug || product.id)}"
             >
               ${buttonText}
             </button>
