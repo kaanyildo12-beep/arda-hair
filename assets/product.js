@@ -2050,6 +2050,106 @@ function stockLimitText(stock) {
 }
 
 
+async function getProductCartLivePrice(item) {
+
+  if (!item) return null;
+
+  if (item.variantId) {
+    const { data, error } =
+      await productDb
+        .from('product_variants')
+        .select('price_cents')
+        .eq('id', item.variantId)
+        .maybeSingle();
+
+    if (!error && data?.price_cents != null) {
+      return Number(data.price_cents);
+    }
+  }
+
+  if (item.productId) {
+    const { data, error } =
+      await productDb
+        .from('products')
+        .select('price_cents')
+        .eq('id', item.productId)
+        .maybeSingle();
+
+    if (!error && data?.price_cents != null) {
+      return Number(data.price_cents);
+    }
+  }
+
+  return null;
+}
+
+
+async function syncProductCartPrices() {
+
+  let changed = false;
+
+  for (const item of cart) {
+
+    const livePrice =
+      await getProductCartLivePrice(item);
+
+    if (livePrice === null) continue;
+
+    const oldPrice =
+      Number(item.price_cents || 0);
+
+    if (oldPrice !== livePrice) {
+
+      item.price_change_from_cents =
+        oldPrice;
+
+      item.price_change_direction =
+        livePrice > oldPrice ? 'up' : 'down';
+
+      item.price_cents =
+        livePrice;
+
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    saveCart();
+  }
+}
+
+
+function productCartPriceChangeText(item) {
+
+  if (item.price_change_from_cents == null) {
+    return '';
+  }
+
+  const oldPrice =
+    formatProductMoney(
+      item.price_change_from_cents
+    );
+
+  const newPrice =
+    formatProductMoney(
+      item.price_cents
+    );
+
+  const up =
+    item.price_change_direction === 'up';
+
+  if (currentLang === 'tr') {
+    return `${up ? 'Fiyat arttı' : 'Fiyat düştü'}: ${oldPrice} → ${newPrice}`;
+  }
+
+  if (currentLang === 'en') {
+    return `${up ? 'Price increased' : 'Price decreased'}: ${oldPrice} → ${newPrice}`;
+  }
+
+  return `${up ? 'Preis gestiegen' : 'Preis gesunken'}: ${oldPrice} → ${newPrice}`;
+}
+
+
 async function getLiveCartItemStock(item) {
 
   if (!item) return null;
@@ -2243,7 +2343,9 @@ function updateCartCount() {
 }
 
 
-function renderCartDrawer() {
+async function renderCartDrawer() {
+
+  await syncProductCartPrices();
 
   const container = $('productCartItems');
 
@@ -2282,6 +2384,16 @@ function renderCartDrawer() {
           <small>
             ${formatProductMoney(item.price_cents)}
           </small>
+
+          ${
+            productCartPriceChangeText(item)
+              ? `
+                <small style="display:block;margin-top:4px;font-weight:700;">
+                  ${escapeProductHtml(productCartPriceChangeText(item))}
+                </small>
+              `
+              : ''
+          }
 
           <div class="product-cart-controls">
 

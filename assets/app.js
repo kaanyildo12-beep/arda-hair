@@ -1093,7 +1093,106 @@ function renderMainCartAndFavorites() {
 }
 
 
-function renderMainCart() {
+async function getMainCartLivePrice(item) {
+
+  if (!item) return null;
+
+  if (item.variantId) {
+    const { data, error } =
+      await shopDb
+        .from('product_variants')
+        .select('price_cents')
+        .eq('id', item.variantId)
+        .maybeSingle();
+
+    if (!error && data?.price_cents != null) {
+      return Number(data.price_cents);
+    }
+  }
+
+  if (item.productId) {
+    const { data, error } =
+      await shopDb
+        .from('products')
+        .select('price_cents')
+        .eq('id', item.productId)
+        .maybeSingle();
+
+    if (!error && data?.price_cents != null) {
+      return Number(data.price_cents);
+    }
+  }
+
+  return null;
+}
+
+
+async function syncMainCartPrices(cart) {
+
+  let changed = false;
+
+  for (const item of cart) {
+
+    const livePrice =
+      await getMainCartLivePrice(item);
+
+    if (livePrice === null) continue;
+
+    const oldPrice =
+      Number(item.price_cents || 0);
+
+    if (oldPrice !== livePrice) {
+
+      item.price_change_from_cents =
+        oldPrice;
+
+      item.price_change_direction =
+        livePrice > oldPrice ? 'up' : 'down';
+
+      item.price_cents =
+        livePrice;
+
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    localStorage.setItem(
+      'ardaHairCart',
+      JSON.stringify(cart)
+    );
+  }
+}
+
+
+function mainCartPriceChangeText(item) {
+
+  if (item.price_change_from_cents == null) {
+    return '';
+  }
+
+  const oldPrice =
+    mainMoney(item.price_change_from_cents);
+
+  const newPrice =
+    mainMoney(item.price_cents);
+
+  const up =
+    item.price_change_direction === 'up';
+
+  if (lang === 'tr') {
+    return `${up ? 'Fiyat arttı' : 'Fiyat düştü'}: ${oldPrice} → ${newPrice}`;
+  }
+
+  if (lang === 'en') {
+    return `${up ? 'Price increased' : 'Price decreased'}: ${oldPrice} → ${newPrice}`;
+  }
+
+  return `${up ? 'Preis gestiegen' : 'Preis gesunken'}: ${oldPrice} → ${newPrice}`;
+}
+
+
+async function renderMainCart() {
 
   const drawer =
     document.getElementById('cartDrawer');
@@ -1101,6 +1200,8 @@ function renderMainCart() {
   if (!drawer) return;
 
   const cart = getSavedCart();
+
+  await syncMainCartPrices(cart);
 
   const count =
     cart.reduce(
@@ -1207,6 +1308,20 @@ function renderMainCart() {
                 ? `
                   <small>
                     ${escapeShopHtml(item.variant)}
+                  </small>
+                `
+                : ''
+            }
+
+            <small>
+              ${mainMoney(item.price_cents)}
+            </small>
+
+            ${
+              mainCartPriceChangeText(item)
+                ? `
+                  <small style="display:block;margin-top:4px;font-weight:700;">
+                    ${escapeShopHtml(mainCartPriceChangeText(item))}
                   </small>
                 `
                 : ''
