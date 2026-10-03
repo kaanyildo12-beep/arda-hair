@@ -56,7 +56,8 @@ module.exports = async function handler(
     if (
       !sessionId.startsWith(
         'cs_'
-      )
+      ) ||
+      sessionId.length > 255
     ) {
 
       return res.status(400).json({

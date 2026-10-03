@@ -17,6 +17,9 @@ const PAYPAL_BASE_URL =
 const { checkRateLimit } =
   require('../lib/rate-limit');
 
+const { enforceJsonBodyLimit } =
+  require('../lib/request-guard');
+
 
 async function getPayPalAccessToken() {
 
@@ -93,6 +96,13 @@ module.exports = async function handler(
   }
 
 
+  if (!enforceJsonBodyLimit(req)) {
+    return res.status(413).json({
+      error: 'PAYLOAD_TOO_LARGE'
+    });
+  }
+
+
   if (
     !SERVICE_KEY ||
     !PAYPAL_CLIENT_ID ||
@@ -120,7 +130,7 @@ module.exports = async function handler(
       ).trim();
 
 
-    if (!paypalOrderId) {
+    if (!paypalOrderId || paypalOrderId.length > 128) {
 
       return res.status(400).json({
         error: 'INVALID_PAYPAL_ORDER'

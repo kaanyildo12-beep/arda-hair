@@ -7,6 +7,9 @@ const SERVICE_KEY =
 const { checkRateLimit } =
   require('../lib/rate-limit');
 
+const { enforceJsonBodyLimit } =
+  require('../lib/request-guard');
+
 
 module.exports = async function handler(req, res) {
 
@@ -27,6 +30,13 @@ module.exports = async function handler(req, res) {
       error: 'METHOD_NOT_ALLOWED'
     });
 
+  }
+
+
+  if (!enforceJsonBodyLimit(req)) {
+    return res.status(413).json({
+      error: 'PAYLOAD_TOO_LARGE'
+    });
   }
 
 

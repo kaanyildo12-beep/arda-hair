@@ -1,4 +1,4 @@
-﻿const crypto = require('crypto');
+const crypto = require('crypto');
 
 const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
@@ -10,17 +10,31 @@ const WEBHOOK_SECRET =
   process.env.STRIPE_WEBHOOK_SECRET;
 
 
-async function getRawBody(req) {
+async function getRawBody(req, maxBytes = 1048576) {
 
   const chunks = [];
+  let totalBytes = 0;
 
   for await (const chunk of req) {
 
-    chunks.push(
+    const buffer =
       Buffer.isBuffer(chunk)
         ? chunk
-        : Buffer.from(chunk)
-    );
+        : Buffer.from(chunk);
+
+    totalBytes += buffer.length;
+
+    if (totalBytes > maxBytes) {
+      const error =
+        new Error('PAYLOAD_TOO_LARGE');
+
+      error.code =
+        'PAYLOAD_TOO_LARGE';
+
+      throw error;
+    }
+
+    chunks.push(buffer);
 
   }
 
@@ -416,6 +430,12 @@ async function handler(
 
 
   } catch (error) {
+
+    if (error?.code === 'PAYLOAD_TOO_LARGE') {
+      return res.status(413).json({
+        error: 'PAYLOAD_TOO_LARGE'
+      });
+    }
 
     console.error(
       'Stripe webhook error:',

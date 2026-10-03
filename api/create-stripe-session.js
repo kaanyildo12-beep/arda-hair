@@ -16,6 +16,9 @@ const { getAuthenticatedUser } =
 const { checkRateLimit } =
   require('../lib/rate-limit');
 
+const { enforceJsonBodyLimit } =
+  require('../lib/request-guard');
+
 
 async function deleteOrder(orderId) {
 
@@ -102,6 +105,13 @@ module.exports = async function handler(
       error: 'METHOD_NOT_ALLOWED'
     });
 
+  }
+
+
+  if (!enforceJsonBodyLimit(req)) {
+    return res.status(413).json({
+      error: 'PAYLOAD_TOO_LARGE'
+    });
   }
 
 

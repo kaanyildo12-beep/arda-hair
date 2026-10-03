@@ -17,6 +17,9 @@ const PAYPAL_BASE_URL =
   process.env.PAYPAL_BASE_URL ||
   'https://api-m.sandbox.paypal.com';
 
+const { enforceJsonBodyLimit } =
+  require('../lib/request-guard');
+
 
 async function getAccessToken() {
 
@@ -421,6 +424,13 @@ async function handler(
         'METHOD_NOT_ALLOWED'
     });
 
+  }
+
+
+  if (!enforceJsonBodyLimit(req, 1048576)) {
+    return res.status(413).json({
+      error: 'PAYLOAD_TOO_LARGE'
+    });
   }
 
 
