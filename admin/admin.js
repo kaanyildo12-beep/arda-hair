@@ -1813,24 +1813,25 @@ $('productForm').addEventListener('submit', async (e) => {
 ========================= */
 
 async function saveVariants(productId) {
-  const { error: deleteError } = await sb
+  const { data: existingRows, error: existingError } = await sb
     .from('product_variants')
-    .delete()
+    .select('id')
     .eq('product_id', productId);
 
-  if (deleteError) {
+  if (existingError) {
     $('editorMsg').textContent =
-      'Varianten konnten nicht aktualisiert werden: ' +
-      deleteError.message;
+      'Varianten konnten nicht geladen werden: ' +
+      existingError.message;
 
     return false;
   }
 
-  if (!currentVariants.length) {
-    return true;
-  }
-
   const rows = currentVariants.map((variant, index) => ({
+    id:
+      variant.id ||
+      variant.temp_id ||
+      crypto.randomUUID(),
+
     product_id: productId,
 
     sku:
@@ -1872,21 +1873,48 @@ async function saveVariants(productId) {
     sort_order: index
   }));
 
-  const { error } = await sb
-    .from('product_variants')
-    .insert(rows);
+  if (rows.length) {
+    const { error: upsertError } = await sb
+      .from('product_variants')
+      .upsert(rows, {
+        onConflict: 'id'
+      });
 
-  if (error) {
-    $('editorMsg').textContent =
-      'Varianten konnten nicht gespeichert werden: ' +
-      error.message;
+    if (upsertError) {
+      $('editorMsg').textContent =
+        'Varianten konnten nicht gespeichert werden: ' +
+        upsertError.message;
 
-    return false;
+      return false;
+    }
+  }
+
+  const desiredIds =
+    new Set(rows.map(row => row.id));
+
+  const removedIds =
+    (existingRows || [])
+      .map(row => row.id)
+      .filter(id => !desiredIds.has(id));
+
+  if (removedIds.length) {
+    const { error: deleteError } = await sb
+      .from('product_variants')
+      .delete()
+      .eq('product_id', productId)
+      .in('id', removedIds);
+
+    if (deleteError) {
+      $('editorMsg').textContent =
+        'Entfernte Varianten konnten nicht gelöscht werden: ' +
+        deleteError.message;
+
+      return false;
+    }
   }
 
   return true;
 }
-
 /* =========================
    MEDIA
 ========================= */
@@ -1933,13 +1961,22 @@ async function uploadMedia(productId) {
     });
 
   if (mediaError) {
+    const { error: cleanupError } = await sb
+      .storage
+      .from('product-media')
+      .remove([path]);
+
     $('editorMsg').textContent =
-      'Datei hochgeladen, aber Medien-Datensatz konnte nicht gespeichert werden: ' +
-      mediaError.message;
+      cleanupError
+        ? 'Medien-Datensatz konnte nicht gespeichert werden und die hochgeladene Datei konnte nicht automatisch entfernt werden: ' +
+          mediaError.message +
+          ' / Cleanup: ' +
+          cleanupError.message
+        : 'Medien-Datensatz konnte nicht gespeichert werden. Die hochgeladene Datei wurde wieder entfernt: ' +
+          mediaError.message;
 
     return false;
   }
-
   return true;
 }
 
