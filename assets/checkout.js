@@ -1,4 +1,4 @@
-﻿/* =========================================
+/* =========================================
    ARDA HAIR — CHECKOUT
 ========================================= */
 const CHECKOUT_SUPABASE_URL =
@@ -633,7 +633,9 @@ function updateCheckoutState() {
   if (checkoutSubmitting) {
 
     checkoutMessage.textContent =
-      'Du wirst sicher zu Stripe weitergeleitet …';
+      getPaymentMethod() === 'paypal'
+        ? 'Du wirst sicher zu PayPal weitergeleitet …'
+        : 'Du wirst sicher zu Stripe weitergeleitet …';
 
     return;
 
@@ -968,6 +970,8 @@ checkoutForm
         checkoutSubmitting =
           false;
 
+        updateCheckoutState();
+
 
         if (
           error.message ===
@@ -1002,8 +1006,6 @@ checkoutForm
 
         }
 
-
-        updateCheckoutState();
 
       }
 
