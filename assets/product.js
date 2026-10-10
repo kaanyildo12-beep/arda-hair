@@ -882,6 +882,8 @@ function renderProduct() {
 
   }
 
+  updateProductSeo();
+
   renderOptions();
   renderHighlights();
   renderTechnicalDetails();
@@ -897,6 +899,202 @@ function renderProduct() {
 /* =========================================
    LANG
 ========================================= */
+
+function updateProductSeo() {
+
+  if (!currentProduct) return;
+
+  const name =
+    getProductName() ||
+    'ARDA HAIR';
+
+  const description =
+    getProductDescription() ||
+    'ARDA HAIR Premium Extensions.';
+
+  const identifier =
+    currentProduct.slug ||
+    currentProduct.id;
+
+  const canonicalUrl =
+    `https://arda-hair.vercel.app/product.html?product=${encodeURIComponent(identifier)}`;
+
+  const imageUrl =
+    getFirstProductImage();
+
+  const priceCents =
+    Number(
+      selectedVariant?.price_cents ??
+      currentProduct.price_cents ??
+      0
+    );
+
+  const stock =
+    Number(
+      selectedVariant?.stock ??
+      currentProduct.stock ??
+      0
+    );
+
+  const setMeta = (attribute, key, content) => {
+
+    if (!content) return;
+
+    let meta =
+      document.querySelector(
+        `meta[${attribute}="${key}"]`
+      );
+
+    if (!meta) {
+      meta =
+        document.createElement('meta');
+
+      meta.setAttribute(
+        attribute,
+        key
+      );
+
+      document.head.appendChild(meta);
+    }
+
+    meta.setAttribute(
+      'content',
+      content
+    );
+
+  };
+
+
+  let canonical =
+    document.querySelector(
+      'link[rel="canonical"]'
+    );
+
+  if (!canonical) {
+    canonical =
+      document.createElement('link');
+
+    canonical.setAttribute(
+      'rel',
+      'canonical'
+    );
+
+    document.head.appendChild(
+      canonical
+    );
+  }
+
+  canonical.setAttribute(
+    'href',
+    canonicalUrl
+  );
+
+
+  const descriptionMeta =
+    document.querySelector(
+      'meta[name="description"]'
+    );
+
+  if (descriptionMeta) {
+    descriptionMeta.setAttribute(
+      'content',
+      description
+    );
+  } else {
+    setMeta(
+      'name',
+      'description',
+      description
+    );
+  }
+
+
+  setMeta('property', 'og:type', 'product');
+  setMeta('property', 'og:site_name', 'ARDA HAIR');
+  setMeta('property', 'og:title', `${name} — ARDA HAIR`);
+  setMeta('property', 'og:description', description);
+  setMeta('property', 'og:url', canonicalUrl);
+
+  if (imageUrl) {
+    setMeta(
+      'property',
+      'og:image',
+      imageUrl
+    );
+  }
+
+
+  setMeta(
+    'name',
+    'twitter:card',
+    imageUrl
+      ? 'summary_large_image'
+      : 'summary'
+  );
+
+  setMeta('name', 'twitter:title', `${name} — ARDA HAIR`);
+  setMeta('name', 'twitter:description', description);
+
+  if (imageUrl) {
+    setMeta(
+      'name',
+      'twitter:image',
+      imageUrl
+    );
+  }
+
+
+  let schema =
+    document.getElementById(
+      'productStructuredData'
+    );
+
+  if (!schema) {
+    schema =
+      document.createElement('script');
+
+    schema.type =
+      'application/ld+json';
+
+    schema.id =
+      'productStructuredData';
+
+    document.head.appendChild(
+      schema
+    );
+  }
+
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    description,
+    url: canonicalUrl,
+    brand: {
+      '@type': 'Brand',
+      name: 'ARDA HAIR'
+    },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EUR',
+      price: (priceCents / 100).toFixed(2),
+      availability:
+        stock > 0
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+      url: canonicalUrl
+    }
+  };
+
+  if (imageUrl) {
+    productSchema.image =
+      [imageUrl];
+  }
+
+  schema.textContent =
+    JSON.stringify(productSchema);
+
+}
 
 function getProductName() {
 
