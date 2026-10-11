@@ -3208,6 +3208,14 @@ function showProductError(
   const t =
     productTranslations[currentLang];
 
+  let robotsMeta = document.querySelector('meta[name="robots"]');
+  if (!robotsMeta) {
+    robotsMeta = document.createElement('meta');
+    robotsMeta.setAttribute('name', 'robots');
+    document.head.appendChild(robotsMeta);
+  }
+  robotsMeta.setAttribute('content', 'noindex, follow');
+
   $('productName')
     .textContent =
     t.notFoundTitle;
