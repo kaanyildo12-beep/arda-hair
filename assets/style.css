@@ -1176,6 +1176,7 @@ footer {
 }
 
 
+
 /* =========================================
    PREMIUM HERO BACKGROUND
 ========================================= */
@@ -2961,3 +2962,9 @@ footer {
       "button";
   }
 }
+
+/* Shop premium highlights */
+.shop-highlights{max-width:1320px;margin:0 auto 22px;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(255,255,255,.72);border:1px solid #eadfe3;border-radius:18px;box-shadow:0 10px 34px rgba(18,18,18,.04);overflow:hidden}.shop-highlights>div{padding:19px 22px;display:flex;flex-direction:column;gap:4px}.shop-highlights>div+div{border-left:1px solid #eee4e7}.shop-highlights strong{font-size:13px;font-weight:700;color:#111;letter-spacing:.02em}.shop-highlights span{font-size:12px;color:#8a7f83;line-height:1.45}@media(max-width:700px){.shop-highlights{grid-template-columns:1fr}.shop-highlights>div{padding:15px 17px}.shop-highlights>div+div{border-left:0;border-top:1px solid #eee4e7}}
+
+/* Modern newsletter checkbox */
+.newsletter-consent{position:relative;cursor:pointer}.newsletter-consent input{position:absolute;opacity:0;width:1px;height:1px}.newsletter-checkmark{display:block!important;width:22px;height:22px;min-width:22px;margin-top:1px;border:1.5px solid #e7a7bb;border-radius:7px;background:rgba(255,255,255,.05);position:relative;transition:.2s ease}.newsletter-checkmark::after{content:'';position:absolute;left:7px;top:3px;width:5px;height:10px;border-right:2px solid #111;border-bottom:2px solid #111;transform:rotate(45deg) scale(0);transition:transform .18s ease}.newsletter-consent input:checked+.newsletter-checkmark{background:#e7a7bb;border-color:#e7a7bb;box-shadow:0 0 0 4px rgba(231,167,187,.14)}.newsletter-consent input:checked+.newsletter-checkmark::after{transform:rotate(45deg) scale(1)}.newsletter-consent input:focus-visible+.newsletter-checkmark{outline:2px solid #fff;outline-offset:3px}
