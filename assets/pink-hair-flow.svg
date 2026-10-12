@@ -1,0 +1,56 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 1600" fill="none">
+  <defs>
+    <linearGradient id="hairMain" x1="0" y1="0" x2="0" y2="1600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f6b7c8" stop-opacity="0.95"/>
+      <stop offset="30%" stop-color="#ef9db6" stop-opacity="0.90"/>
+      <stop offset="65%" stop-color="#e88aa8" stop-opacity="0.82"/>
+      <stop offset="100%" stop-color="#de7698" stop-opacity="0.72"/>
+    </linearGradient>
+
+    <linearGradient id="hairSoft" x1="0" y1="0" x2="0" y2="1600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffd6e2" stop-opacity="0.70"/>
+      <stop offset="40%" stop-color="#f6b7c8" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#e88aa8" stop-opacity="0.38"/>
+    </linearGradient>
+
+    <filter id="softBlur" x="-20%" y="-10%" width="140%" height="120%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
+  </defs>
+
+  <!-- thick main waves -->
+  <path d="M120 -40C40 120 95 220 150 330C210 450 225 580 180 700C145 795 120 900 150 1015C180 1130 245 1245 225 1370C212 1450 185 1515 165 1600"
+        stroke="url(#hairMain)" stroke-width="34" stroke-linecap="round" filter="url(#softBlur)"/>
+
+  <path d="M210 -20C165 110 175 205 230 315C285 425 315 530 285 650C255 770 200 885 225 1010C248 1125 320 1250 300 1390C292 1470 270 1530 245 1600"
+        stroke="url(#hairMain)" stroke-width="28" stroke-linecap="round" opacity="0.92" filter="url(#softBlur)"/>
+
+  <path d="M300 -30C360 115 330 230 285 350C242 465 250 585 300 710C350 835 365 960 330 1090C300 1205 245 1330 265 1470C272 1520 288 1560 300 1600"
+        stroke="url(#hairSoft)" stroke-width="24" stroke-linecap="round" opacity="0.82" filter="url(#softBlur)"/>
+
+  <!-- medium strands -->
+  <path d="M78 40C110 145 92 225 68 308C45 390 40 485 70 590C102 705 132 820 118 940C104 1060 58 1178 68 1310C74 1398 98 1492 118 1600"
+        stroke="url(#hairSoft)" stroke-width="12" stroke-linecap="round" opacity="0.85"/>
+
+  <path d="M165 55C130 180 150 278 190 388C235 510 242 612 215 722C188 830 155 930 168 1048C182 1170 235 1285 225 1412C220 1490 198 1548 185 1600"
+        stroke="url(#hairSoft)" stroke-width="11" stroke-linecap="round" opacity="0.72"/>
+
+  <path d="M248 35C305 155 295 255 255 365C218 470 210 570 242 688C272 800 312 905 306 1028C300 1158 255 1278 268 1408C275 1490 292 1545 305 1600"
+        stroke="url(#hairSoft)" stroke-width="10" stroke-linecap="round" opacity="0.72"/>
+
+  <path d="M338 70C295 188 312 280 350 390C388 500 392 605 365 718C340 830 308 930 320 1048C332 1168 372 1288 365 1410C362 1492 350 1552 342 1600"
+        stroke="url(#hairSoft)" stroke-width="12" stroke-linecap="round" opacity="0.74"/>
+
+  <!-- fine hairs -->
+  <path d="M138 0C162 92 158 170 142 248C124 336 118 420 135 510C152 605 182 700 180 800C178 905 150 1008 152 1120C154 1260 182 1415 195 1600"
+        stroke="#ffd9e5" stroke-opacity="0.45" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M278 8C252 118 260 205 282 292C305 382 320 468 310 558C300 648 270 742 272 845C275 958 308 1082 305 1210C302 1360 282 1490 270 1600"
+        stroke="#ffd9e5" stroke-opacity="0.42" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M98 150C118 220 122 300 108 372C92 455 72 542 82 625C92 712 132 806 132 906C132 1010 100 1115 102 1225C105 1362 130 1480 148 1600"
+        stroke="#f8c1d1" stroke-opacity="0.38" stroke-width="3" stroke-linecap="round"/>
+
+  <path d="M320 175C300 255 296 335 315 408C334 482 356 568 348 652C340 742 308 834 308 935C308 1040 332 1142 330 1252C328 1380 308 1492 290 1600"
+        stroke="#f8c1d1" stroke-opacity="0.38" stroke-width="3" stroke-linecap="round"/>
+</svg>
