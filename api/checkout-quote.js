@@ -1,8 +1,8 @@
 const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
-const SUPABASE_KEY =
-  'sb_publishable_wUwY1wDw05gblt9WVOMT6Q_xxIcGKvF';
+const SERVICE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const { checkRateLimit } =
   require('../lib/rate-limit');
@@ -28,6 +28,19 @@ module.exports = async function handler(req, res) {
     return res.status(413).json({
       error: 'PAYLOAD_TOO_LARGE'
     });
+  }
+
+
+  if (!SERVICE_KEY) {
+
+    console.error(
+      'Required server secret missing'
+    );
+
+    return res.status(500).json({
+      error: 'SERVER_CONFIG_ERROR'
+    });
+
   }
 
 
@@ -120,9 +133,9 @@ module.exports = async function handler(req, res) {
           method: 'POST',
 
           headers: {
-            apikey: SUPABASE_KEY,
+            apikey: SERVICE_KEY,
             Authorization:
-              `Bearer ${SUPABASE_KEY}`,
+              `Bearer ${SERVICE_KEY}`,
             'Content-Type':
               'application/json'
           },
