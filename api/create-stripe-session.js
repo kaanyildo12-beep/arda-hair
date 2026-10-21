@@ -2,7 +2,7 @@ const SUPABASE_URL =
   'https://zehtftzxrjuoqcpcqmcs.supabase.co';
 
 const SITE_URL =
-  'https://arda-hair.vercel.app';
+  'https://ardahair.com';
 
 const SERVICE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY;

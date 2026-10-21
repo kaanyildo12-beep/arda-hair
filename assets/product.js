@@ -917,7 +917,7 @@ function updateProductSeo() {
     currentProduct.id;
 
   const canonicalUrl =
-    `https://arda-hair.vercel.app/product.html?product=${encodeURIComponent(identifier)}`;
+    `https://ardahair.com/product.html?product=${encodeURIComponent(identifier)}`;
 
   const imageUrl =
     getFirstProductImage();

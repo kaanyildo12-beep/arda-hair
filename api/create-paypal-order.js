@@ -5,7 +5,7 @@ const SITE_URL =
   process.env.VERCEL_ENV === 'preview' &&
   process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : 'https://arda-hair.vercel.app';
+    : 'https://ardahair.com';
 
 const SERVICE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY;

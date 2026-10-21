@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://arda-hair.vercel.app/sitemap.xml
+Sitemap: https://ardahair.com/sitemap.xml
